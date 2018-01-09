@@ -1,11 +1,13 @@
-﻿namespace AssemblyTool.Kernel.Data
+﻿using AssemblyTool.Kernel.Services;
+
+namespace AssemblyTool.Kernel.Data
 {
     public class AssessmentSectionCategoriesOutput
     {
         public AssessmentSectionCategoriesOutput(AssemblyCategory category, double lowerBoundary, double upperBoundary)
         {
-            //ProbabilityValidator.Validate(lowerBoundary);
-            //ProbabilityValidator.Validate(upperBoundary);
+            ProbabilityValidator.Validate(lowerBoundary);
+            ProbabilityValidator.Validate(upperBoundary);
 
             Category = category;
             LowerBoundary = lowerBoundary;
