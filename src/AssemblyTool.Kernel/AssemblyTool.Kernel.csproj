@@ -43,6 +43,7 @@
     <Compile Include="Categories\CategoriesCalculator.cs" />
     <Compile Include="Categories\CategoriesOutputBase.cs" />
     <Compile Include="Categories\FailureMechanismCategoriesOutput.cs" />
+    <Compile Include="Categories\FailureMechanismSectionCategoriesOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

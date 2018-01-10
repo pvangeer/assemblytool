@@ -49,7 +49,7 @@ namespace AssemblyTool.Kernel.ErrorHandling
         InvalidLowerBoundaryStandard,
 
         /// <summary>
-        /// The entered probability distribution factor is not valid. See the innerexception for more details.
+        /// The entered probability distribution factor is not valid. See the inner exception for more details.
         /// </summary>
         InvalidProbabilityDistributionFactor,
 
@@ -61,6 +61,16 @@ namespace AssemblyTool.Kernel.ErrorHandling
         /// <summary>
         /// The lower boundary (probability) of a category should be lower than the upperboundary (probability), but it is not.
         /// </summary>
-        CategoryLowerBoundaryExceedsUpperBoundary
+        CategoryLowerBoundaryExceedsUpperBoundary,
+
+        /// <summary>
+        /// Value should be above one (or equal to one), but it is not
+        /// </summary>
+        ValueBelowOne,
+
+        /// <summary>
+        /// The specified N - value is invalid. See the inner exception for more details.
+        /// </summary>
+        InvalidNValue
     }
 }
