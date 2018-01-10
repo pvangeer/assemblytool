@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyCategory.cs" />
+    <Compile Include="AssessmentSectionAssemblyCategory.cs" />
+    <Compile Include="FailureMechanismAssemblyCategory.cs" />
+    <Compile Include="FailureMechanismCategoriesOutput.cs" />
     <Compile Include="AssessmentSectionCategoriesOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
