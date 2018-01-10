@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AssemblyTool.Kernel.Categories;
 using AssemblyTool.Kernel.Data;
 using NUnit.Framework;
 

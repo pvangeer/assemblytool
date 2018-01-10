@@ -24,14 +24,14 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyTool.Kernel.ErrorHandling
 {
-    public class ProbabilityValidationException : Exception
+    public class AssemblyToolKernelException : Exception
     {
-        public ProbabilityValidationException(ErrorCode errorCode, ProbabilityValidationException innerexception) :  base(errorCode.GetMessage(),innerexception)
+        public AssemblyToolKernelException(ErrorCode errorCode, AssemblyToolKernelException innerexception) :  base(errorCode.GetMessage(),innerexception)
         {
             Code = errorCode;
         }
 
-        public ProbabilityValidationException(ErrorCode errorCode) : base(errorCode.GetMessage())
+        public AssemblyToolKernelException(ErrorCode errorCode) : base(errorCode.GetMessage())
         {
             Code = errorCode;
         }

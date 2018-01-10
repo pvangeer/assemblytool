@@ -23,12 +23,39 @@ namespace AssemblyTool.Kernel.Data
 {
     public enum FailureMechanismAssemblyCategory
     {
+        /// <summary>
+        /// Assembly category It. This category lies between a probability of 0 and 1/30 * f * signaling standard
+        /// </summary>
         It,
+
+        /// <summary>
+        /// Assembly category IIt. This category lies between a probability of 1/30 * f * signaling standard and f * signaling standard
+        /// </summary>
         IIt,
+
+        /// <summary>
+        /// Assembly category IIIt. This category lies between a probability of f * signaling standard and signaling standard
+        /// </summary>
         IIIt,
+
+        /// <summary>
+        /// Assembly category IVt. This category lies between a probability of f * lower boundary standard and lower boundary standard
+        /// </summary>
         IVt,
+
+        /// <summary>
+        /// Assembly category Vt. This category lies between a probability of lower boundary standard and 30 * lower boundary standard
+        /// </summary>
         Vt,
+
+        /// <summary>
+        /// Assembly category VIt. This category lies between a probability of 30 * lower boundary standard and 1
+        /// </summary>
         VIt,
+
+        /// <summary>
+        /// Assembly category VIt. No result yet (NGO - Nog geen oordeel)
+        /// </summary>
         VIIt
     }
 }

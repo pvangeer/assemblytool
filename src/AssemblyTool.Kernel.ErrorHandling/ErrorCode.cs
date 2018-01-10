@@ -23,10 +23,44 @@ namespace AssemblyTool.Kernel.ErrorHandling
 {
     public enum ErrorCode
     {
-        ProbabilityBelowZero,
-        ProbabilityAboveOne,
+        /// <summary>
+        ///  The value of this parameter is supposed not to be lower than 0, but it is.
+        /// </summary>
+        ValueBelowZero,
+
+        /// <summary>
+        /// The value of this parameter is supposed not to exceed 1, but it does.
+        /// </summary>
+        ValueAboveOne,
+
+        /// <summary>
+        /// The entered signaling standard exceeds the lower boundary. This should bot be the case.
+        /// </summary>
         SignallingStandardExceedsLowerBoundary,
-        IncorrectSignalingStandard,
-        IncorrectLowerBoundaryStandard
+
+        /// <summary>
+        /// The entered signaling standard is not valid. See the innerexception for more details.
+        /// </summary>
+        InvalidSignalingStandard,
+
+        /// <summary>
+        /// The entered lower boundary standard is not valid. See the innerexception for more details.
+        /// </summary>
+        InvalidLowerBoundaryStandard,
+
+        /// <summary>
+        /// The entered probability distribution factor is not valid. See the innerexception for more details.
+        /// </summary>
+        InvalidProbabilityDistributionFactor,
+
+        /// <summary>
+        /// The value of this double equals NaN.
+        /// </summary>
+        ValueIsNaN,
+
+        /// <summary>
+        /// The lower boundary (probability) of a category should be lower than the upperboundary (probability), but it is not.
+        /// </summary>
+        CategoryLowerBoundaryExceedsUpperBoundary
     }
 }

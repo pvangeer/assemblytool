@@ -23,6 +23,11 @@ namespace AssemblyTool.Kernel.ErrorHandling
 {
     public static class ErrorCodeExtensions
     {
+        /// <summary>
+        /// Translates the error code to a readable string message that can be used in the exception that uses this code.
+        /// </summary>
+        /// <param name="errorCode"><see cref="ErrorCode"/> that needs to be translated to a meaningfull message.</param>
+        /// <returns></returns>
         public static string GetMessage(this ErrorCode errorCode)
         {
             return "";

@@ -19,26 +19,34 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AssemblyTool.Kernel.ErrorHandling;
 
 namespace AssemblyTool.Kernel.Services
 {
     public static class ProbabilityValidator
     {
+        /// <summary>
+        /// Validates <paramref name="probability"/> for being a valid probability. This means a double within the range [0-1].
+        /// </summary>
+        /// <param name="probability">The probability to validate</param>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probability"/> is NaN</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probability"/> is smaller than 0</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probability"/> exceeds 1</exception>
         public static void Validate(double probability)
         {
+            if (double.IsNaN(probability))
+            {
+                throw new AssemblyToolKernelException(ErrorCode.ValueIsNaN);
+            }
+
             if (probability < 0)
             {
-                throw new ProbabilityValidationException(ErrorCode.ProbabilityBelowZero);
+                throw new AssemblyToolKernelException(ErrorCode.ValueBelowZero);
             }
 
             if (probability > 1)
             {
-                throw new ProbabilityValidationException(ErrorCode.ProbabilityAboveOne);
+                throw new AssemblyToolKernelException(ErrorCode.ValueAboveOne);
             }
         }
     }

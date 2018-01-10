@@ -23,10 +23,29 @@ namespace AssemblyTool.Kernel.Data
 {
     public enum AssessmentSectionAssemblyCategory
     {
+        /// <summary>
+        /// A+ category, this categories is between a probability of 0 and 1/30 times the signaling standard
+        /// </summary>
         APlus,
+
+        /// <summary>
+        /// Assembly category A. This category lies between a probability of the 1/30 times the signaling standard and the signaling standard
+        /// </summary>
         A,
+
+        /// <summary>
+        /// Assembly category B. This category lies between a probability of the signaling standard and the lower boundary standard
+        /// </summary>
         B,
+
+        /// <summary>
+        /// Assembly category C. This category lies between a probability of the lower boundary standard and 30 times the lower boundary standard
+        /// </summary>
         C,
+        
+        /// <summary>
+        /// Assembly category D. This category lies is between a probability of 30 times the lower boundary standard and 1
+        /// </summary>
         D
     }
 }

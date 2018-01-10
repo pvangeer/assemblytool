@@ -19,26 +19,40 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using AssemblyTool.Kernel.ErrorHandling;
 using AssemblyTool.Kernel.Services;
 
-namespace AssemblyTool.Kernel.Data
+namespace AssemblyTool.Kernel.Categories
 {
-    public class FailureMechanismCategoriesOutput
+    public class CategoriesOutputBase<T>
     {
-        public FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory category, double lowerBoundary, double upperBoundary)
+        protected CategoriesOutputBase(T category, double lowerBoundary, double upperBoundary)
         {
             ProbabilityValidator.Validate(lowerBoundary);
             ProbabilityValidator.Validate(upperBoundary);
+            if (lowerBoundary > upperBoundary)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);
+            }
 
             Category = category;
             LowerBoundary = lowerBoundary;
             UpperBoundary = upperBoundary;
         }
 
-        public FailureMechanismAssemblyCategory Category {get;}
+        /// <summary>
+        /// Assessment category for which this output is calculated.
+        /// </summary>
+        public T Category {get;}
 
+        /// <summary>
+        /// Lower boundary (probability) of this category
+        /// </summary>
         public double LowerBoundary { get; }
 
+        /// <summary>
+        /// Upper boundary (probability) of this category
+        /// </summary>
         public double UpperBoundary { get; }
     }
 }
