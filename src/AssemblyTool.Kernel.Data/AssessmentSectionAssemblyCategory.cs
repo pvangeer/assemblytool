@@ -1,6 +1,6 @@
 ﻿namespace AssemblyTool.Kernel.Data
 {
-    public enum AssemblyCategory
+    public enum AssessmentSectionAssemblyCategory
     {
         APlus,
         A,

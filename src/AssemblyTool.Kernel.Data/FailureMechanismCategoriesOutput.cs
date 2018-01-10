@@ -2,9 +2,9 @@
 
 namespace AssemblyTool.Kernel.Data
 {
-    public class AssessmentSectionCategoriesOutput
+    public class FailureMechanismCategoriesOutput
     {
-        public AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory category, double lowerBoundary, double upperBoundary)
+        public FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory category, double lowerBoundary, double upperBoundary)
         {
             ProbabilityValidator.Validate(lowerBoundary);
             ProbabilityValidator.Validate(upperBoundary);
@@ -14,7 +14,7 @@ namespace AssemblyTool.Kernel.Data
             UpperBoundary = upperBoundary;
         }
 
-        public AssessmentSectionAssemblyCategory Category {get;}
+        public FailureMechanismAssemblyCategory Category {get;}
 
         public double LowerBoundary { get; }
 

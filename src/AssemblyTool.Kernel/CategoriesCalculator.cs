@@ -19,11 +19,33 @@ namespace AssemblyTool.Kernel
 
             return new[]
             {
-                new AssessmentSectionCategoriesOutput(AssemblyCategory.APlus,0,aPlusToA),
-                new AssessmentSectionCategoriesOutput(AssemblyCategory.A,aPlusToA, signalingStandard),
-                new AssessmentSectionCategoriesOutput(AssemblyCategory.B,signalingStandard, lowerBoundaryStandard),
-                new AssessmentSectionCategoriesOutput(AssemblyCategory.C,lowerBoundaryStandard, cToD),
-                new AssessmentSectionCategoriesOutput(AssemblyCategory.D, cToD, 1), 
+                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.APlus,0,aPlusToA),
+                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.A,aPlusToA, signalingStandard),
+                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.B,signalingStandard, lowerBoundaryStandard),
+                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.C,lowerBoundaryStandard, cToD),
+                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.D, cToD, 1), 
+            };
+        }
+
+        /// <summary>
+        /// WBI-1-1
+        /// </summary>
+        /// <returns></returns>
+        public static FailureMechanismCategoriesOutput[] CalculateFailureMechanismCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor)
+        {
+            ValidateStandards(signalingStandard, lowerBoundaryStandard);
+
+            var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard;
+            var iItoIII = probabilityDistributionFactor * signalingStandard;
+
+            return new[]
+            {
+                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.It,0,iToII),
+                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIt,iToII, iItoIII),
+                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIIt,iItoIII, signalingStandard),
+                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IVt,probabilityDistributionFactor * lowerBoundaryStandard, lowerBoundaryStandard),
+                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.Vt, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
+                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.VIt, 30 * lowerBoundaryStandard, 1),
             };
         }
 
