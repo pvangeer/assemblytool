@@ -19,6 +19,9 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using AssemblyTool.Kernel.Services;
@@ -37,21 +40,32 @@ namespace AssemblyTool.Kernel.Categories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> is no probability (not in the range [0-1]).</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundaryStandard"/> is no probability (not in the range [0-1]).</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
-        public static AssessmentSectionCategoriesOutput[] CalculateAssessmentSectionCategories(double signalingStandard, double lowerBoundaryStandard)
+        public static CalculationOutput<AssessmentSectionCategoriesOutput[]> CalculateAssessmentSectionCategories(double signalingStandard, double lowerBoundaryStandard)
         {
-            ValidateStandards(signalingStandard, lowerBoundaryStandard);
-
-            var aPlusToA = 1/30.0*signalingStandard;
-            var cToD = 30 * lowerBoundaryStandard;
-
-            return new[]
+            try
             {
-                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.APlus,0,aPlusToA),
-                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.A,aPlusToA, signalingStandard),
-                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.B,signalingStandard, lowerBoundaryStandard),
-                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.C,lowerBoundaryStandard, cToD),
-                new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.D, cToD, 1), 
-            };
+                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+
+                var aPlusToA = 1 / 30.0 * signalingStandard;
+                var cToD = 30 * lowerBoundaryStandard;
+
+                var categories =  new[]
+                {
+                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.APlus,0,aPlusToA),
+                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.A,aPlusToA, signalingStandard),
+                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.B,signalingStandard, lowerBoundaryStandard),
+                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.C,lowerBoundaryStandard, cToD),
+                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.D, cToD, 1),
+                };
+                
+                return new CalculationOutput<AssessmentSectionCategoriesOutput[]>(categories);
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                return new CalculationOutput<AssessmentSectionCategoriesOutput[]>(e);
+            }
+
+            
         }
 
         /// <summary>
@@ -66,24 +80,33 @@ namespace AssemblyTool.Kernel.Categories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundaryStandard"/> is no probability (not in the range [0-1]).</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="probabilityDistributionFactor"/> is not in the range [0-1].</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
-        public static FailureMechanismCategoriesOutput[] CalculateFailureMechanismCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor)
+        public static CalculationOutput<FailureMechanismCategoriesOutput[]> CalculateFailureMechanismCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor)
         {
-            ValidateStandards(signalingStandard, lowerBoundaryStandard);
-            ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
-
-            var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard;
-            var iItoIII = probabilityDistributionFactor * signalingStandard;
-            var iIItoIV = probabilityDistributionFactor * lowerBoundaryStandard;
-
-            return new[]
+            try
             {
-                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.It,0,iToII),
-                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIt,iToII, iItoIII),
-                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIIt,iItoIII, iIItoIV),
-                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IVt,iIItoIV, lowerBoundaryStandard),
-                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.Vt, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
-                new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.VIt, 30 * lowerBoundaryStandard, 1),
-            };
+                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
+
+                var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard;
+                var iItoIII = probabilityDistributionFactor * signalingStandard;
+                var iIItoIV = probabilityDistributionFactor * lowerBoundaryStandard;
+
+                var categories = new[]
+                {
+                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.It,0,iToII),
+                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIt,iToII, iItoIII),
+                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIIt,iItoIII, iIItoIV),
+                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IVt,iIItoIV, lowerBoundaryStandard),
+                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.Vt, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
+                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.VIt, 30 * lowerBoundaryStandard, 1),
+                };
+
+                return new CalculationOutput<FailureMechanismCategoriesOutput[]>(categories);
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                return new CalculationOutput<FailureMechanismCategoriesOutput[]>(e);
+            }
         }
 
         /// <summary>
@@ -100,25 +123,34 @@ namespace AssemblyTool.Kernel.Categories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="probabilityDistributionFactor"/> is not in the range [0-1].</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="nValue"/> is smaller than 1 or NaN.<paramref name="lowerBoundaryStandard"/>.</exception>
-        public static FailureMechanismSectionCategoriesOutput[] CalculateFailureMechanismSectionCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue)
+        public static CalculationOutput<FailureMechanismSectionCategoriesOutput[]> CalculateFailureMechanismSectionCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue)
         {
-            ValidateStandards(signalingStandard, lowerBoundaryStandard);
-            ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
-            ValidateNValue(nValue);
-            
-            var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard / nValue;
-            var iItoIII = probabilityDistributionFactor * signalingStandard / nValue;
-            var iIItoIV = probabilityDistributionFactor * lowerBoundaryStandard / nValue;
-
-            return new[]
+            try
             {
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,0,iToII),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, lowerBoundaryStandard),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * lowerBoundaryStandard, 1),
-            };
+                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
+                ValidateNValue(nValue);
+
+                var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard / nValue;
+                var iItoIII = probabilityDistributionFactor * signalingStandard / nValue;
+                var iIItoIV = probabilityDistributionFactor * lowerBoundaryStandard / nValue;
+
+                var categories = new[]
+                {
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,0,iToII),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, lowerBoundaryStandard),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * lowerBoundaryStandard, 1),
+                };
+
+                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(categories);
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(e);
+            }
         }
 
         /// <summary>
@@ -135,32 +167,42 @@ namespace AssemblyTool.Kernel.Categories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="probabilityDistributionFactor"/> is not in the range [0-1].</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="nValue"/> is smaller than 1 or NaN.<paramref name="lowerBoundaryStandard"/>.</exception>
-        public static FailureMechanismSectionCategoriesOutput[] CalculateGeotechnicFailureMechanismSectionCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue)
+        public static CalculationOutput<FailureMechanismSectionCategoriesOutput[]> CalculateGeotechnicFailureMechanismSectionCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue)
         {
-            ValidateStandards(signalingStandard, lowerBoundaryStandard);
-            ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
-            ValidateNValue(nValue);
-
-            var factor = probabilityDistributionFactor * 10 / nValue;
-            if (factor > 1)
+            try
             {
-                // TODO: Issue warning
-                factor = 1;
+                var warnings = new List<WarningMessage>();
+
+                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
+                ValidateNValue(nValue);
+
+                var factor = probabilityDistributionFactor * 10 / nValue;
+                if (factor > 1)
+                {
+                    warnings.Add(WarningMessage.CorrectedSectionSpecificNValue);
+                    factor = 1;
+                }
+
+                var iToII = 1 / 30.0 * factor * signalingStandard;
+                var iItoIII = factor * signalingStandard;
+                var iIItoIV = factor * lowerBoundaryStandard;
+
+                var categories = new[]
+                {
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,0,iToII),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, lowerBoundaryStandard),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
+                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * lowerBoundaryStandard, 1),
+                };
+                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(categories,warnings.ToArray());
             }
-
-            var iToII = 1 / 30.0 * factor * signalingStandard;
-            var iItoIII = factor * signalingStandard;
-            var iIItoIV = factor * lowerBoundaryStandard;
-
-            return new[]
+            catch (AssemblyToolKernelException e)
             {
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,0,iToII),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, lowerBoundaryStandard),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
-                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * lowerBoundaryStandard, 1),
-            };
+                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(e);
+            }
         }
 
         private static void ValidateNValue(double nValue)

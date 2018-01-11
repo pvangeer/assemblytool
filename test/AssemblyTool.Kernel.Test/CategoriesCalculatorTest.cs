@@ -21,6 +21,7 @@
 
 using AssemblyTool.Kernel.Categories;
 using AssemblyTool.Kernel.Data;
+using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
 namespace AssemblyTool.Kernel.Test
@@ -33,7 +34,14 @@ namespace AssemblyTool.Kernel.Test
         {
             var signalingStandard = 1 / 3000.0;
             var lowerBoundaryStandard = 1 / 1000.0;
-            var result = CategoriesCalculator.CalculateAssessmentSectionCategories(signalingStandard, lowerBoundaryStandard);
+            var calculationResult = CategoriesCalculator.CalculateAssessmentSectionCategories(signalingStandard, lowerBoundaryStandard);
+
+            Assert.IsNotNull(calculationResult.Result);
+            Assert.IsNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            var result = calculationResult.Result;
 
             Assert.AreEqual(5,result.Length);
             var firstCategory = result[0];
@@ -64,7 +72,14 @@ namespace AssemblyTool.Kernel.Test
             var signalingStandard = 1 / 3000.0;
             var lowerBoundaryStandard = 1 / 1000.0;
             var probabilityDistributionFactor = 0.5;
-            var result = CategoriesCalculator.CalculateFailureMechanismCategories(signalingStandard, lowerBoundaryStandard,probabilityDistributionFactor);
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(signalingStandard, lowerBoundaryStandard,probabilityDistributionFactor);
+
+            Assert.IsNotNull(calculationResult.Result);
+            Assert.IsNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            var result = calculationResult.Result;
 
             Assert.AreEqual(6, result.Length);
             var firstCategory = result[0];
@@ -100,7 +115,14 @@ namespace AssemblyTool.Kernel.Test
             var lowerBoundaryStandard = 1 / 1000.0;
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
-            var result = CategoriesCalculator.CalculateFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+
+            Assert.IsNotNull(calculationResult.Result);
+            Assert.IsNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            var result = calculationResult.Result;
 
             var signalingStandardOnSection = signalingStandard * probabilityDistributionFactor / nValue;
             var lowerBoundaryOnSection = lowerBoundaryStandard * probabilityDistributionFactor / nValue;
@@ -139,7 +161,14 @@ namespace AssemblyTool.Kernel.Test
             var lowerBoundaryStandard = 1 / 1000.0;
             var probabilityDistributionFactor = 0.04;
             var nValue = 2.5;
-            var result = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+            var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+
+            Assert.IsNotNull(calculationResult.Result);
+            Assert.IsNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            var result = calculationResult.Result;
 
             var signalingStandardOnSection = signalingStandard * probabilityDistributionFactor *10 / nValue;
             var lowerBoundaryOnSection = lowerBoundaryStandard * probabilityDistributionFactor *10 / nValue;
@@ -178,11 +207,18 @@ namespace AssemblyTool.Kernel.Test
             var lowerBoundaryStandard = 1 / 1000.0;
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
-            var result = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+            var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
 
+            Assert.IsNotNull(calculationResult.Result);
+            Assert.IsNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+
+            Assert.AreEqual(1,calculationResult.WarningMessages.Length);
+            Assert.AreEqual(WarningMessage.CorrectedSectionSpecificNValue,calculationResult.WarningMessages[0]);
+
+            var result = calculationResult.Result;
             var signalingStandardOnSection = signalingStandard;
             var lowerBoundaryOnSection = lowerBoundaryStandard;
-
             Assert.AreEqual(6, result.Length);
             var firstCategory = result[0];
             Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Iv, firstCategory.Category);

@@ -43,7 +43,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +56,10 @@
     <ProjectReference Include="..\..\src\AssemblyTool.Kernel.Data\AssemblyTool.Kernel.Data.csproj">
       <Project>{0E03F9A8-7BA4-4F78-BF6D-EF2A9E600B79}</Project>
       <Name>AssemblyTool.Kernel.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\AssemblyTool.Kernel.ErrorHandling\AssemblyTool.Kernel.ErrorHandling.csproj">
+      <Project>{b75e04b2-a702-46df-a014-ea500f5fda19}</Project>
+      <Name>AssemblyTool.Kernel.ErrorHandling</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\AssemblyTool.Kernel\AssemblyTool.Kernel.csproj">
       <Project>{B40F1032-599A-497C-A1A4-CD5584BAB54D}</Project>

@@ -42,6 +42,7 @@
     <Compile Include="Categories\AssessmentSectionCategoriesOutput.cs" />
     <Compile Include="Categories\CategoriesCalculator.cs" />
     <Compile Include="Categories\CategoriesOutputBase.cs" />
+    <Compile Include="Categories\CalculationOutput.cs" />
     <Compile Include="Categories\FailureMechanismCategoriesOutput.cs" />
     <Compile Include="Categories\FailureMechanismSectionCategoriesOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
