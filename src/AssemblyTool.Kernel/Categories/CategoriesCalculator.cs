@@ -28,7 +28,8 @@ namespace AssemblyTool.Kernel.Categories
     public static class CategoriesCalculator
     {
         /// <summary>
-        /// Calculates category boundaries (probabilities) for usages in assembly of WBI2017 assessment results on assessment section level. This method implements "WBI-2-1" from the Functional Design.
+        /// Calculates category boundaries (probabilities) for usages in assembly of WBI2017 assessment results on assessment section level. 
+        /// This method implements "WBI-2-1" from the Functional Design.
         /// </summary>
         /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
         /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
@@ -87,7 +88,7 @@ namespace AssemblyTool.Kernel.Categories
 
         /// <summary>
         /// Calculates category boundaries (probabilities) for usages in assembly of WBI2017 assessment results on failure mechanism level. 
-        /// This method implements "WBI-1-1" from the Functional Design.
+        /// This method implements "WBI-0-1" from the Functional Design.
         /// </summary>
         /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
         /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
@@ -122,7 +123,7 @@ namespace AssemblyTool.Kernel.Categories
 
         /// <summary>
         /// Calculates category boundaries (probabilities) for usages in assembly of WBI2017 assessment results on failure mechanism level. 
-        /// This method implements "WBI-1-1" from the Functional Design.
+        /// This method implements "WBI-0-2" from the Functional Design.
         /// </summary>
         /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
         /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
