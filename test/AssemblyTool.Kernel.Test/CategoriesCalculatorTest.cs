@@ -19,7 +19,6 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Categories;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
@@ -29,12 +28,24 @@ namespace AssemblyTool.Kernel.Test
     [TestFixture]
     public class CategoriesCalculatorTest
     {
-        [Test]
-        public void CalculateAssessmentSectionCategoriesTest()
+        #region CalculateAssessmentSectionCategories
+
+        [TestCase(1 / 3000.0, 1 / 1000.0)]
+        [TestCase(1 / 1000.0, 1 / 1000.0)]
+        [TestCase(1 / 1000.0, 1 / 3000.0)]
+        public void CalculateAssessmentSectionCategoriesTest(double signalingStandard,double lowerBoundaryStandard)
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
             var calculationResult = CategoriesCalculator.CalculateAssessmentSectionCategories(signalingStandard, lowerBoundaryStandard);
+
+            if (lowerBoundaryStandard < signalingStandard)
+            {
+                Assert.IsNull(calculationResult.Result);
+                Assert.IsEmpty(calculationResult.WarningMessages);
+                Assert.IsNotNull(calculationResult.ErrorMessage);
+
+                Assert.AreEqual(ErrorCode.SignallingStandardExceedsLowerBoundary, calculationResult.ErrorMessage.Code);
+                return;
+            }
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNull(calculationResult.ErrorMessage);
@@ -66,11 +77,27 @@ namespace AssemblyTool.Kernel.Test
             Assert.AreEqual(1, category5.UpperBoundary, 1e-8);
         }
 
-        [Test]
-        public void CalculateFailureMechanismCategoriesTest()
+        #endregion
+
+        #region CalculateFailureMechanismCategories
+
+        [TestCase(2, 1 / 1000, 1 / 1000, ErrorCode.InvalidProbabilityDistributionFactor)]
+        [TestCase(0.04, 2, 1 / 1000, ErrorCode.InvalidSignalingStandard)]
+        public void CalculateFailureMechanismCategoriesCallsValidation(double factor, double signalingStandard,double lowerBoundary, ErrorCode expectedError)
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(signalingStandard, lowerBoundary, factor);
+
+            Assert.IsNull(calculationResult.Result);
+            Assert.IsNotNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+            Assert.AreEqual(expectedError,calculationResult.ErrorMessage.Code);
+        }
+
+        [TestCase(1 / 3000, 1 / 1000)]
+        [TestCase(1 / 1000, 1 / 1000)]
+        public void CalculateFailureMechanismCategoriesTest(double signalingStandard, double lowerBoundaryStandard)
+        {
             var probabilityDistributionFactor = 0.5;
             var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(signalingStandard, lowerBoundaryStandard,probabilityDistributionFactor);
 
@@ -108,11 +135,14 @@ namespace AssemblyTool.Kernel.Test
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
 
-        [Test]
-        public void CalculateFailureMechanismSectionCategoriesTest()
+        #endregion
+
+        #region CalculateFailureMechanismSectionCategories
+
+        [TestCase(1 / 3000.0, 1 / 1000.0)]
+        [TestCase(1 / 1000.0, 1 / 1000.0)]
+        public void CalculateFailureMechanismSectionCategoriesTest(double signalingStandard, double lowerBoundaryStandard)
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
             var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
@@ -153,6 +183,24 @@ namespace AssemblyTool.Kernel.Test
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
+
+        [TestCase(-1, 1 / 1000.0, 0.5, 2.5, ErrorCode.InvalidSignalingStandard)]
+        [TestCase(1 / 3000.0, 1 / 1000.0, 2, 2.5, ErrorCode.InvalidProbabilityDistributionFactor)]
+        [TestCase(1 / 3000.0, 1 / 1000.0, 0.5, -5, ErrorCode.InvalidNValue)]
+        public void CalculateFailureMechanismSectionCategoriesCallsValidationTest(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue, ErrorCode expectedError)
+        {
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+
+            Assert.IsNull(calculationResult.Result);
+            Assert.IsNotNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            Assert.AreEqual(expectedError,calculationResult.ErrorMessage.Code);
+        }
+        #endregion
+
+        #region CalculateGeotechnicFailureMechanismSectionCategories
 
         [Test]
         public void CalculateGeotechnicFailureMechanismSectionCategoriesTest()
@@ -213,8 +261,8 @@ namespace AssemblyTool.Kernel.Test
             Assert.IsNull(calculationResult.ErrorMessage);
             Assert.IsNotNull(calculationResult.WarningMessages);
 
-            Assert.AreEqual(1,calculationResult.WarningMessages.Length);
-            Assert.AreEqual(WarningMessage.CorrectedSectionSpecificNValue,calculationResult.WarningMessages[0]);
+            Assert.AreEqual(1, calculationResult.WarningMessages.Length);
+            Assert.AreEqual(WarningMessage.CorrectedSectionSpecificNValue, calculationResult.WarningMessages[0]);
 
             var result = calculationResult.Result;
             var signalingStandardOnSection = signalingStandard;
@@ -245,5 +293,54 @@ namespace AssemblyTool.Kernel.Test
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
+
+        #endregion
+
+        #region ValidateNValue
+
+        [TestCase(double.NaN, ErrorCode.ValueIsNaN)]
+        [TestCase(0, ErrorCode.ValueBelowOne)]
+        public void CalculateGeotechnicFailureMechanismSectionCategoriesValidatesNValueNaNTest(double nValue, ErrorCode expectedSubError)
+        {
+            var signalingStandard = 1 / 3000.0;
+            var lowerBoundaryStandard = 1 / 1000.0;
+            var probabilityDistributionFactor = 0.04;
+            var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+
+            Assert.IsNull(calculationResult.Result);
+            Assert.IsNotNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            Assert.AreEqual(ErrorCode.InvalidNValue, calculationResult.ErrorMessage.Code);
+            Assert.IsInstanceOf<AssemblyToolKernelException>(calculationResult.ErrorMessage.InnerException);
+            Assert.AreEqual(expectedSubError, ((AssemblyToolKernelException)calculationResult.ErrorMessage.InnerException).Code);
+        }
+
+        #endregion
+
+        #region ValidaeProbabilityDistributionFactor
+
+        [TestCase(-1,ErrorCode.ValueBelowZero)]
+        [TestCase(2, ErrorCode.ValueAboveOne)]
+        [TestCase(double.NaN, ErrorCode.ValueIsNaN)]
+        public void ValidateProbabilityDistributionFactorTest(double factor, ErrorCode expectedSubError)
+        {
+            var signalingStandard = 1 / 3000.0;
+            var lowerBoundaryStandard = 1 / 1000.0;
+            var nValue = 10;
+            var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, factor, nValue);
+
+            Assert.IsNull(calculationResult.Result);
+            Assert.IsNotNull(calculationResult.ErrorMessage);
+            Assert.IsNotNull(calculationResult.WarningMessages);
+            Assert.IsEmpty(calculationResult.WarningMessages);
+
+            Assert.AreEqual(ErrorCode.InvalidProbabilityDistributionFactor, calculationResult.ErrorMessage.Code);
+            Assert.IsInstanceOf<AssemblyToolKernelException>(calculationResult.ErrorMessage.InnerException);
+            Assert.AreEqual(expectedSubError, ((AssemblyToolKernelException)calculationResult.ErrorMessage.InnerException).Code);
+        }
+
+        #endregion
     }
 }

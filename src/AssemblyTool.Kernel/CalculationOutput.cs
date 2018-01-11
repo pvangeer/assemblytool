@@ -20,39 +20,36 @@
 // All rights reserved.
 
 using AssemblyTool.Kernel.ErrorHandling;
-using AssemblyTool.Kernel.Services;
 
-namespace AssemblyTool.Kernel.Categories
+namespace AssemblyTool.Kernel
 {
-    public class CategoriesOutputBase<T>
+    public class CalculationOutput<TResult>
     {
-        protected CategoriesOutputBase(T category, double lowerBoundary, double upperBoundary)
+        public CalculationOutput(AssemblyToolKernelException exception, WarningMessage[] warningMessages = null)
         {
-            ProbabilityValidator.Validate(lowerBoundary);
-            ProbabilityValidator.Validate(upperBoundary);
-            if (lowerBoundary > upperBoundary)
-            {
-                throw new AssemblyToolKernelException(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);
-            }
+            WarningMessages = warningMessages ?? new WarningMessage[] { };
+            ErrorMessage = exception;
+        }
 
-            Category = category;
-            LowerBoundary = lowerBoundary;
-            UpperBoundary = upperBoundary;
+        public CalculationOutput(TResult result, WarningMessage[] warningMessages = null)
+        {
+            Result = result;
+            WarningMessages = warningMessages ?? new WarningMessage[]{};
         }
 
         /// <summary>
-        /// Assessment category for which this output is calculated.
+        /// Error message that occured during calculation.
         /// </summary>
-        public T Category {get;}
+        public AssemblyToolKernelException ErrorMessage { get; }
 
         /// <summary>
-        /// Lower boundary (probability) of this category
+        /// Warning messages that occured during calculation.
         /// </summary>
-        public double LowerBoundary { get; }
+        public WarningMessage[] WarningMessages { get; }
 
         /// <summary>
-        /// Upper boundary (probability) of this category
+        /// The resulting result of the calculation.
         /// </summary>
-        public double UpperBoundary { get; }
+        public TResult Result { get; }
     }
 }

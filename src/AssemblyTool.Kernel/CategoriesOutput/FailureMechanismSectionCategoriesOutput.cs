@@ -22,12 +22,12 @@
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel.Categories
+namespace AssemblyTool.Kernel.CategoriesOutput
 {
-    public class FailureMechanismCategoriesOutput : CategoriesOutputBase<FailureMechanismAssemblyCategory>
+    public class FailureMechanismSectionCategoriesOutput : CategoriesOutputBase<FailureMechanismSectionAssemblyCategory>
     {
         /// <summary>
-        /// Creates a new instance of <see cref="FailureMechanismCategoriesOutput"/>.
+        /// Creates a new instance of <see cref="FailureMechanismSectionCategoriesOutput"/>.
         /// </summary>
         /// <param name="category">The input to calculate the derived macro stability inwards input.</param>
         /// <param name="lowerBoundary">The input to calculate the derived macro stability inwards input.</param>
@@ -35,8 +35,7 @@ namespace AssemblyTool.Kernel.Categories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory category, double lowerBoundary,double upperBoundary) 
-            : base(category, lowerBoundary, upperBoundary)
+        public FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory category, double lowerBoundary, double upperBoundary) : base(category, lowerBoundary, upperBoundary)
         {
         }
     }

@@ -19,14 +19,13 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using AssemblyTool.Kernel.CategoriesOutput;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using AssemblyTool.Kernel.Services;
 
-namespace AssemblyTool.Kernel.Categories
+namespace AssemblyTool.Kernel
 {
     public static class CategoriesCalculator
     {
@@ -44,7 +43,7 @@ namespace AssemblyTool.Kernel.Categories
         {
             try
             {
-                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ProbabilityValidator.ValidateStandards(signalingStandard, lowerBoundaryStandard);
 
                 var aPlusToA = 1 / 30.0 * signalingStandard;
                 var cToD = 30 * lowerBoundaryStandard;
@@ -84,7 +83,7 @@ namespace AssemblyTool.Kernel.Categories
         {
             try
             {
-                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ProbabilityValidator.ValidateStandards(signalingStandard, lowerBoundaryStandard);
                 ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
 
                 var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard;
@@ -127,7 +126,7 @@ namespace AssemblyTool.Kernel.Categories
         {
             try
             {
-                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ProbabilityValidator.ValidateStandards(signalingStandard, lowerBoundaryStandard);
                 ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
                 ValidateNValue(nValue);
 
@@ -173,7 +172,7 @@ namespace AssemblyTool.Kernel.Categories
             {
                 var warnings = new List<WarningMessage>();
 
-                ValidateStandards(signalingStandard, lowerBoundaryStandard);
+                ProbabilityValidator.ValidateStandards(signalingStandard, lowerBoundaryStandard);
                 ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
                 ValidateNValue(nValue);
 
@@ -205,6 +204,12 @@ namespace AssemblyTool.Kernel.Categories
             }
         }
 
+        /// <summary>
+        /// This method validates the specified N - value to take into account the length effect. N needs to be a valid douvle >= 1.
+        /// </summary>
+        /// <param name="nValue">The N-value that needs to be validated.</param>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="nValue"/> equals NaN</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="nValue"/> is a double smaller than 1.0</exception>
         private static void ValidateNValue(double nValue)
         {
             if (double.IsNaN(nValue))
@@ -240,40 +245,6 @@ namespace AssemblyTool.Kernel.Categories
             if (probabilityDistributionFactor > 1)
             {
                 throw new AssemblyToolKernelException(ErrorCode.InvalidProbabilityDistributionFactor, new AssemblyToolKernelException(ErrorCode.ValueAboveOne));
-            }
-        }
-
-        /// <summary>
-        /// Validates the lower and upper probabilities.
-        /// </summary>
-        /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
-        /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
-        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="signalingStandard"/> is not a valid probability</exception>
-        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="lowerBoundaryStandard"/> is not a valid probability</exception>
-        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="signalingStandard"/> exceeds <paramref name="lowerBoundaryStandard"/></exception>
-        private static void ValidateStandards(double signalingStandard, double lowerBoundaryStandard)
-        {
-            try
-            {
-                ProbabilityValidator.Validate(signalingStandard);
-            }
-            catch (AssemblyToolKernelException e)
-            {
-                throw new AssemblyToolKernelException(ErrorCode.InvalidSignalingStandard, e);
-            }
-
-            try
-            {
-                ProbabilityValidator.Validate(lowerBoundaryStandard);
-            }
-            catch (AssemblyToolKernelException e)
-            {
-                throw new AssemblyToolKernelException(ErrorCode.InvalidLowerBoundaryStandard, e);
-            }
-
-            if (signalingStandard > lowerBoundaryStandard)
-            {
-                throw new AssemblyToolKernelException(ErrorCode.SignallingStandardExceedsLowerBoundary);
             }
         }
     }

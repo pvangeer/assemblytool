@@ -20,36 +20,39 @@
 // All rights reserved.
 
 using AssemblyTool.Kernel.ErrorHandling;
+using AssemblyTool.Kernel.Services;
 
-namespace AssemblyTool.Kernel.Categories
+namespace AssemblyTool.Kernel.CategoriesOutput
 {
-    public class CalculationOutput<TResult>
+    public class CategoriesOutputBase<T>
     {
-        public CalculationOutput(AssemblyToolKernelException exception, WarningMessage[] warningMessages = null)
+        protected CategoriesOutputBase(T category, double lowerBoundary, double upperBoundary)
         {
-            WarningMessages = warningMessages ?? new WarningMessage[] { };
-            ErrorMessage = exception;
+            ProbabilityValidator.Validate(lowerBoundary);
+            ProbabilityValidator.Validate(upperBoundary);
+            if (lowerBoundary > upperBoundary)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);
+            }
+
+            Category = category;
+            LowerBoundary = lowerBoundary;
+            UpperBoundary = upperBoundary;
         }
 
-        public CalculationOutput(TResult result, WarningMessage[] warningMessages = null)
-        {
-            Result = result;
-            WarningMessages = warningMessages ?? new WarningMessage[]{};
-        }
+        /// <summary>
+        /// Assessment category for which this output is calculated.
+        /// </summary>
+        public T Category {get;}
 
         /// <summary>
-        /// Error message that occured during calculation.
+        /// Lower boundary (probability) of this category
         /// </summary>
-        public AssemblyToolKernelException ErrorMessage { get; }
+        public double LowerBoundary { get; }
 
         /// <summary>
-        /// Warning messages that occured during calculation.
+        /// Upper boundary (probability) of this category
         /// </summary>
-        public WarningMessage[] WarningMessages { get; }
-
-        /// <summary>
-        /// The resulting result of the calculation.
-        /// </summary>
-        public TResult Result { get; }
+        public double UpperBoundary { get; }
     }
 }
