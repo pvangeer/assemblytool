@@ -92,6 +92,7 @@ namespace AssemblyTool.Kernel.Categories
         /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
         /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
         /// <param name="probabilityDistributionFactor">The (combined) contribution of this/these failure mechanism(s) to the total probability of failure of the assessment section in the failure probability distribution table.</param>
+        /// <param name="nValue">The value of N to take into account the length effect.</param>
         /// <returns>A collection of <see cref="FailureMechanismCategoriesOutput"/> that contains all assembly categories with their boundaries.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> is no probability (not in the range [0-1]).</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundaryStandard"/> is no probability (not in the range [0-1]).</exception>
@@ -103,10 +104,52 @@ namespace AssemblyTool.Kernel.Categories
             ValidateStandards(signalingStandard, lowerBoundaryStandard);
             ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
             ValidateNValue(nValue);
-
+            
             var iToII = 1 / 30.0 * probabilityDistributionFactor * signalingStandard / nValue;
             var iItoIII = probabilityDistributionFactor * signalingStandard / nValue;
             var iIItoIV = probabilityDistributionFactor * lowerBoundaryStandard / nValue;
+
+            return new[]
+            {
+                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,0,iToII),
+                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
+                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
+                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, lowerBoundaryStandard),
+                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, lowerBoundaryStandard, 30 * lowerBoundaryStandard),
+                new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * lowerBoundaryStandard, 1),
+            };
+        }
+
+        /// <summary>
+        /// Calculates category boundaries (probabilities) for usages in assembly of WBI2017 assessment results on failure mechanism level. 
+        /// This method implements "WBI-1-1" from the Functional Design.
+        /// </summary>
+        /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
+        /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
+        /// <param name="probabilityDistributionFactor">The (combined) contribution of this/these failure mechanism(s) to the total probability of failure of the assessment section in the failure probability distribution table.</param>
+        /// <param name="nValue">The value of N to take into account the length effect.</param>
+        /// <returns>A collection of <see cref="FailureMechanismCategoriesOutput"/> that contains all assembly categories with their boundaries.</returns>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> is no probability (not in the range [0-1]).</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundaryStandard"/> is no probability (not in the range [0-1]).</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="probabilityDistributionFactor"/> is not in the range [0-1].</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="nValue"/> is smaller than 1 or NaN.<paramref name="lowerBoundaryStandard"/>.</exception>
+        public static FailureMechanismSectionCategoriesOutput[] CalculateGeotechnicFailureMechanismSectionCategories(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue)
+        {
+            ValidateStandards(signalingStandard, lowerBoundaryStandard);
+            ValidateProbabilityDistributionFactor(probabilityDistributionFactor);
+            ValidateNValue(nValue);
+
+            var factor = probabilityDistributionFactor * 10 / nValue;
+            if (factor > 1)
+            {
+                // TODO: Issue warning
+                factor = 1;
+            }
+
+            var iToII = 1 / 30.0 * factor * signalingStandard;
+            var iItoIII = factor * signalingStandard;
+            var iIItoIV = factor * lowerBoundaryStandard;
 
             return new[]
             {

@@ -131,5 +131,83 @@ namespace AssemblyTool.Kernel.Test
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
+
+        [Test]
+        public void CalculateGeotechnicFailureMechanismSectionCategoriesTest()
+        {
+            var signalingStandard = 1 / 3000.0;
+            var lowerBoundaryStandard = 1 / 1000.0;
+            var probabilityDistributionFactor = 0.04;
+            var nValue = 2.5;
+            var result = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+
+            var signalingStandardOnSection = signalingStandard * probabilityDistributionFactor *10 / nValue;
+            var lowerBoundaryOnSection = lowerBoundaryStandard * probabilityDistributionFactor *10 / nValue;
+
+            Assert.AreEqual(6, result.Length);
+            var firstCategory = result[0];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Iv, firstCategory.Category);
+            Assert.AreEqual(0, firstCategory.LowerBoundary, 1e-8);
+            Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, firstCategory.UpperBoundary, 1e-8);
+            var category2 = result[1];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIv, category2.Category);
+            Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, category2.LowerBoundary, 1e-8);
+            Assert.AreEqual(signalingStandardOnSection, category2.UpperBoundary, 1e-8);
+            var category3 = result[2];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIIv, category3.Category);
+            Assert.AreEqual(signalingStandardOnSection, category3.LowerBoundary, 1e-8);
+            Assert.AreEqual(lowerBoundaryOnSection, category3.UpperBoundary, 1e-8);
+            var category4 = result[3];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IVv, category4.Category);
+            Assert.AreEqual(lowerBoundaryOnSection, category4.LowerBoundary, 1e-8);
+            Assert.AreEqual(lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
+            var category5 = result[4];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Vv, category5.Category);
+            Assert.AreEqual(lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
+            Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.UpperBoundary, 1e-8);
+            var category6 = result[5];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.VIv, category6.Category);
+            Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
+            Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
+        }
+
+        [Test]
+        public void CalculateGeotechnicFailureMechanismSectionCategoriesWithHighNTest()
+        {
+            var signalingStandard = 1 / 3000.0;
+            var lowerBoundaryStandard = 1 / 1000.0;
+            var probabilityDistributionFactor = 0.5;
+            var nValue = 2.5;
+            var result = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+
+            var signalingStandardOnSection = signalingStandard;
+            var lowerBoundaryOnSection = lowerBoundaryStandard;
+
+            Assert.AreEqual(6, result.Length);
+            var firstCategory = result[0];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Iv, firstCategory.Category);
+            Assert.AreEqual(0, firstCategory.LowerBoundary, 1e-8);
+            Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, firstCategory.UpperBoundary, 1e-8);
+            var category2 = result[1];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIv, category2.Category);
+            Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, category2.LowerBoundary, 1e-8);
+            Assert.AreEqual(signalingStandardOnSection, category2.UpperBoundary, 1e-8);
+            var category3 = result[2];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIIv, category3.Category);
+            Assert.AreEqual(signalingStandardOnSection, category3.LowerBoundary, 1e-8);
+            Assert.AreEqual(lowerBoundaryOnSection, category3.UpperBoundary, 1e-8);
+            var category4 = result[3];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IVv, category4.Category);
+            Assert.AreEqual(lowerBoundaryOnSection, category4.LowerBoundary, 1e-8);
+            Assert.AreEqual(lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
+            var category5 = result[4];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Vv, category5.Category);
+            Assert.AreEqual(lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
+            Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.UpperBoundary, 1e-8);
+            var category6 = result[5];
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.VIv, category6.Category);
+            Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
+            Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
+        }
     }
 }
