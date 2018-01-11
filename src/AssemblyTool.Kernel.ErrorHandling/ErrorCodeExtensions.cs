@@ -19,10 +19,26 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using System.Collections.Generic;
+
 namespace AssemblyTool.Kernel.ErrorHandling
 {
     public static class ErrorCodeExtensions
     {
+        private static Dictionary<ErrorCode, string> CodeTranslations = new Dictionary<ErrorCode, string>
+        {
+            {ErrorCode.ValueBelowZero, "The value of this parameter is supposed not to be lower than 0, but it is."},
+            {ErrorCode.ValueAboveOne, "The value of this parameter is supposed not to exceed 1, but it does."},
+            {ErrorCode.SignallingStandardExceedsLowerBoundary,"The entered signaling standard exceeds the lower boundary. This should bot be the case."},
+            {ErrorCode.InvalidSignalingStandard,"The entered signaling standard is not valid. See the innerexception for more details."},
+            {ErrorCode.InvalidLowerBoundaryStandard,"The entered lower boundary standard is not valid. See the innerexception for more details."},
+            {ErrorCode.InvalidProbabilityDistributionFactor,"The entered probability distribution factor is not valid. See the inner exception for more details."},
+            {ErrorCode.ValueIsNaN, "The value of this double equals NaN."},
+            {ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary,"The lower boundary (probability) of a category should be lower than the upperboundary (probability), but it is not."},
+            {ErrorCode.ValueBelowOne, "Value should be above one (or equal to one), but it is not"},
+            {ErrorCode.InvalidNValue, "The specified N - value is invalid. See the inner exception for more details."}
+        };
+        
         /// <summary>
         /// Translates the error code to a readable string message that can be used in the exception that uses this code.
         /// </summary>
@@ -30,7 +46,7 @@ namespace AssemblyTool.Kernel.ErrorHandling
         /// <returns></returns>
         public static string GetMessage(this ErrorCode errorCode)
         {
-            return "";
+            return CodeTranslations.ContainsKey(errorCode) ? CodeTranslations[errorCode] : "Unspecified error occured.";
         }
     }
 }

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CE85AF9-05FE-4527-9355-FE4428D98E2E}</ProjectGuid>
+    <ProjectGuid>{73498D57-B613-4D80-8CB3-97321A0C433C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AssemblyTool.Kernel.Data.Test</RootNamespace>
-    <AssemblyName>AssemblyTool.Kernel.Data.Test</AssemblyName>
+    <RootNamespace>AssemblyTool.Kernel.Services.Test</RootNamespace>
+    <AssemblyName>AssemblyTool.Kernel.Services.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MathNet.Numerics.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.9.0\lib\net40\nunit.framework.dll</HintPath>
     </Reference>
@@ -47,10 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProbabilityValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AssemblyTool.Kernel.ErrorHandling\AssemblyTool.Kernel.ErrorHandling.csproj">
+      <Project>{B75E04B2-A702-46DF-A014-EA500F5FDA19}</Project>
+      <Name>AssemblyTool.Kernel.ErrorHandling</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\AssemblyTool.Kernel.Services\AssemblyTool.Kernel.Services.csproj">
+      <Project>{3FAB8403-2B52-4B6E-B115-BDFBA3736F87}</Project>
+      <Name>AssemblyTool.Kernel.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

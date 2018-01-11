@@ -1,36 +1,15 @@
-﻿// Copyright (C) Stichting Deltares 2018. All rights reserved.
-//
-// This file is part of AssemblyTool.
-//
-// AssemblyTool is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with this program. If not, see <http://www.gnu.org/licenses/>.
-//
-// All names, logos, and references to "Deltares" are registered trademarks of
-// Stichting Deltares and remain full property of Stichting Deltares at all times.
-// All rights reserved.
-
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AssemblyTool.Kernel.Data.Test")]
+[assembly: AssemblyTitle("AssemblyTool.Kernel.Services.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("AssemblyTool.Kernel.Data.Test")]
+[assembly: AssemblyProduct("AssemblyTool.Kernel.Services.Test")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -41,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4ce85af9-05fe-4527-9355-fe4428d98e2e")]
+[assembly: Guid("73498d57-b613-4d80-8cb3-97321a0c433c")]
 
 // Version information for an assembly consists of the following four values:
 //
