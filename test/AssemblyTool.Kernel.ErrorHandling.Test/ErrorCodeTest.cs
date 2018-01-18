@@ -20,21 +20,28 @@
 // All rights reserved.
 
 using System;
+using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.ErrorHandling
+namespace AssemblyTool.Kernel.ErrorHandling.Test
 {
-    public class AssemblyToolKernelException : Exception
+    [TestFixture]
+    public class ErrorCodeTest
     {
-        public AssemblyToolKernelException(ErrorCode errorCode, AssemblyToolKernelException innerexception) :  base(errorCode.GetMessage(),innerexception)
+        [Test]
+        public void Values_ExpectedValues()
         {
-            Code = errorCode;
+            // Assert
+            Assert.AreEqual(10, Enum.GetValues(typeof(ErrorCode)).Length);
+            Assert.AreEqual(0, (int)ErrorCode.ValueBelowZero);
+            Assert.AreEqual(1, (int)ErrorCode.ValueAboveOne);
+            Assert.AreEqual(2, (int)ErrorCode.SignallingStandardExceedsLowerBoundary);
+            Assert.AreEqual(3, (int)ErrorCode.InvalidSignalingStandard);
+            Assert.AreEqual(4, (int)ErrorCode.InvalidLowerBoundaryStandard);
+            Assert.AreEqual(5, (int)ErrorCode.InvalidProbabilityDistributionFactor);
+            Assert.AreEqual(6, (int)ErrorCode.ValueIsNaN);
+            Assert.AreEqual(7, (int)ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);
+            Assert.AreEqual(8, (int)ErrorCode.ValueBelowOne);
+            Assert.AreEqual(9, (int)ErrorCode.InvalidNValue);
         }
-
-        public AssemblyToolKernelException(ErrorCode errorCode) : base(errorCode.GetMessage())
-        {
-            Code = errorCode;
-        }
-
-        public ErrorCode Code { get; }
     }
 }

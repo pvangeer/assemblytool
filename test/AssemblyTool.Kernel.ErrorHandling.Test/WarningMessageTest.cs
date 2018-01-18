@@ -20,21 +20,22 @@
 // All rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.ErrorHandling
+namespace AssemblyTool.Kernel.ErrorHandling.Test
 {
-    public class AssemblyToolKernelException : Exception
+    [TestFixture]
+    public class WarningMessageTest
     {
-        public AssemblyToolKernelException(ErrorCode errorCode, AssemblyToolKernelException innerexception) :  base(errorCode.GetMessage(),innerexception)
+        [Test]
+        public void Values_ExpectedValues()
         {
-            Code = errorCode;
+            // Assert
+            Assert.AreEqual(1, Enum.GetValues(typeof(WarningMessage)).Length);
+            Assert.AreEqual(0, (int)WarningMessage.CorrectedSectionSpecificNValue);
         }
-
-        public AssemblyToolKernelException(ErrorCode errorCode) : base(errorCode.GetMessage())
-        {
-            Code = errorCode;
-        }
-
-        public ErrorCode Code { get; }
     }
 }
