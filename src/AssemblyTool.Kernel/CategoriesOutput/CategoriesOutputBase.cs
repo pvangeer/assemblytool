@@ -19,17 +19,15 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
-using AssemblyTool.Kernel.Services;
 
 namespace AssemblyTool.Kernel.CategoriesOutput
 {
     public class CategoriesOutputBase<T>
     {
-        protected CategoriesOutputBase(T category, double lowerBoundary, double upperBoundary)
+        protected CategoriesOutputBase(T category, Probability lowerBoundary, Probability upperBoundary)
         {
-            ProbabilityValidator.Validate(lowerBoundary);
-            ProbabilityValidator.Validate(upperBoundary);
             if (lowerBoundary > upperBoundary)
             {
                 throw new AssemblyToolKernelException(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);

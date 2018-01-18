@@ -35,7 +35,7 @@ namespace AssemblyTool.Kernel.Test
         [TestCase(1 / 1000.0, 1 / 3000.0)]
         public void CalculateAssessmentSectionCategoriesTest(double signalingStandard,double lowerBoundaryStandard)
         {
-            var calculationResult = CategoriesCalculator.CalculateAssessmentSectionCategories(signalingStandard, lowerBoundaryStandard);
+            var calculationResult = CategoriesCalculator.CalculateAssessmentSectionCategories(new Probability(signalingStandard), new Probability(lowerBoundaryStandard));
 
             if (lowerBoundaryStandard < signalingStandard)
             {
@@ -81,11 +81,11 @@ namespace AssemblyTool.Kernel.Test
 
         #region CalculateFailureMechanismCategories
 
-        [TestCase(2, 1 / 1000, 1 / 1000, ErrorCode.InvalidProbabilityDistributionFactor)]
-        [TestCase(0.04, 2, 1 / 1000, ErrorCode.InvalidSignalingStandard)]
+        [TestCase(2, 1 / 1000.0, 1 / 1000.0, ErrorCode.InvalidProbabilityDistributionFactor)]
+        [TestCase(0.04, 1 / 500.0, 1 / 1000.0, ErrorCode.SignallingStandardExceedsLowerBoundary)]
         public void CalculateFailureMechanismCategoriesCallsValidation(double factor, double signalingStandard,double lowerBoundary, ErrorCode expectedError)
         {
-            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(signalingStandard, lowerBoundary, factor);
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(new Probability(signalingStandard), new Probability(lowerBoundary), factor);
 
             Assert.IsNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.ErrorMessage);
@@ -99,7 +99,7 @@ namespace AssemblyTool.Kernel.Test
         public void CalculateFailureMechanismCategoriesTest(double signalingStandard, double lowerBoundaryStandard)
         {
             var probabilityDistributionFactor = 0.5;
-            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(signalingStandard, lowerBoundaryStandard,probabilityDistributionFactor);
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(new Probability(signalingStandard), new Probability(lowerBoundaryStandard),probabilityDistributionFactor);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNull(calculationResult.ErrorMessage);
@@ -145,7 +145,7 @@ namespace AssemblyTool.Kernel.Test
         {
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
-            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories((Probability)signalingStandard, (Probability)lowerBoundaryStandard, probabilityDistributionFactor, nValue);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNull(calculationResult.ErrorMessage);
@@ -184,12 +184,12 @@ namespace AssemblyTool.Kernel.Test
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
 
-        [TestCase(-1, 1 / 1000.0, 0.5, 2.5, ErrorCode.InvalidSignalingStandard)]
+        [TestCase(1 / 500.0, 1 / 1000.0, 0.5, 2.5, ErrorCode.SignallingStandardExceedsLowerBoundary)]
         [TestCase(1 / 3000.0, 1 / 1000.0, 2, 2.5, ErrorCode.InvalidProbabilityDistributionFactor)]
         [TestCase(1 / 3000.0, 1 / 1000.0, 0.5, -5, ErrorCode.InvalidNValue)]
         public void CalculateFailureMechanismSectionCategoriesCallsValidationTest(double signalingStandard, double lowerBoundaryStandard, double probabilityDistributionFactor, double nValue, ErrorCode expectedError)
         {
-            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories((Probability)signalingStandard,(Probability)lowerBoundaryStandard, probabilityDistributionFactor, nValue);
 
             Assert.IsNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.ErrorMessage);
@@ -205,8 +205,8 @@ namespace AssemblyTool.Kernel.Test
         [Test]
         public void CalculateGeotechnicFailureMechanismSectionCategoriesTest()
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
+            var signalingStandard = new Probability(1 / 3000.0);
+            var lowerBoundaryStandard = new Probability(1 / 1000.0);
             var probabilityDistributionFactor = 0.04;
             var nValue = 2.5;
             var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
@@ -251,8 +251,8 @@ namespace AssemblyTool.Kernel.Test
         [Test]
         public void CalculateGeotechnicFailureMechanismSectionCategoriesWithHighNTest()
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
+            var signalingStandard = new Probability(1 / 3000.0);
+            var lowerBoundaryStandard = new Probability(1 / 1000.0);
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
             var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
@@ -302,8 +302,8 @@ namespace AssemblyTool.Kernel.Test
         [TestCase(0, ErrorCode.ValueBelowOne)]
         public void CalculateGeotechnicFailureMechanismSectionCategoriesValidatesNValueNaNTest(double nValue, ErrorCode expectedSubError)
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
+            var signalingStandard = new Probability(1 / 3000.0);
+            var lowerBoundaryStandard = new Probability(1 / 1000.0);
             var probabilityDistributionFactor = 0.04;
             var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
 
@@ -326,8 +326,8 @@ namespace AssemblyTool.Kernel.Test
         [TestCase(double.NaN, ErrorCode.ValueIsNaN)]
         public void ValidateProbabilityDistributionFactorTest(double factor, ErrorCode expectedSubError)
         {
-            var signalingStandard = 1 / 3000.0;
-            var lowerBoundaryStandard = 1 / 1000.0;
+            var signalingStandard = new Probability(1 / 3000.0);
+            var lowerBoundaryStandard = new Probability(1 / 1000.0);
             var nValue = 10;
             var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(signalingStandard, lowerBoundaryStandard, factor, nValue);
 

@@ -38,7 +38,14 @@
     <Compile Include="AssessmentSectionAssemblyCategory.cs" />
     <Compile Include="FailureMechanismSectionAssemblyCategory.cs" />
     <Compile Include="FailureMechanismAssemblyCategory.cs" />
+    <Compile Include="Probability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssemblyTool.Kernel.ErrorHandling\AssemblyTool.Kernel.ErrorHandling.csproj">
+      <Project>{B75E04B2-A702-46DF-A014-EA500F5FDA19}</Project>
+      <Name>AssemblyTool.Kernel.ErrorHandling</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

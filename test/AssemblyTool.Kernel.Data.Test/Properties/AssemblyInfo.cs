@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AssemblyTool.Kernel.Services.Test")]
+[assembly: AssemblyTitle("AssemblyTool.Kernel.Data.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("AssemblyTool.Kernel.Services.Test")]
+[assembly: AssemblyProduct("AssemblyTool.Kernel.Data.Test")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("73498d57-b613-4d80-8cb3-97321a0c433c")]
+[assembly: Guid("0862b6c3-3d8b-4044-af55-28306e24a9c5")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -52,10 +52,6 @@
       <Project>{B75E04B2-A702-46DF-A014-EA500F5FDA19}</Project>
       <Name>AssemblyTool.Kernel.ErrorHandling</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AssemblyTool.Kernel.Services\AssemblyTool.Kernel.Services.csproj">
-      <Project>{3FAB8403-2B52-4B6E-B115-BDFBA3736F87}</Project>
-      <Name>AssemblyTool.Kernel.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

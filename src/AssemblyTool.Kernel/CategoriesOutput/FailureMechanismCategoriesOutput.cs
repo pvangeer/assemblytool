@@ -35,7 +35,7 @@ namespace AssemblyTool.Kernel.CategoriesOutput
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory category, double lowerBoundary,double upperBoundary) 
+        public FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory category, Probability lowerBoundary,Probability upperBoundary) 
             : base(category, lowerBoundary, upperBoundary)
         {
         }

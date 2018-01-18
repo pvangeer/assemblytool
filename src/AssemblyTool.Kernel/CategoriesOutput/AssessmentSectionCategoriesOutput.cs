@@ -35,7 +35,7 @@ namespace AssemblyTool.Kernel.CategoriesOutput
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory category, double lowerBoundary, double upperBoundary) 
+        public AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory category, Probability lowerBoundary, Probability upperBoundary) 
             : base(category,lowerBoundary,upperBoundary)
         {
         }
