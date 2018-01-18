@@ -39,6 +39,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoriesCalculatorTest.cs" />
+    <Compile Include="CategoriesOutputTest.cs" />
+    <Compile Include="CategoriesOutput\FailureMechanismSectionCategoriesOutputTest.cs" />
+    <Compile Include="CategoriesOutput\AssessmentSectionCategoriesOutputTest.cs" />
+    <Compile Include="CategoriesOutput\CategoriesOutputBaseTest.cs" />
+    <Compile Include="CategoriesOutput\FailureMechanismCategoriesOutputTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

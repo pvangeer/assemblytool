@@ -38,6 +38,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentSectionAssemblyCategoryTest.cs" />
+    <Compile Include="FailureMechanismAssemblyCategoryTest.cs" />
+    <Compile Include="FailureMechanismSectionAssemblyCategoryTest.cs" />
     <Compile Include="ProbabilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -19,38 +19,27 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using AssemblyTool.Kernel.CategoriesOutput;
 using AssemblyTool.Kernel.Data;
-using AssemblyTool.Kernel.ErrorHandling;
+using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.CategoriesOutput
+namespace AssemblyTool.Kernel.Test.CategoriesOutput
 {
-    public abstract class CategoriesOutputBase<T>
+    [TestFixture]
+    public class FailureMechanismCategoriesOutputTest
     {
-        protected CategoriesOutputBase(T category, Probability lowerBoundary, Probability upperBoundary)
+        [Test]
+        public void ConstructorCallsBaseCorrect()
         {
-            if (lowerBoundary > upperBoundary)
-            {
-                throw new AssemblyToolKernelException(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);
-            }
+            var upperBoundary = (Probability)(1 / 100.0);
+            var category = FailureMechanismAssemblyCategory.IIt;
+            var lowerBoundary = (Probability)(1 / 1000.0);
 
-            Category = category;
-            LowerBoundary = lowerBoundary;
-            UpperBoundary = upperBoundary;
+            var output = new FailureMechanismCategoriesOutput(category, lowerBoundary, upperBoundary);
+            Assert.IsNotNull(output);
+            Assert.AreEqual(category, output.Category);
+            Assert.AreEqual(lowerBoundary, output.LowerBoundary);
+            Assert.AreEqual(upperBoundary, output.UpperBoundary);
         }
-
-        /// <summary>
-        /// Assessment category for which this output is calculated.
-        /// </summary>
-        public T Category {get;}
-
-        /// <summary>
-        /// Lower boundary (probability) of this category
-        /// </summary>
-        public double LowerBoundary { get; }
-
-        /// <summary>
-        /// Upper boundary (probability) of this category
-        /// </summary>
-        public double UpperBoundary { get; }
     }
 }
