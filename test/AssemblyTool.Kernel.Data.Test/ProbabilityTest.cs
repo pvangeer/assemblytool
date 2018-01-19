@@ -19,14 +19,13 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-
 using System;
 using System.Globalization;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
-namespace Core.Common.Base.Test.Data
+namespace AssemblyTool.Kernel.Data.Test
 {
     [TestFixture]
     public class ProbabilityTest
@@ -590,7 +589,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.456, 0.123, 1)]
         [TestCase(0.123, 0.456, -1)]
         public void CompareTo_ProbabilityToProbability_ReturnsExpectedResult(double probabilityValue, double probabilityValue2,
-                                                                                 int expectedProbabilityIndex)
+            int expectedProbabilityIndex)
         {
             // Setup
             var probability1 = new Probability(probabilityValue);
@@ -610,7 +609,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.123, 0.123, 0.123, 0)]
         [TestCase(0.456, 0.234, 0.123, 1)]
         public void CompareTo_TransitiveProbability_ReturnsExpectedResult(double probabilityValue1, double probabilityValue2,
-                                                                            double probabilityValue3, int expectedValue)
+            double probabilityValue3, int expectedValue)
         {
             // Setup
             var probability1 = new Probability(probabilityValue1);
@@ -633,7 +632,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.123, 0.123, 0.123, 0)]
         [TestCase(0.456, 0.234, 0.123, 1)]
         public void CompareTo_TransitiveDouble_ReturnsExpectedResult(double probabilityValue, double value2,
-                                                                     double value3, int expectedValue)
+            double value3, int expectedValue)
         {
             // Setup
             var probability1 = new Probability(probabilityValue);
@@ -672,7 +671,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.456, 0.123, false)]
         [TestCase(0.123, 0.489, true)]
         public void OperatorLessOrEqual_VaryingDouble_ReturnsExpectedValues(double probabilityValue, double value,
-                                                                            bool isProbabilityLess)
+            bool isProbabilityLess)
         {
             // Setup
             var probability = new Probability(probabilityValue);
@@ -708,7 +707,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.489, 0.1237, false)]
         [TestCase(0.489, 0.891, true)]
         public void OperatorLessOrEqual_VaryingProbability_ReturnsExpectedValues(double probabilityValue1, double probabilityValue2,
-                                                                                   bool isProbabilityOneLess)
+            bool isProbabilityOneLess)
         {
             // Setup
             var probabilityOne = new Probability(probabilityValue1);
@@ -746,7 +745,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.456, 0.123, true)]
         [TestCase(0.123, 0.456, false)]
         public void OperatorGreater_VaryingDouble_ReturnsExpectedValues(double probabilityValue, double value,
-                                                                        bool isProbabilityGreater)
+            bool isProbabilityGreater)
         {
             // Setup
             var probability = new Probability(probabilityValue);
@@ -782,7 +781,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.4856, 0.126, true)]
         [TestCase(0.126, 0.786, false)]
         public void OperatorGreater_VaryingProbability_ReturnsExpectedValues(double probabilityValue1, double probabilityValue2,
-                                                                               bool isProbabilityOneGreater)
+            bool isProbabilityOneGreater)
         {
             // Setup
             var probabilityOne = new Probability(probabilityValue1);
@@ -820,7 +819,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.123, 0.456, false)]
         [TestCase(0.456, 0.123, true)]
         public void OperatorGreaterOrEqual_VaryingDouble_ReturnsExpectedValues(double probabilityValue, double value,
-                                                                               bool isProbabilityGreater)
+            bool isProbabilityGreater)
         {
             // Setup
             var probability = new Probability(probabilityValue);
@@ -856,7 +855,7 @@ namespace Core.Common.Base.Test.Data
         [TestCase(0.456, 0.123, true)]
         [TestCase(0.123, 0.456, false)]
         public void OperatorGreaterOrEqual_VaryingProbability_ReturnsExpectedValues(double probabilityValue1, double probabilityValue2,
-                                                                                      bool isProbabilityOneGreater)
+            bool isProbabilityOneGreater)
         {
             // Setup
             var probabilityOne = new Probability(probabilityValue1);
@@ -889,12 +888,5 @@ namespace Core.Common.Base.Test.Data
             Assert.IsTrue(probabilityOneIsGreater);
             Assert.IsTrue(probabilityTwoIsGreater);
         }
-    }
-}
-
-namespace AssemblyTool.Kernel.Data.Test
-{
-    class ProbabilityTest
-    {
     }
 }
