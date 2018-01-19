@@ -36,7 +36,10 @@ namespace AssemblyTool.Kernel.CalculatorInput
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> is no probability (not in the range [0-1]).</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundaryStandard"/> is no probability (not in the range [0-1]).</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="probabilityDistributionFactor"/> is not in the range [0-1].</exception>
-        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability than <paramref name="lowerBoundaryStandard"/>.</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probabilityDistributionFactor"/> is NaN</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probabilityDistributionFactor"/> is smaller than 0</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probabilityDistributionFactor"/> exceeds 1</exception>
         public CalculateFailureMechanismCategoriesInput(Probability signalingStandard, Probability lowerBoundaryStandard, double probabilityDistributionFactor) : base(signalingStandard, lowerBoundaryStandard)
         {
             ValidateProbabilityDistributionFactor(probabilityDistributionFactor);

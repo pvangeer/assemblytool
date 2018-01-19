@@ -1,4 +1,4 @@
-﻿// Copyright (C) Stichting Deltares 2018. All rights reserved.
+﻿    // Copyright (C) Stichting Deltares 2018. All rights reserved.
 //
 // This file is part of AssemblyTool.
 //
@@ -31,7 +31,7 @@ namespace AssemblyTool.Kernel.CalculatorInput
         /// </summary>
         /// <param name="signalingStandard">The signalling standard for this assessment section.</param>
         /// <param name="lowerBoundaryStandard">The lower boundary standard for this assessment section.</param>
-        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability that <paramref name="lowerBoundaryStandard"/>.</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="signalingStandard"/> has a higher probability than <paramref name="lowerBoundaryStandard"/>.</exception>
         public CalculateAssessmentSectionCategoriesInput(Probability signalingStandard, Probability lowerBoundaryStandard)
         {
             ValidateStandards(signalingStandard,lowerBoundaryStandard);

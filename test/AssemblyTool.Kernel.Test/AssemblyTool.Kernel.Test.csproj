@@ -38,6 +38,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculatorInput\CalculateAssessmentSectionCategoriesInputTest.cs" />
+    <Compile Include="CalculatorInput\CalculateFailureMechanismCategoriesInputTest.cs" />
+    <Compile Include="CalculatorInput\CalculateFailureMechanismSectionCategoriesInputTest.cs" />
     <Compile Include="CategoriesCalculatorTest.cs" />
     <Compile Include="CategoriesOutputTest.cs" />
     <Compile Include="CategoriesOutput\FailureMechanismSectionCategoriesOutputTest.cs" />
