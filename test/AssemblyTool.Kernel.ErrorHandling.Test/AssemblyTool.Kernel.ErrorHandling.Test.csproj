@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyToolKernelExceptionTest.cs" />
     <Compile Include="ErrorCodeExtensionsTest.cs" />
     <Compile Include="ErrorCodeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
