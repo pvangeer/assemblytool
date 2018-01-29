@@ -19,25 +19,25 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.CategoriesOutput;
+using AssemblyTool.Kernel.Categories.CategoriesOutput;
 using AssemblyTool.Kernel.Data;
 using NUnit.Framework;
 
 namespace AssemblyTool.Kernel.Test.CategoriesOutput
 {
     [TestFixture]
-    public class FailureMechanismSectionCategoriesOutputTest
+    public class FailureMechanismCategoriesOutputTest
     {
         [Test]
         public void ConstructorCallsBaseCorrect()
         {
             var upperBoundary = (Probability)(1 / 100.0);
-            var category = FailureMechanismSectionAssemblyCategory.IVv;
+            var category = FailureMechanismAssemblyCategory.IIt;
             var lowerBoundary = (Probability)(1 / 1000.0);
 
-            var output = new FailureMechanismSectionCategoriesOutput(category, lowerBoundary, upperBoundary);
+            var output = new FailureMechanismCategoriesOutput(category, lowerBoundary, upperBoundary);
             Assert.IsNotNull(output);
-            Assert.AreEqual(category,output.Category);
+            Assert.AreEqual(category, output.Category);
             Assert.AreEqual(lowerBoundary, output.LowerBoundary);
             Assert.AreEqual(upperBoundary, output.UpperBoundary);
         }

@@ -19,7 +19,8 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.CalculatorInput;
+using AssemblyTool.Kernel.Categories;
+using AssemblyTool.Kernel.Categories.CalculatorInput;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;

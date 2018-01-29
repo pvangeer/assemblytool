@@ -22,7 +22,7 @@
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel.CategoriesOutput
+namespace AssemblyTool.Kernel.Categories.CategoriesOutput
 {
     public abstract class CategoriesOutputBase<T>
     {

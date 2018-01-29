@@ -19,7 +19,8 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.CalculatorInput;
+using System;
+using AssemblyTool.Kernel.Categories.CalculatorInput;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
@@ -27,45 +28,42 @@ using NUnit.Framework;
 namespace AssemblyTool.Kernel.Test.CalculatorInput
 {
     [TestFixture]
-    public class CalculateFailureMechanismSectionCategoriesInputTest
+    public class CalculateFailureMechanismCategoriesInputTest
     {
         [Test]
-        [TestCase(-1.0, ErrorCode.ValueBelowOne)]
-        [TestCase(0.9999999999999999, ErrorCode.ValueBelowOne)]
+        [TestCase(-1.0, ErrorCode.ValueBelowZero)]
+        [TestCase(2.4, ErrorCode.ValueAboveOne)]
         [TestCase(double.NaN, ErrorCode.ValueIsNaN)]
-        public void ConstructrValidatesNValue(double nValue, ErrorCode expectedInnerExceptionCode)
+        public void ConstructrValidatesProbabilityDistributionFactor(double probabilityDistributionFactor,
+            ErrorCode expectedInnerExceptionCode)
         {
             try
             {
-                var input = new CalculateFailureMechanismSectionCategoriesInput((Probability)0.123, (Probability)0.456, 0.04, nValue);
+                var input = new CalculateFailureMechanismCategoriesInput((Probability) 0.123, (Probability) 0.456,probabilityDistributionFactor);
                 Assert.Fail("Expected exception");
             }
             catch (AssemblyToolKernelException e)
             {
-                Assert.AreEqual(ErrorCode.InvalidNValue, e.Code);
+                Assert.AreEqual(ErrorCode.InvalidProbabilityDistributionFactor, e.Code);
                 Assert.IsNotNull(e.InnerException);
                 Assert.IsInstanceOf<AssemblyToolKernelException>(e.InnerException);
-                var innerException = (AssemblyToolKernelException)e.InnerException;
+                var innerException = (AssemblyToolKernelException) e.InnerException;
                 Assert.AreEqual(expectedInnerExceptionCode, innerException.Code);
             }
         }
 
         [Test]
-        [TestCase(2.1634)]
-        [TestCase(1.000)]
-        [TestCase(1.0001)]
-        public void ConstructorPassesAllPropertiesCorrectly(double nValue)
+        public void ConstructorPassesAllPropertiesCorrectly()
         {
             var probabilityDistributionFactor = 0.4;
             var signalingStandard = (Probability)0.123;
             var lowerBoundaryStandard = (Probability)0.456;
 
-            var input = new CalculateFailureMechanismSectionCategoriesInput(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
+            var input = new CalculateFailureMechanismCategoriesInput(signalingStandard, lowerBoundaryStandard,probabilityDistributionFactor);
 
             Assert.AreEqual(signalingStandard, input.SignalingStandard);
             Assert.AreEqual(lowerBoundaryStandard, input.LowerBoundaryStandard);
             Assert.AreEqual(probabilityDistributionFactor, input.ProbabilityDistributionFactor);
-            Assert.AreEqual(nValue, input.NValue);
         }
     }
 }

@@ -19,7 +19,7 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.CategoriesOutput;
+using AssemblyTool.Kernel.Categories.CategoriesOutput;
 using AssemblyTool.Kernel.Data;
 using NUnit.Framework;
 

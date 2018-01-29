@@ -23,7 +23,7 @@ using System;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel.CalculatorInput
+namespace AssemblyTool.Kernel.Categories.CalculatorInput
 {
     public class CalculateFailureMechanismCategoriesInput : CalculateAssessmentSectionCategoriesInput
     {

@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AssemblyTool.Kernel.CategoriesOutput;
+using AssemblyTool.Kernel.Categories.CategoriesOutput;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;

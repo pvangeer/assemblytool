@@ -25,7 +25,7 @@ using NUnit.Framework;
 namespace AssemblyTool.Kernel.Test
 {
     [TestFixture]
-    public class CategoriesOutputTest
+    public class CalculationOutputTest
     {
         [Test]
         public void ConstructorPassesErrorCorrectlyWithoutWarnings()
