@@ -19,23 +19,22 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel.Categories.CategoriesOutput
+namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public class FailureMechanismSectionCategoriesOutput : CategoriesOutputBase<FailureMechanismSectionAssemblyCategory>
+    public class FailureMechanismSectionCategory : CategoryBase<FailureMechanismSectionAssemblyCategoryGroup>
     {
         /// <summary>
-        /// Creates a new instance of <see cref="FailureMechanismSectionCategoriesOutput"/>.
+        /// Creates a new instance of <see cref="FailureMechanismSectionCategory"/>.
         /// </summary>
-        /// <param name="category">The input to calculate the derived macro stability inwards input.</param>
+        /// <param name="categoryGroup">The input to calculate the derived macro stability inwards input.</param>
         /// <param name="lowerBoundary">The input to calculate the derived macro stability inwards input.</param>
         /// <param name="upperBoundary">The input to calculate the derived macro stability inwards input.</param>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory category, Probability lowerBoundary, Probability upperBoundary) : base(category, lowerBoundary, upperBoundary)
+        public FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup categoryGroup, Probability lowerBoundary, Probability upperBoundary) : base(categoryGroup, lowerBoundary, upperBoundary)
         {
         }
     }

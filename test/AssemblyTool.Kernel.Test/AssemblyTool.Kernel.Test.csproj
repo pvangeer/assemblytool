@@ -38,15 +38,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculatorInput\CalculateAssessmentSectionCategoriesInputTest.cs" />
-    <Compile Include="CalculatorInput\CalculateFailureMechanismCategoriesInputTest.cs" />
-    <Compile Include="CalculatorInput\CalculateFailureMechanismSectionCategoriesInputTest.cs" />
-    <Compile Include="CategoriesCalculatorTest.cs" />
-    <Compile Include="CategoriesOutputTest.cs" />
-    <Compile Include="CategoriesOutput\FailureMechanismSectionCategoriesOutputTest.cs" />
-    <Compile Include="CategoriesOutput\AssessmentSectionCategoriesOutputTest.cs" />
-    <Compile Include="CategoriesOutput\CategoriesOutputBaseTest.cs" />
-    <Compile Include="CategoriesOutput\FailureMechanismCategoriesOutputTest.cs" />
+    <Compile Include="Categories\CalculatorInput\CalculateAssessmentSectionCategoriesInputTest.cs" />
+    <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismCategoriesInputTest.cs" />
+    <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismSectionCategoriesInputTest.cs" />
+    <Compile Include="Categories\CategoriesCalculatorTest.cs" />
+    <Compile Include="CalculationOutputTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

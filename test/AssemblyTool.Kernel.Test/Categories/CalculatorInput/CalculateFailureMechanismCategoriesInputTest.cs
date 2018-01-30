@@ -19,13 +19,12 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System;
 using AssemblyTool.Kernel.Categories.CalculatorInput;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Test.CalculatorInput
+namespace AssemblyTool.Kernel.Test.Categories.CalculatorInput
 {
     [TestFixture]
     public class CalculateFailureMechanismCategoriesInputTest

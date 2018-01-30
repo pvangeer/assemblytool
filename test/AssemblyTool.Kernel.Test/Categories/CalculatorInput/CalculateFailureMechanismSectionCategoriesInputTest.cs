@@ -24,7 +24,7 @@ using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Test.CalculatorInput
+namespace AssemblyTool.Kernel.Test.Categories.CalculatorInput
 {
     [TestFixture]
     public class CalculateFailureMechanismSectionCategoriesInputTest

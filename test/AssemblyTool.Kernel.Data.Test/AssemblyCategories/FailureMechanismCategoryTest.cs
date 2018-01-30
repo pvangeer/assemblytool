@@ -19,26 +19,26 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System;
+using AssemblyTool.Kernel.Data.AssemblyCategories;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Data.Test
+namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
 {
     [TestFixture]
-    public class FailureMechanismAssemblyCategoryTest
+    public class FailureMechanismCategoryTest
     {
         [Test]
-        public void Values_ExpectedValues()
+        public void ConstructorCallsBaseCorrect()
         {
-            // Assert
-            Assert.AreEqual(7, Enum.GetValues(typeof(FailureMechanismAssemblyCategory)).Length);
-            Assert.AreEqual(0, (int)FailureMechanismAssemblyCategory.It);
-            Assert.AreEqual(1, (int)FailureMechanismAssemblyCategory.IIt);
-            Assert.AreEqual(2, (int)FailureMechanismAssemblyCategory.IIIt);
-            Assert.AreEqual(3, (int)FailureMechanismAssemblyCategory.IVt);
-            Assert.AreEqual(4, (int)FailureMechanismAssemblyCategory.Vt);
-            Assert.AreEqual(5, (int)FailureMechanismAssemblyCategory.VIt);
-            Assert.AreEqual(6, (int)FailureMechanismAssemblyCategory.VIIt);
+            var upperBoundary = (Probability)(1 / 100.0);
+            var category = FailureMechanismAssemblyCategoryGroup.IIt;
+            var lowerBoundary = (Probability)(1 / 1000.0);
+
+            var output = new FailureMechanismCategory(category, lowerBoundary, upperBoundary);
+            Assert.IsNotNull(output);
+            Assert.AreEqual(category, output.CategoryGroup);
+            Assert.AreEqual(lowerBoundary, output.LowerBoundary);
+            Assert.AreEqual(upperBoundary, output.UpperBoundary);
         }
     }
 }

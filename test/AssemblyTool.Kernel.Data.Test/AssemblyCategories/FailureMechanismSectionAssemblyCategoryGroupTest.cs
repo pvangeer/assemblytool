@@ -19,27 +19,27 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Categories.CategoriesOutput;
-using AssemblyTool.Kernel.Data;
+using System;
+using AssemblyTool.Kernel.Data.AssemblyCategories;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Test.CategoriesOutput
+namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
 {
     [TestFixture]
-    public class FailureMechanismCategoriesOutputTest
+    public class FailureMechanismSectionAssemblyCategoryGroupTest
     {
         [Test]
-        public void ConstructorCallsBaseCorrect()
+        public void Values_ExpectedValues()
         {
-            var upperBoundary = (Probability)(1 / 100.0);
-            var category = FailureMechanismAssemblyCategory.IIt;
-            var lowerBoundary = (Probability)(1 / 1000.0);
-
-            var output = new FailureMechanismCategoriesOutput(category, lowerBoundary, upperBoundary);
-            Assert.IsNotNull(output);
-            Assert.AreEqual(category, output.Category);
-            Assert.AreEqual(lowerBoundary, output.LowerBoundary);
-            Assert.AreEqual(upperBoundary, output.UpperBoundary);
+            // Assert
+            Assert.AreEqual(7, Enum.GetValues(typeof(FailureMechanismSectionAssemblyCategoryGroup)).Length);
+            Assert.AreEqual(0, (int)FailureMechanismSectionAssemblyCategoryGroup.Iv);
+            Assert.AreEqual(1, (int)FailureMechanismSectionAssemblyCategoryGroup.IIv);
+            Assert.AreEqual(2, (int)FailureMechanismSectionAssemblyCategoryGroup.IIIv);
+            Assert.AreEqual(3, (int)FailureMechanismSectionAssemblyCategoryGroup.IVv);
+            Assert.AreEqual(4, (int)FailureMechanismSectionAssemblyCategoryGroup.Vv);
+            Assert.AreEqual(5, (int)FailureMechanismSectionAssemblyCategoryGroup.VIv);
+            Assert.AreEqual(6, (int)FailureMechanismSectionAssemblyCategoryGroup.VIIv);
         }
     }
 }

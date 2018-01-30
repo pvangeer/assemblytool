@@ -71,6 +71,21 @@ namespace AssemblyTool.Kernel.ErrorHandling
         /// <summary>
         /// The specified N - value is invalid. See the inner exception for more details.
         /// </summary>
-        InvalidNValue
+        InvalidNValue,
+
+        /// <summary>
+        /// No category was found that included the specified probability. Possibly the category list is empty or not complete.
+        /// </summary>
+        NoMatchingCategory,
+
+        /// <summary>
+        /// It is not possible a low category fails at the same time a high category passes.
+        /// </summary>
+        ImpossibleResultCombination,
+
+        /// <summary>
+        /// The provided result specifies a probability without specifying a probability
+        /// </summary>
+        NoProbability
     }
 }

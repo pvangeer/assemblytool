@@ -19,18 +19,14 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using AssemblyTool.Kernel.Categories.CategoriesOutput;
-using AssemblyTool.Kernel.Data;
+using AssemblyTool.Kernel.Data.AssemblyCategories;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Test.CategoriesOutput
+namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
 {
     [TestFixture]
-    public class CategoriesOutputBaseTest
+    public class CategoryBaseTest
     {
         [Test]
         public void ConstructorValidatesBoundaries()
@@ -59,11 +55,11 @@ namespace AssemblyTool.Kernel.Test.CategoriesOutput
             var output = new TestOutput(category, lowerBoundary, upperBoundary);
             Assert.AreEqual(upperBoundary, output.UpperBoundary);
             Assert.AreEqual(lowerBoundary, output.LowerBoundary);
-            Assert.AreEqual(category, output.Category);
+            Assert.AreEqual(category, output.CategoryGroup);
         }
     }
 
-    public class TestOutput : CategoriesOutputBase<TestCategory>
+    public class TestOutput : CategoryBase<TestCategory>
     {
         public TestOutput(TestCategory category, Probability lowerBoundary, Probability upperBoundary) : base(category, lowerBoundary, upperBoundary)
         {

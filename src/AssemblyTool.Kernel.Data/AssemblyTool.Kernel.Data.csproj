@@ -35,9 +35,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssessmentSectionAssemblyCategory.cs" />
-    <Compile Include="FailureMechanismSectionAssemblyCategory.cs" />
-    <Compile Include="FailureMechanismAssemblyCategory.cs" />
+    <Compile Include="AssemblyCategories\AssessmentSectionAssemblyCategoryGroup.cs" />
+    <Compile Include="AssemblyCategories\AssessmentSectionCategory.cs" />
+    <Compile Include="AssemblyCategories\CategoryBase.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismCategory.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismSectionCategory.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismSectionAssemblyCategoryGroup.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismAssemblyCategoryGroup.cs" />
+    <Compile Include="AssessmentResults\DetailedAssesmentCategoryBoundariesResult.cs" />
+    <Compile Include="AssessmentResults\DetailedAssessmentResult.cs" />
+    <Compile Include="AssessmentResults\SimpleAssessmentResult.cs" />
     <Compile Include="Probability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

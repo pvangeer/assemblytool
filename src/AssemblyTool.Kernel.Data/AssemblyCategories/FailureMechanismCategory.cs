@@ -19,24 +19,23 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel.Categories.CategoriesOutput
+namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public class FailureMechanismCategoriesOutput : CategoriesOutputBase<FailureMechanismAssemblyCategory>
+    public class FailureMechanismCategory : CategoryBase<FailureMechanismAssemblyCategoryGroup>
     {
         /// <summary>
-        /// Creates a new instance of <see cref="FailureMechanismCategoriesOutput"/>.
+        /// Creates a new instance of <see cref="FailureMechanismCategory"/>.
         /// </summary>
-        /// <param name="category">The input to calculate the derived macro stability inwards input.</param>
+        /// <param name="categoryGroup">The input to calculate the derived macro stability inwards input.</param>
         /// <param name="lowerBoundary">The input to calculate the derived macro stability inwards input.</param>
         /// <param name="upperBoundary">The input to calculate the derived macro stability inwards input.</param>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory category, Probability lowerBoundary,Probability upperBoundary) 
-            : base(category, lowerBoundary, upperBoundary)
+        public FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup categoryGroup, Probability lowerBoundary,Probability upperBoundary) 
+            : base(categoryGroup, lowerBoundary, upperBoundary)
         {
         }
     }

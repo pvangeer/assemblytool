@@ -22,10 +22,11 @@
 using AssemblyTool.Kernel.Categories;
 using AssemblyTool.Kernel.Categories.CalculatorInput;
 using AssemblyTool.Kernel.Data;
+using AssemblyTool.Kernel.Data.AssemblyCategories;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Test
+namespace AssemblyTool.Kernel.Test.Categories
 {
     [TestFixture]
     public class CategoriesCalculatorTest
@@ -48,23 +49,23 @@ namespace AssemblyTool.Kernel.Test
 
             Assert.AreEqual(5,result.Length);
             var firstCategory = result[0];
-            Assert.AreEqual(AssessmentSectionAssemblyCategory.APlus,firstCategory.Category);
+            Assert.AreEqual(AssessmentSectionAssemblyCategoryGroup.APlus,firstCategory.CategoryGroup);
             Assert.AreEqual(0,firstCategory.LowerBoundary,1e-8);
             Assert.AreEqual(1/30.0*signalingStandard,firstCategory.UpperBoundary, 1e-8);
             var category2 = result[1];
-            Assert.AreEqual(AssessmentSectionAssemblyCategory.A, category2.Category);
+            Assert.AreEqual(AssessmentSectionAssemblyCategoryGroup.A, category2.CategoryGroup);
             Assert.AreEqual(1 / 30.0 * signalingStandard, category2.LowerBoundary, 1e-8);
             Assert.AreEqual(signalingStandard, category2.UpperBoundary, 1e-8);
             var category3 = result[2];
-            Assert.AreEqual(AssessmentSectionAssemblyCategory.B, category3.Category);
+            Assert.AreEqual(AssessmentSectionAssemblyCategoryGroup.B, category3.CategoryGroup);
             Assert.AreEqual(signalingStandard, category3.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryStandard, category3.UpperBoundary, 1e-8);
             var category4 = result[3];
-            Assert.AreEqual(AssessmentSectionAssemblyCategory.C, category4.Category);
+            Assert.AreEqual(AssessmentSectionAssemblyCategoryGroup.C, category4.CategoryGroup);
             Assert.AreEqual(lowerBoundaryStandard, category4.LowerBoundary, 1e-8);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
             var category5 = result[4];
-            Assert.AreEqual(AssessmentSectionAssemblyCategory.D, category5.Category);
+            Assert.AreEqual(AssessmentSectionAssemblyCategoryGroup.D, category5.CategoryGroup);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category5.UpperBoundary, 1e-8);
         }
@@ -90,27 +91,27 @@ namespace AssemblyTool.Kernel.Test
 
             Assert.AreEqual(6, result.Length);
             var firstCategory = result[0];
-            Assert.AreEqual(FailureMechanismAssemblyCategory.It, firstCategory.Category);
+            Assert.AreEqual(FailureMechanismAssemblyCategoryGroup.It, firstCategory.CategoryGroup);
             Assert.AreEqual(0, firstCategory.LowerBoundary, 1e-8);
             Assert.AreEqual(1 / 30.0 * probabilityDistributionFactor * signalingStandard, firstCategory.UpperBoundary, 1e-8);
             var category2 = result[1];
-            Assert.AreEqual(FailureMechanismAssemblyCategory.IIt, category2.Category);
+            Assert.AreEqual(FailureMechanismAssemblyCategoryGroup.IIt, category2.CategoryGroup);
             Assert.AreEqual(1 / 30.0 * probabilityDistributionFactor * signalingStandard, category2.LowerBoundary, 1e-8);
             Assert.AreEqual(probabilityDistributionFactor * signalingStandard, category2.UpperBoundary, 1e-8);
             var category3 = result[2];
-            Assert.AreEqual(FailureMechanismAssemblyCategory.IIIt, category3.Category);
+            Assert.AreEqual(FailureMechanismAssemblyCategoryGroup.IIIt, category3.CategoryGroup);
             Assert.AreEqual(probabilityDistributionFactor * signalingStandard, category3.LowerBoundary, 1e-8);
             Assert.AreEqual(probabilityDistributionFactor * lowerBoundaryStandard, category3.UpperBoundary, 1e-8);
             var category4 = result[3];
-            Assert.AreEqual(FailureMechanismAssemblyCategory.IVt, category4.Category);
+            Assert.AreEqual(FailureMechanismAssemblyCategoryGroup.IVt, category4.CategoryGroup);
             Assert.AreEqual(probabilityDistributionFactor * lowerBoundaryStandard, category4.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
             var category5 = result[4];
-            Assert.AreEqual(FailureMechanismAssemblyCategory.Vt, category5.Category);
+            Assert.AreEqual(FailureMechanismAssemblyCategoryGroup.Vt, category5.CategoryGroup);
             Assert.AreEqual(lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.UpperBoundary, 1e-8);
             var category6 = result[5];
-            Assert.AreEqual(FailureMechanismAssemblyCategory.VIt, category6.Category);
+            Assert.AreEqual(FailureMechanismAssemblyCategoryGroup.VIt, category6.CategoryGroup);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
@@ -140,27 +141,27 @@ namespace AssemblyTool.Kernel.Test
 
             Assert.AreEqual(6, result.Length);
             var firstCategory = result[0];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Iv, firstCategory.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.Iv, firstCategory.CategoryGroup);
             Assert.AreEqual(0, firstCategory.LowerBoundary, 1e-8);
             Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, firstCategory.UpperBoundary, 1e-8);
             var category2 = result[1];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIv, category2.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IIv, category2.CategoryGroup);
             Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, category2.LowerBoundary, 1e-8);
             Assert.AreEqual(signalingStandardOnSection, category2.UpperBoundary, 1e-8);
             var category3 = result[2];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIIv, category3.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IIIv, category3.CategoryGroup);
             Assert.AreEqual(signalingStandardOnSection, category3.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryOnSection, category3.UpperBoundary, 1e-8);
             var category4 = result[3];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IVv, category4.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IVv, category4.CategoryGroup);
             Assert.AreEqual(lowerBoundaryOnSection, category4.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
             var category5 = result[4];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Vv, category5.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.Vv, category5.CategoryGroup);
             Assert.AreEqual(lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.UpperBoundary, 1e-8);
             var category6 = result[5];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.VIv, category6.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.VIv, category6.CategoryGroup);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
@@ -190,27 +191,27 @@ namespace AssemblyTool.Kernel.Test
 
             Assert.AreEqual(6, result.Length);
             var firstCategory = result[0];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Iv, firstCategory.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.Iv, firstCategory.CategoryGroup);
             Assert.AreEqual(0, firstCategory.LowerBoundary, 1e-8);
             Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, firstCategory.UpperBoundary, 1e-8);
             var category2 = result[1];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIv, category2.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IIv, category2.CategoryGroup);
             Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, category2.LowerBoundary, 1e-8);
             Assert.AreEqual(signalingStandardOnSection, category2.UpperBoundary, 1e-8);
             var category3 = result[2];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIIv, category3.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IIIv, category3.CategoryGroup);
             Assert.AreEqual(signalingStandardOnSection, category3.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryOnSection, category3.UpperBoundary, 1e-8);
             var category4 = result[3];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IVv, category4.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IVv, category4.CategoryGroup);
             Assert.AreEqual(lowerBoundaryOnSection, category4.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
             var category5 = result[4];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Vv, category5.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.Vv, category5.CategoryGroup);
             Assert.AreEqual(lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.UpperBoundary, 1e-8);
             var category6 = result[5];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.VIv, category6.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.VIv, category6.CategoryGroup);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }
@@ -237,27 +238,27 @@ namespace AssemblyTool.Kernel.Test
             var lowerBoundaryOnSection = lowerBoundaryStandard;
             Assert.AreEqual(6, result.Length);
             var firstCategory = result[0];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Iv, firstCategory.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.Iv, firstCategory.CategoryGroup);
             Assert.AreEqual(0, firstCategory.LowerBoundary, 1e-8);
             Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, firstCategory.UpperBoundary, 1e-8);
             var category2 = result[1];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIv, category2.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IIv, category2.CategoryGroup);
             Assert.AreEqual(1 / 30.0 * signalingStandardOnSection, category2.LowerBoundary, 1e-8);
             Assert.AreEqual(signalingStandardOnSection, category2.UpperBoundary, 1e-8);
             var category3 = result[2];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IIIv, category3.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IIIv, category3.CategoryGroup);
             Assert.AreEqual(signalingStandardOnSection, category3.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryOnSection, category3.UpperBoundary, 1e-8);
             var category4 = result[3];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.IVv, category4.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.IVv, category4.CategoryGroup);
             Assert.AreEqual(lowerBoundaryOnSection, category4.LowerBoundary, 1e-8);
             Assert.AreEqual(lowerBoundaryStandard, category4.UpperBoundary, 1e-8);
             var category5 = result[4];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.Vv, category5.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.Vv, category5.CategoryGroup);
             Assert.AreEqual(lowerBoundaryStandard, category5.LowerBoundary, 1e-8);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category5.UpperBoundary, 1e-8);
             var category6 = result[5];
-            Assert.AreEqual(FailureMechanismSectionAssemblyCategory.VIv, category6.Category);
+            Assert.AreEqual(FailureMechanismSectionAssemblyCategoryGroup.VIv, category6.CategoryGroup);
             Assert.AreEqual(30.0 * lowerBoundaryStandard, category6.LowerBoundary, 1e-8);
             Assert.AreEqual(1, category6.UpperBoundary, 1e-8);
         }

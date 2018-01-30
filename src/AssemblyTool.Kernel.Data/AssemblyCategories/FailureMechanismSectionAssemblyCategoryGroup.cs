@@ -19,9 +19,9 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data
+namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public enum FailureMechanismSectionAssemblyCategory
+    public enum FailureMechanismSectionAssemblyCategoryGroup
     {
         /// <summary>
         /// Assembly category Iv. This category lies between a probability of 0 and 1/30 * f * signaling standard / N

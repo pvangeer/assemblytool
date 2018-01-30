@@ -35,18 +35,19 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CalculatorInput\CalculateAssessmentSectionCategoriesInput.cs" />
-    <Compile Include="CalculatorInput\CalculateFailureMechanismCategoriesInput.cs" />
-    <Compile Include="CalculatorInput\CalculateFailureMechanismSectionCategoriesInput.cs" />
-    <Compile Include="CategoriesOutput\AssessmentSectionCategoriesOutput.cs" />
-    <Compile Include="CategoriesCalculator.cs" />
-    <Compile Include="CategoriesOutput\CategoriesOutputBase.cs" />
+    <Compile Include="Categories\CalculatorInput\CalculateAssessmentSectionCategoriesInput.cs" />
+    <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismCategoriesInput.cs" />
+    <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismSectionCategoriesInput.cs" />
+    <Compile Include="Categories\CategoriesCalculator.cs" />
     <Compile Include="CalculationOutput.cs" />
-    <Compile Include="CategoriesOutput\FailureMechanismCategoriesOutput.cs" />
-    <Compile Include="CategoriesOutput\FailureMechanismSectionCategoriesOutput.cs" />
+    <Compile Include="Assembly\FailureMechanismSection\FailureMechanismSectionAssemblyCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\test\AssemblyTool.Kernel.Data.Test\AssemblyTool.Kernel.Data.Test.csproj">
+      <Project>{0862B6C3-3D8B-4044-AF55-28306E24A9C5}</Project>
+      <Name>AssemblyTool.Kernel.Data.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AssemblyTool.Kernel.Data\AssemblyTool.Kernel.Data.csproj">
       <Project>{0E03F9A8-7BA4-4F78-BF6D-EF2A9E600B79}</Project>
       <Name>AssemblyTool.Kernel.Data</Name>

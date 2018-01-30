@@ -20,12 +20,12 @@
 // All rights reserved.
 
 using System.Collections.Generic;
-using AssemblyTool.Kernel.CalculatorInput;
-using AssemblyTool.Kernel.CategoriesOutput;
+using AssemblyTool.Kernel.Categories.CalculatorInput;
 using AssemblyTool.Kernel.Data;
+using AssemblyTool.Kernel.Data.AssemblyCategories;
 using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel
+namespace AssemblyTool.Kernel.Categories
 {
     public static class CategoriesCalculator
     {
@@ -34,8 +34,8 @@ namespace AssemblyTool.Kernel
         /// This method implements "WBI-2-1" from the Functional Design.
         /// </summary>
         /// <param name="input">The input for this method, consisting of an signaling standard and a lower boundary standard.</param>
-        /// <returns>A collection of <see cref="AssessmentSectionCategoriesOutput"/> that contains all assembly categories with their boundaries.</returns>
-        public static CalculationOutput<AssessmentSectionCategoriesOutput[]> CalculateAssessmentSectionCategories(CalculateAssessmentSectionCategoriesInput input)
+        /// <returns>A collection of <see cref="AssessmentSectionCategory"/> that contains all assembly categories with their boundaries.</returns>
+        public static CalculationOutput<AssessmentSectionCategory[]> CalculateAssessmentSectionCategories(CalculateAssessmentSectionCategoriesInput input)
         {
             try
             {
@@ -44,18 +44,18 @@ namespace AssemblyTool.Kernel
 
                 var categories =  new[]
                 {
-                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.APlus,(Probability)0,aPlusToA),
-                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.A,aPlusToA, input.SignalingStandard),
-                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.B,input.SignalingStandard, input.LowerBoundaryStandard),
-                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.C,input.LowerBoundaryStandard, cToD),
-                    new AssessmentSectionCategoriesOutput(AssessmentSectionAssemblyCategory.D, cToD, (Probability)1),
+                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.APlus,(Probability)0,aPlusToA),
+                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.A,aPlusToA, input.SignalingStandard),
+                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.B,input.SignalingStandard, input.LowerBoundaryStandard),
+                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.C,input.LowerBoundaryStandard, cToD),
+                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.D, cToD, (Probability)1),
                 };
 
-                return new CalculationOutput<AssessmentSectionCategoriesOutput[]>(categories);
+                return new CalculationOutput<AssessmentSectionCategory[]>(categories);
             }
             catch (AssemblyToolKernelException e)
             {
-                return new CalculationOutput<AssessmentSectionCategoriesOutput[]>(e);
+                return new CalculationOutput<AssessmentSectionCategory[]>(e);
             }
         }
 
@@ -64,8 +64,8 @@ namespace AssemblyTool.Kernel
         /// This method implements "WBI-1-1" from the Functional Design.
         /// </summary>
         /// <param name="input">The input for this method, consisting of an signaling standard, a lower boundary standard and probability distribution factor.</param>
-        /// <returns>A collection of <see cref="FailureMechanismCategoriesOutput"/> that contains all assembly categories with their boundaries.</returns>
-        public static CalculationOutput<FailureMechanismCategoriesOutput[]> CalculateFailureMechanismCategories(CalculateFailureMechanismCategoriesInput input)
+        /// <returns>A collection of <see cref="FailureMechanismCategory"/> that contains all assembly categories with their boundaries.</returns>
+        public static CalculationOutput<FailureMechanismCategory[]> CalculateFailureMechanismCategories(CalculateFailureMechanismCategoriesInput input)
         {
             try
             {
@@ -75,19 +75,19 @@ namespace AssemblyTool.Kernel
 
                 var categories = new[]
                 {
-                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.It,(Probability)0,iToII),
-                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIt,iToII, iItoIII),
-                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IIIt,iItoIII, iIItoIV),
-                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.IVt,iIItoIV, input.LowerBoundaryStandard),
-                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.Vt, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
-                    new FailureMechanismCategoriesOutput(FailureMechanismAssemblyCategory.VIt, 30 * input.LowerBoundaryStandard, (Probability)1),
+                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.It,(Probability)0,iToII),
+                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.IIt,iToII, iItoIII),
+                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.IIIt,iItoIII, iIItoIV),
+                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.IVt,iIItoIV, input.LowerBoundaryStandard),
+                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.Vt, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
+                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.VIt, 30 * input.LowerBoundaryStandard, (Probability)1),
                 };
 
-                return new CalculationOutput<FailureMechanismCategoriesOutput[]>(categories);
+                return new CalculationOutput<FailureMechanismCategory[]>(categories);
             }
             catch (AssemblyToolKernelException e)
             {
-                return new CalculationOutput<FailureMechanismCategoriesOutput[]>(e);
+                return new CalculationOutput<FailureMechanismCategory[]>(e);
             }
         }
 
@@ -96,8 +96,8 @@ namespace AssemblyTool.Kernel
         /// This method implements "WBI-0-1" from the Functional Design.
         /// </summary>
         /// <param name="input">The input for this method, consisting of an signaling standard, a lower boundary standard and probability distribution factor and an N-value that takes the length-effect into account.</param>
-        /// <returns>A collection of <see cref="FailureMechanismCategoriesOutput"/> that contains all assembly categories with their boundaries.</returns>
-        public static CalculationOutput<FailureMechanismSectionCategoriesOutput[]> CalculateFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
+        /// <returns>A collection of <see cref="FailureMechanismCategory"/> that contains all assembly categories with their boundaries.</returns>
+        public static CalculationOutput<FailureMechanismSectionCategory[]> CalculateFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
         {
             try
             {
@@ -107,19 +107,19 @@ namespace AssemblyTool.Kernel
 
                 var categories = new[]
                 {
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,(Probability)0,iToII),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Iv,(Probability)0,iToII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIv,iToII, iItoIII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIIv,iItoIII, iIItoIV),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IVv,iIItoIV, input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
                 };
 
-                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(categories);
+                return new CalculationOutput<FailureMechanismSectionCategory[]>(categories);
             }
             catch (AssemblyToolKernelException e)
             {
-                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(e);
+                return new CalculationOutput<FailureMechanismSectionCategory[]>(e);
             }
         }
 
@@ -128,8 +128,8 @@ namespace AssemblyTool.Kernel
         /// This method implements "WBI-0-2" from the Functional Design.
         /// </summary>
         /// <param name="input">The input for this method, consisting of an signaling standard, a lower boundary standard and probability distribution factor and an N-value that takes the length-effect into account.</param>
-        /// <returns>A collection of <see cref="FailureMechanismCategoriesOutput"/> that contains all assembly categories with their boundaries.</returns>
-        public static CalculationOutput<FailureMechanismSectionCategoriesOutput[]> CalculateGeotechnicFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
+        /// <returns>A collection of <see cref="FailureMechanismCategory"/> that contains all assembly categories with their boundaries.</returns>
+        public static CalculationOutput<FailureMechanismSectionCategory[]> CalculateGeotechnicFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
         {
             try
             {
@@ -148,18 +148,18 @@ namespace AssemblyTool.Kernel
 
                 var categories = new[]
                 {
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Iv,(Probability)0,iToII),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIv,iToII, iItoIII),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IIIv,iItoIII, iIItoIV),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.IVv,iIItoIV, input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategoriesOutput(FailureMechanismSectionAssemblyCategory.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Iv,(Probability)0,iToII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIv,iToII, iItoIII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIIv,iItoIII, iIItoIV),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IVv,iIItoIV, input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
                 };
-                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(categories,warnings.ToArray());
+                return new CalculationOutput<FailureMechanismSectionCategory[]>(categories,warnings.ToArray());
             }
             catch (AssemblyToolKernelException e)
             {
-                return new CalculationOutput<FailureMechanismSectionCategoriesOutput[]>(e);
+                return new CalculationOutput<FailureMechanismSectionCategory[]>(e);
             }
         }
     }

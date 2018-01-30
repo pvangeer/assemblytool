@@ -38,9 +38,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssessmentSectionAssemblyCategoryTest.cs" />
-    <Compile Include="FailureMechanismAssemblyCategoryTest.cs" />
-    <Compile Include="FailureMechanismSectionAssemblyCategoryTest.cs" />
+    <Compile Include="AssemblyCategories\AssessmentSectionCategoryTest.cs" />
+    <Compile Include="AssemblyCategories\CategoryBaseTest.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismCategoryTest.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismSectionCategoryTest.cs" />
+    <Compile Include="AssemblyCategories\AssessmentSectionAssemblyCategoryGroupTest.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismAssemblyCategoryGroupTest.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismSectionAssemblyCategoryGroupTest.cs" />
     <Compile Include="ProbabilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,5 +61,6 @@
       <Name>AssemblyTool.Kernel.ErrorHandling</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,9 +19,9 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data
+namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public enum AssessmentSectionAssemblyCategory
+    public enum AssessmentSectionAssemblyCategoryGroup
     {
         /// <summary>
         /// A+ category, this categories is between a probability of 0 and 1/30 times the signaling standard

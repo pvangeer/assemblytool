@@ -19,24 +19,30 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System;
-using NUnit.Framework;
+using AssemblyTool.Kernel.ErrorHandling;
 
-namespace AssemblyTool.Kernel.Data.Test
+namespace AssemblyTool.Kernel.Data.AssessmentResults
 {
-    [TestFixture]
-    public class AssessmentSectionAssemblyCategoryTest
+    public class TailoreMadeProbabilityAssessmentResult
     {
-        [Test]
-        public void Values_ExpectedValues()
+        public TailoreMadeProbabilityAssessmentResult(TailorMadeProbabilisticAssessmentResult result)
         {
-            // Assert
-            Assert.AreEqual(5, Enum.GetValues(typeof(AssessmentSectionAssemblyCategory)).Length);
-            Assert.AreEqual(0, (int)AssessmentSectionAssemblyCategory.APlus);
-            Assert.AreEqual(1, (int)AssessmentSectionAssemblyCategory.A);
-            Assert.AreEqual(2, (int)AssessmentSectionAssemblyCategory.B);
-            Assert.AreEqual(3, (int)AssessmentSectionAssemblyCategory.C);
-            Assert.AreEqual(4, (int)AssessmentSectionAssemblyCategory.D);
+            if (result == TailorMadeProbabilisticAssessmentResult.Probability)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.NoProbability);
+            }
+
+            AssessmentResult = result;
         }
+
+        public TailoreMadeProbabilityAssessmentResult(Probability probability)
+        {
+            Probability = probability;
+            AssessmentResult = TailorMadeProbabilisticAssessmentResult.Probability;
+        }
+
+        public TailorMadeProbabilisticAssessmentResult AssessmentResult { get; }
+
+        public Probability Probability { get; }
     }
 }
