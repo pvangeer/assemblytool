@@ -218,7 +218,12 @@ namespace AssemblyTool.Kernel.Test.Assembly
             FailureMechanismSectionCategoryGroup tailorMadeAssessmentResult,
             FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
+            var calculationOutput = FailureMechanismSectionAssemblyCalculator.CombinedAssessmentFromFailureMechanismSectionResults(simpleAssessmentResult,detailedAssessmentResult,tailorMadeAssessmentResult);
 
+            Assert.IsNotNull(calculationOutput);
+            Assert.IsNull(calculationOutput.ErrorMessage);
+            Assert.IsEmpty(calculationOutput.WarningMessages);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
         }
     }
 }
