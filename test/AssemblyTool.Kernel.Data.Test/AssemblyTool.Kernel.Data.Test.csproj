@@ -45,6 +45,13 @@
     <Compile Include="AssemblyCategories\AssessmentSectionAssemblyCategoryGroupTest.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismAssemblyCategoryGroupTest.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismSectionAssemblyCategoryGroupTest.cs" />
+    <Compile Include="AssessmentResults\DetailedAssessmentCategoryBoundariesResultTest.cs" />
+    <Compile Include="AssessmentResults\DetailedAssessmentResultTest.cs" />
+    <Compile Include="AssessmentResults\SimpleAssessmentResultTest.cs" />
+    <Compile Include="AssessmentResults\TailorMadeAssessmentResultTest.cs" />
+    <Compile Include="AssessmentResults\TailorMadeCategoryAssessmentResultTest.cs" />
+    <Compile Include="AssessmentResults\TailorMadeProbabilityAssessmentResultGroupTest.cs" />
+    <Compile Include="AssessmentResults\TailorMadeProbabilityAssessmentResultTest.cs" />
     <Compile Include="ProbabilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

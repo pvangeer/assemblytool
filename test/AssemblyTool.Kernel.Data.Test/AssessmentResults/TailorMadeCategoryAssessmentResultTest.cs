@@ -19,26 +19,29 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Data.AssemblyCategories;
+using System;
+using AssemblyTool.Kernel.Data.AssessmentResults;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
+namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
 {
     [TestFixture]
-    public class FailureMechanismCategoryTest
+    public class TailorMadeCategoryAssessmentResultTest
     {
         [Test]
-        public void ConstructorCallsBaseCorrect()
+        public void Values_ExpectedValues()
         {
-            var upperBoundary = (Probability)(1 / 100.0);
-            var category = FailureMechanismCategoryGroup.IIt;
-            var lowerBoundary = (Probability)(1 / 1000.0);
-
-            var output = new FailureMechanismCategory(category, lowerBoundary, upperBoundary);
-            Assert.IsNotNull(output);
-            Assert.AreEqual(category, output.CategoryGroup);
-            Assert.AreEqual(lowerBoundary, output.LowerBoundary);
-            Assert.AreEqual(upperBoundary, output.UpperBoundary);
+            // Assert
+            Assert.AreEqual(9, Enum.GetValues(typeof(TailorMadeCategoryAssessmentResult)).Length);
+            Assert.AreEqual(1, (int)TailorMadeCategoryAssessmentResult.Iv);
+            Assert.AreEqual(2, (int)TailorMadeCategoryAssessmentResult.IIv);
+            Assert.AreEqual(3, (int)TailorMadeCategoryAssessmentResult.IIIv);
+            Assert.AreEqual(4, (int)TailorMadeCategoryAssessmentResult.IVv);
+            Assert.AreEqual(5, (int)TailorMadeCategoryAssessmentResult.Vv);
+            Assert.AreEqual(6, (int)TailorMadeCategoryAssessmentResult.VIv);
+            Assert.AreEqual(7, (int)TailorMadeCategoryAssessmentResult.VIIv);
+            Assert.AreEqual(8, (int)TailorMadeCategoryAssessmentResult.NGO);
+            Assert.AreEqual(9, (int)TailorMadeCategoryAssessmentResult.FV);
         }
     }
 }

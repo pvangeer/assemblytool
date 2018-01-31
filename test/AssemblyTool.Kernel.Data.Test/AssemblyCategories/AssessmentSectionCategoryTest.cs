@@ -31,7 +31,7 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
         public void ConstructorCallsBaseCorrect()
         {
             var upperBoundary = (Probability)(1 / 100.0);
-            var category = AssessmentSectionAssemblyCategoryGroup.B;
+            var category = AssessmentSectionCategoryGroup.B;
             var lowerBoundary = (Probability)(1 / 1000.0);
 
             var output = new AssessmentSectionCategory(category, lowerBoundary, upperBoundary);

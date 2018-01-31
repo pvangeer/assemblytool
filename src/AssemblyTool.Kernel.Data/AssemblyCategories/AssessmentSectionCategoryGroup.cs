@@ -21,41 +21,31 @@
 
 namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public enum FailureMechanismAssemblyCategoryGroup
+    public enum AssessmentSectionCategoryGroup
     {
         /// <summary>
-        /// Assembly category It. This category lies between a probability of 0 and 1/30 * f * signaling standard
+        /// A+ category, this categories is between a probability of 0 and 1/30 times the signaling standard
         /// </summary>
-        It,
+        APlus,
 
         /// <summary>
-        /// Assembly category IIt. This category lies between a probability of 1/30 * f * signaling standard and f * signaling standard
+        /// Assembly category A. This category lies between a probability of the 1/30 times the signaling standard and the signaling standard
         /// </summary>
-        IIt,
+        A,
 
         /// <summary>
-        /// Assembly category IIIt. This category lies between a probability of f * signaling standard and f * lower boundary standard
+        /// Assembly category B. This category lies between a probability of the signaling standard and the lower boundary standard
         /// </summary>
-        IIIt,
+        B,
 
         /// <summary>
-        /// Assembly category IVt. This category lies between a probability of f * lower boundary standard and lower boundary standard
+        /// Assembly category C. This category lies between a probability of the lower boundary standard and 30 times the lower boundary standard
         /// </summary>
-        IVt,
-
+        C,
+        
         /// <summary>
-        /// Assembly category Vt. This category lies between a probability of lower boundary standard and 30 * lower boundary standard
+        /// Assembly category D. This category lies is between a probability of 30 times the lower boundary standard and 1
         /// </summary>
-        Vt,
-
-        /// <summary>
-        /// Assembly category VIt. This category lies between a probability of 30 * lower boundary standard and 1
-        /// </summary>
-        VIt,
-
-        /// <summary>
-        /// Assembly category VIt. No result yet (NGO - Nog geen oordeel)
-        /// </summary>
-        VIIt
+        D
     }
 }

@@ -44,11 +44,11 @@ namespace AssemblyTool.Kernel.Categories
 
                 var categories =  new[]
                 {
-                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.APlus,(Probability)0,aPlusToA),
-                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.A,aPlusToA, input.SignalingStandard),
-                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.B,input.SignalingStandard, input.LowerBoundaryStandard),
-                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.C,input.LowerBoundaryStandard, cToD),
-                    new AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup.D, cToD, (Probability)1),
+                    new AssessmentSectionCategory(AssessmentSectionCategoryGroup.APlus,(Probability)0,aPlusToA),
+                    new AssessmentSectionCategory(AssessmentSectionCategoryGroup.A,aPlusToA, input.SignalingStandard),
+                    new AssessmentSectionCategory(AssessmentSectionCategoryGroup.B,input.SignalingStandard, input.LowerBoundaryStandard),
+                    new AssessmentSectionCategory(AssessmentSectionCategoryGroup.C,input.LowerBoundaryStandard, cToD),
+                    new AssessmentSectionCategory(AssessmentSectionCategoryGroup.D, cToD, (Probability)1),
                 };
 
                 return new CalculationOutput<AssessmentSectionCategory[]>(categories);
@@ -75,12 +75,12 @@ namespace AssemblyTool.Kernel.Categories
 
                 var categories = new[]
                 {
-                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.It,(Probability)0,iToII),
-                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.IIt,iToII, iItoIII),
-                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.IIIt,iItoIII, iIItoIV),
-                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.IVt,iIItoIV, input.LowerBoundaryStandard),
-                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.Vt, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
-                    new FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup.VIt, 30 * input.LowerBoundaryStandard, (Probability)1),
+                    new FailureMechanismCategory(FailureMechanismCategoryGroup.It,(Probability)0,iToII),
+                    new FailureMechanismCategory(FailureMechanismCategoryGroup.IIt,iToII, iItoIII),
+                    new FailureMechanismCategory(FailureMechanismCategoryGroup.IIIt,iItoIII, iIItoIV),
+                    new FailureMechanismCategory(FailureMechanismCategoryGroup.IVt,iIItoIV, input.LowerBoundaryStandard),
+                    new FailureMechanismCategory(FailureMechanismCategoryGroup.Vt, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
+                    new FailureMechanismCategory(FailureMechanismCategoryGroup.VIt, 30 * input.LowerBoundaryStandard, (Probability)1),
                 };
 
                 return new CalculationOutput<FailureMechanismCategory[]>(categories);
@@ -107,12 +107,12 @@ namespace AssemblyTool.Kernel.Categories
 
                 var categories = new[]
                 {
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Iv,(Probability)0,iToII),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIv,iToII, iItoIII),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIIv,iItoIII, iIItoIV),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IVv,iIItoIV, input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv,(Probability)0,iToII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIv,iToII, iItoIII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIIv,iItoIII, iIItoIV),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IVv,iIItoIV, input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
                 };
 
                 return new CalculationOutput<FailureMechanismSectionCategory[]>(categories);
@@ -148,12 +148,12 @@ namespace AssemblyTool.Kernel.Categories
 
                 var categories = new[]
                 {
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Iv,(Probability)0,iToII),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIv,iToII, iItoIII),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IIIv,iItoIII, iIItoIV),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.IVv,iIItoIV, input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
-                    new FailureMechanismSectionCategory(FailureMechanismSectionAssemblyCategoryGroup.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv,(Probability)0,iToII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIv,iToII, iItoIII),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIIv,iItoIII, iIItoIV),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IVv,iIItoIV, input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Vv, input.LowerBoundaryStandard, 30 * input.LowerBoundaryStandard),
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv, 30 * input.LowerBoundaryStandard, (Probability)1),
                 };
                 return new CalculationOutput<FailureMechanismSectionCategory[]>(categories,warnings.ToArray());
             }

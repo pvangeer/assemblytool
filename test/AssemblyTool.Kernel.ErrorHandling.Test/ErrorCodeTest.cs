@@ -31,7 +31,7 @@ namespace AssemblyTool.Kernel.ErrorHandling.Test
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(10, Enum.GetValues(typeof(ErrorCode)).Length);
+            Assert.AreEqual(13, Enum.GetValues(typeof(ErrorCode)).Length);
             Assert.AreEqual(0, (int)ErrorCode.ValueBelowZero);
             Assert.AreEqual(1, (int)ErrorCode.ValueAboveOne);
             Assert.AreEqual(2, (int)ErrorCode.SignallingStandardExceedsLowerBoundary);
@@ -42,6 +42,9 @@ namespace AssemblyTool.Kernel.ErrorHandling.Test
             Assert.AreEqual(7, (int)ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary);
             Assert.AreEqual(8, (int)ErrorCode.ValueBelowOne);
             Assert.AreEqual(9, (int)ErrorCode.InvalidNValue);
+            Assert.AreEqual(10, (int)ErrorCode.NoMatchingCategory);
+            Assert.AreEqual(11, (int)ErrorCode.ImpossibleResultCombination);
+            Assert.AreEqual(12, (int)ErrorCode.NoProbabilityAllowedInConstructor);
         }
     }
 }

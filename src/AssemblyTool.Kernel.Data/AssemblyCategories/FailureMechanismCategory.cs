@@ -23,7 +23,7 @@ using AssemblyTool.Kernel.ErrorHandling;
 
 namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public class FailureMechanismCategory : CategoryBase<FailureMechanismAssemblyCategoryGroup>
+    public class FailureMechanismCategory : CategoryBase<FailureMechanismCategoryGroup>
     {
         /// <summary>
         /// Creates a new instance of <see cref="FailureMechanismCategory"/>.
@@ -34,7 +34,7 @@ namespace AssemblyTool.Kernel.Data.AssemblyCategories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public FailureMechanismCategory(FailureMechanismAssemblyCategoryGroup categoryGroup, Probability lowerBoundary,Probability upperBoundary) 
+        public FailureMechanismCategory(FailureMechanismCategoryGroup categoryGroup, Probability lowerBoundary,Probability upperBoundary) 
             : base(categoryGroup, lowerBoundary, upperBoundary)
         {
         }

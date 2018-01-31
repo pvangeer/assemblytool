@@ -86,6 +86,6 @@ namespace AssemblyTool.Kernel.ErrorHandling
         /// <summary>
         /// The provided result specifies a probability without specifying a probability
         /// </summary>
-        NoProbability
+        NoProbabilityAllowedInConstructor
     }
 }

@@ -19,26 +19,23 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Data.AssemblyCategories;
+using System;
+using AssemblyTool.Kernel.Data.AssessmentResults;
 using NUnit.Framework;
 
-namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
+namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
 {
     [TestFixture]
-    public class FailureMechanismCategoryTest
+    public class DetailedAssessmentResultTest
     {
         [Test]
-        public void ConstructorCallsBaseCorrect()
+        public void Values_ExpectedValues()
         {
-            var upperBoundary = (Probability)(1 / 100.0);
-            var category = FailureMechanismCategoryGroup.IIt;
-            var lowerBoundary = (Probability)(1 / 1000.0);
-
-            var output = new FailureMechanismCategory(category, lowerBoundary, upperBoundary);
-            Assert.IsNotNull(output);
-            Assert.AreEqual(category, output.CategoryGroup);
-            Assert.AreEqual(lowerBoundary, output.LowerBoundary);
-            Assert.AreEqual(upperBoundary, output.UpperBoundary);
+            // Assert
+            Assert.AreEqual(3, Enum.GetValues(typeof(DetailedAssessmentResult)).Length);
+            Assert.AreEqual(1, (int)DetailedAssessmentResult.V);
+            Assert.AreEqual(2, (int)DetailedAssessmentResult.VN);
+            Assert.AreEqual(3, (int)DetailedAssessmentResult.NGO);
         }
     }
 }

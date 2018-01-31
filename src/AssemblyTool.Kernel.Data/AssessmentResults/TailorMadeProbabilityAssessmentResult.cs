@@ -19,23 +19,30 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using AssemblyTool.Kernel.ErrorHandling;
+
 namespace AssemblyTool.Kernel.Data.AssessmentResults
 {
-    public enum TailorMadeProbabilisticAssessmentResult
+    public class TailorMadeProbabilityAssessmentResult
     {
-        /// <summary>
-        /// NGO - Nog Geen Oordeel, No result yet
-        /// </summary>
-        NGO = 1,
+        public TailorMadeProbabilityAssessmentResult(TailorMadeProbabilityAssessmentResultGroup resultGroup)
+        {
+            if (resultGroup == TailorMadeProbabilityAssessmentResultGroup.Probability)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.NoProbabilityAllowedInConstructor);
+            }
 
-        /// <summary>
-        /// FV - Faalkans Verwaarloosbaar, probability neglectible
-        /// </summary>
-        FV = 2,
+            AssessmentResultGroup = resultGroup;
+        }
 
-        /// <summary>
-        /// Instead of a qualitative result, a quentitative result was provided 
-        /// </summary>
-        Probability = 3
+        public TailorMadeProbabilityAssessmentResult(Probability probability)
+        {
+            Probability = probability;
+            AssessmentResultGroup = TailorMadeProbabilityAssessmentResultGroup.Probability;
+        }
+
+        public TailorMadeProbabilityAssessmentResultGroup AssessmentResultGroup { get; }
+
+        public Probability Probability { get; }
     }
 }

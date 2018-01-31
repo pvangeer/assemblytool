@@ -21,41 +21,41 @@
 
 namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public enum FailureMechanismSectionAssemblyCategoryGroup
+    public enum FailureMechanismCategoryGroup
     {
         /// <summary>
-        /// Assembly category Iv. This category lies between a probability of 0 and 1/30 * f * signaling standard / N
+        /// Assembly category It. This category lies between a probability of 0 and 1/30 * f * signaling standard
         /// </summary>
-        Iv,
+        It,
 
         /// <summary>
-        /// Assembly category IIv. This category lies between a probability of 1/30 * f * signaling standard / N and f * signaling standard / N
+        /// Assembly category IIt. This category lies between a probability of 1/30 * f * signaling standard and f * signaling standard
         /// </summary>
-        IIv,
+        IIt,
 
         /// <summary>
-        /// Assembly category IIIv. This category lies between a probability of f * signaling standard / N and f * lower boundary standard / N
+        /// Assembly category IIIt. This category lies between a probability of f * signaling standard and f * lower boundary standard
         /// </summary>
-        IIIv,
+        IIIt,
 
         /// <summary>
-        /// Assembly category IVv. This category lies between a probability of f * lower boundary standard / N and lower boundary standard
+        /// Assembly category IVt. This category lies between a probability of f * lower boundary standard and lower boundary standard
         /// </summary>
-        IVv,
+        IVt,
 
         /// <summary>
-        /// Assembly category Vv. This category lies between a probability of lower boundary standard and 30 * lower boundary standard
+        /// Assembly category Vt. This category lies between a probability of lower boundary standard and 30 * lower boundary standard
         /// </summary>
-        Vv,
+        Vt,
 
         /// <summary>
-        /// Assembly category VIv. This category lies between a probability of 30 * lower boundary standard and 1
+        /// Assembly category VIt. This category lies between a probability of 30 * lower boundary standard and 1
         /// </summary>
-        VIv,
+        VIt,
 
         /// <summary>
-        /// Assembly category VIIv. No result yet (NGO - Nog geen oordeel)
+        /// Assembly category VIt. No result yet (NGO - Nog geen oordeel)
         /// </summary>
-        VIIv
+        VIIt
     }
 }

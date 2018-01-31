@@ -21,7 +21,7 @@
 
 namespace AssemblyTool.Kernel.Data.AssessmentResults
 {
-    public enum TailoreMadeAssessmentCategoryResult
+    public enum TailorMadeCategoryAssessmentResult
     {
         /// <summary>
         /// Assembly category Iv. This category lies between a probability of 0 and 1/30 * f * signaling standard / N

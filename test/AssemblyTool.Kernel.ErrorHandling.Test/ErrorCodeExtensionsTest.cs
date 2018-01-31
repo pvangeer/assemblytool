@@ -38,6 +38,9 @@ namespace AssemblyTool.Kernel.ErrorHandling.Test
         [TestCase(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary,"The lower boundary (probability) of a category should be lower than the upperboundary (probability), but it is not.")]
         [TestCase(ErrorCode.ValueBelowOne, "Value should be above one (or equal to one), but it is not")]
         [TestCase(ErrorCode.InvalidNValue, "The specified N - value is invalid. See the inner exception for more details.")]
+        [TestCase(ErrorCode.NoMatchingCategory,"No category was found that included the specified probability. Possibly the category list is empty or not complete.")]
+        [TestCase(ErrorCode.ImpossibleResultCombination,"It is not possible a low category fails at the same time a high category passes.")]
+        [TestCase(ErrorCode.NoProbabilityAllowedInConstructor,"The provided result specifies a probability without specifying a probability")]
         public void GetMessageReturnsCorrectMessage(ErrorCode code, string expectedMessage)
         {
             Assert.AreEqual(expectedMessage,code.GetMessage());

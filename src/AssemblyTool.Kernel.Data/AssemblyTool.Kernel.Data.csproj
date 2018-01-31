@@ -35,16 +35,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyCategories\AssessmentSectionAssemblyCategoryGroup.cs" />
+    <Compile Include="AssemblyCategories\AssessmentSectionCategoryGroup.cs" />
     <Compile Include="AssemblyCategories\AssessmentSectionCategory.cs" />
     <Compile Include="AssemblyCategories\CategoryBase.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismCategory.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismSectionCategory.cs" />
-    <Compile Include="AssemblyCategories\FailureMechanismSectionAssemblyCategoryGroup.cs" />
-    <Compile Include="AssemblyCategories\FailureMechanismAssemblyCategoryGroup.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismSectionCategoryGroup.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismCategoryGroup.cs" />
     <Compile Include="AssessmentResults\DetailedAssesmentCategoryBoundariesResult.cs" />
     <Compile Include="AssessmentResults\DetailedAssessmentResult.cs" />
     <Compile Include="AssessmentResults\SimpleAssessmentResult.cs" />
+    <Compile Include="AssessmentResults\TailorMadeCategoryAssessmentResult.cs" />
+    <Compile Include="AssessmentResults\TailorMadeProbabilityAssessmentResult.cs" />
+    <Compile Include="AssessmentResults\TailorMadeAssessmentResult.cs" />
+    <Compile Include="AssessmentResults\TailorMadeProbabilityAssessmentResultGroup.cs" />
     <Compile Include="Probability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

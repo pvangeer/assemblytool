@@ -32,14 +32,14 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(7, Enum.GetValues(typeof(FailureMechanismAssemblyCategoryGroup)).Length);
-            Assert.AreEqual(0, (int)FailureMechanismAssemblyCategoryGroup.It);
-            Assert.AreEqual(1, (int)FailureMechanismAssemblyCategoryGroup.IIt);
-            Assert.AreEqual(2, (int)FailureMechanismAssemblyCategoryGroup.IIIt);
-            Assert.AreEqual(3, (int)FailureMechanismAssemblyCategoryGroup.IVt);
-            Assert.AreEqual(4, (int)FailureMechanismAssemblyCategoryGroup.Vt);
-            Assert.AreEqual(5, (int)FailureMechanismAssemblyCategoryGroup.VIt);
-            Assert.AreEqual(6, (int)FailureMechanismAssemblyCategoryGroup.VIIt);
+            Assert.AreEqual(7, Enum.GetValues(typeof(FailureMechanismCategoryGroup)).Length);
+            Assert.AreEqual(0, (int)FailureMechanismCategoryGroup.It);
+            Assert.AreEqual(1, (int)FailureMechanismCategoryGroup.IIt);
+            Assert.AreEqual(2, (int)FailureMechanismCategoryGroup.IIIt);
+            Assert.AreEqual(3, (int)FailureMechanismCategoryGroup.IVt);
+            Assert.AreEqual(4, (int)FailureMechanismCategoryGroup.Vt);
+            Assert.AreEqual(5, (int)FailureMechanismCategoryGroup.VIt);
+            Assert.AreEqual(6, (int)FailureMechanismCategoryGroup.VIIt);
         }
     }
 }

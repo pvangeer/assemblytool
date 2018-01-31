@@ -40,7 +40,7 @@
     <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismSectionCategoriesInput.cs" />
     <Compile Include="Categories\CategoriesCalculator.cs" />
     <Compile Include="CalculationOutput.cs" />
-    <Compile Include="Assembly\FailureMechanismSection\FailureMechanismSectionAssemblyCalculator.cs" />
+    <Compile Include="Assembly\FailureMechanismSectionAssemblyCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

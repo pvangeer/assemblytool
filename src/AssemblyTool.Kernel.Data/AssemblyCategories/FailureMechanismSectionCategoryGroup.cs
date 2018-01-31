@@ -21,31 +21,41 @@
 
 namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public enum AssessmentSectionAssemblyCategoryGroup
+    public enum FailureMechanismSectionCategoryGroup
     {
         /// <summary>
-        /// A+ category, this categories is between a probability of 0 and 1/30 times the signaling standard
+        /// Assembly category Iv. This category lies between a probability of 0 and 1/30 * f * signaling standard / N
         /// </summary>
-        APlus,
+        Iv,
 
         /// <summary>
-        /// Assembly category A. This category lies between a probability of the 1/30 times the signaling standard and the signaling standard
+        /// Assembly category IIv. This category lies between a probability of 1/30 * f * signaling standard / N and f * signaling standard / N
         /// </summary>
-        A,
+        IIv,
 
         /// <summary>
-        /// Assembly category B. This category lies between a probability of the signaling standard and the lower boundary standard
+        /// Assembly category IIIv. This category lies between a probability of f * signaling standard / N and f * lower boundary standard / N
         /// </summary>
-        B,
+        IIIv,
 
         /// <summary>
-        /// Assembly category C. This category lies between a probability of the lower boundary standard and 30 times the lower boundary standard
+        /// Assembly category IVv. This category lies between a probability of f * lower boundary standard / N and lower boundary standard
         /// </summary>
-        C,
-        
+        IVv,
+
         /// <summary>
-        /// Assembly category D. This category lies is between a probability of 30 times the lower boundary standard and 1
+        /// Assembly category Vv. This category lies between a probability of lower boundary standard and 30 * lower boundary standard
         /// </summary>
-        D
+        Vv,
+
+        /// <summary>
+        /// Assembly category VIv. This category lies between a probability of 30 * lower boundary standard and 1
+        /// </summary>
+        VIv,
+
+        /// <summary>
+        /// Assembly category VIIv. No result yet (NGO - Nog geen oordeel)
+        /// </summary>
+        VIIv
     }
 }

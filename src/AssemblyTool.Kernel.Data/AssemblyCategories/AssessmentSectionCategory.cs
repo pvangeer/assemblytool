@@ -23,7 +23,7 @@ using AssemblyTool.Kernel.ErrorHandling;
 
 namespace AssemblyTool.Kernel.Data.AssemblyCategories
 {
-    public class AssessmentSectionCategory : CategoryBase<AssessmentSectionAssemblyCategoryGroup>
+    public class AssessmentSectionCategory : CategoryBase<AssessmentSectionCategoryGroup>
     {
         /// <summary>
         /// Creates a new instance of <see cref="AssessmentSectionCategory"/>.
@@ -34,7 +34,7 @@ namespace AssemblyTool.Kernel.Data.AssemblyCategories
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="upperBoundary"/> is not a valid probability.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when <paramref name="lowerBoundary"/> exceeds <paramref name="upperBoundary"/>.</exception>
-        public AssessmentSectionCategory(AssessmentSectionAssemblyCategoryGroup categoryGroup, Probability lowerBoundary, Probability upperBoundary) 
+        public AssessmentSectionCategory(AssessmentSectionCategoryGroup categoryGroup, Probability lowerBoundary, Probability upperBoundary) 
             : base(categoryGroup,lowerBoundary,upperBoundary)
         {
         }

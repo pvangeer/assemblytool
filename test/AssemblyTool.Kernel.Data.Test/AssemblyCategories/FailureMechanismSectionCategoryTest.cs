@@ -31,7 +31,7 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
         public void ConstructorCallsBaseCorrect()
         {
             var upperBoundary = (Probability)(1 / 100.0);
-            var category = FailureMechanismSectionAssemblyCategoryGroup.IVv;
+            var category = FailureMechanismSectionCategoryGroup.IVv;
             var lowerBoundary = (Probability)(1 / 1000.0);
 
             var output = new FailureMechanismSectionCategory(category, lowerBoundary, upperBoundary);

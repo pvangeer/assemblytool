@@ -25,7 +25,7 @@ namespace AssemblyTool.Kernel.ErrorHandling
 {
     public static class ErrorCodeExtensions
     {
-        private static Dictionary<ErrorCode, string> CodeTranslations = new Dictionary<ErrorCode, string>
+        private static readonly Dictionary<ErrorCode, string> CodeTranslations = new Dictionary<ErrorCode, string>
         {
             {ErrorCode.ValueBelowZero, "The value of this parameter is supposed not to be lower than 0, but it is."},
             {ErrorCode.ValueAboveOne, "The value of this parameter is supposed not to exceed 1, but it does."},
@@ -36,7 +36,10 @@ namespace AssemblyTool.Kernel.ErrorHandling
             {ErrorCode.ValueIsNaN, "The value of this double equals NaN."},
             {ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary,"The lower boundary (probability) of a category should be lower than the upperboundary (probability), but it is not."},
             {ErrorCode.ValueBelowOne, "Value should be above one (or equal to one), but it is not"},
-            {ErrorCode.InvalidNValue, "The specified N - value is invalid. See the inner exception for more details."}
+            {ErrorCode.InvalidNValue, "The specified N - value is invalid. See the inner exception for more details."},
+            {ErrorCode.NoMatchingCategory,"No category was found that included the specified probability. Possibly the category list is empty or not complete."},
+            {ErrorCode.ImpossibleResultCombination,"It is not possible a low category fails at the same time a high category passes."},
+            {ErrorCode.NoProbabilityAllowedInConstructor,"The provided result specifies a probability without specifying a probability" }
         };
         
         /// <summary>

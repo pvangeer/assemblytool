@@ -32,12 +32,12 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(5, Enum.GetValues(typeof(AssessmentSectionAssemblyCategoryGroup)).Length);
-            Assert.AreEqual(0, (int)AssessmentSectionAssemblyCategoryGroup.APlus);
-            Assert.AreEqual(1, (int)AssessmentSectionAssemblyCategoryGroup.A);
-            Assert.AreEqual(2, (int)AssessmentSectionAssemblyCategoryGroup.B);
-            Assert.AreEqual(3, (int)AssessmentSectionAssemblyCategoryGroup.C);
-            Assert.AreEqual(4, (int)AssessmentSectionAssemblyCategoryGroup.D);
+            Assert.AreEqual(5, Enum.GetValues(typeof(AssessmentSectionCategoryGroup)).Length);
+            Assert.AreEqual(0, (int)AssessmentSectionCategoryGroup.APlus);
+            Assert.AreEqual(1, (int)AssessmentSectionCategoryGroup.A);
+            Assert.AreEqual(2, (int)AssessmentSectionCategoryGroup.B);
+            Assert.AreEqual(3, (int)AssessmentSectionCategoryGroup.C);
+            Assert.AreEqual(4, (int)AssessmentSectionCategoryGroup.D);
         }
     }
 }

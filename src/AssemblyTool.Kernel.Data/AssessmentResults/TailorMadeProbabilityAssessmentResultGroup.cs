@@ -19,26 +19,23 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Data.AssemblyCategories;
-using NUnit.Framework;
-
-namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
+namespace AssemblyTool.Kernel.Data.AssessmentResults
 {
-    [TestFixture]
-    public class FailureMechanismCategoryTest
+    public enum TailorMadeProbabilityAssessmentResultGroup
     {
-        [Test]
-        public void ConstructorCallsBaseCorrect()
-        {
-            var upperBoundary = (Probability)(1 / 100.0);
-            var category = FailureMechanismCategoryGroup.IIt;
-            var lowerBoundary = (Probability)(1 / 1000.0);
+        /// <summary>
+        /// NGO - Nog Geen Oordeel, No result yet
+        /// </summary>
+        NGO = 1,
 
-            var output = new FailureMechanismCategory(category, lowerBoundary, upperBoundary);
-            Assert.IsNotNull(output);
-            Assert.AreEqual(category, output.CategoryGroup);
-            Assert.AreEqual(lowerBoundary, output.LowerBoundary);
-            Assert.AreEqual(upperBoundary, output.UpperBoundary);
-        }
+        /// <summary>
+        /// FV - Faalkans Verwaarloosbaar, probability neglectible
+        /// </summary>
+        FV = 2,
+
+        /// <summary>
+        /// Instead of a qualitative result, a quentitative result was provided 
+        /// </summary>
+        Probability = 3
     }
 }
