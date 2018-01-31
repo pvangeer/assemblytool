@@ -34,10 +34,10 @@ namespace AssemblyTool.Kernel.Assembly
         #region Simple assessment
 
         /// <summary>
-        /// WBI-0E-1 / WBI-0E-3
+        /// This method implements WBI-0E-1 and WBI-0E-3 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/>.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanisms(SimpleAssessmentResult result)
         {
             switch (result)
@@ -54,10 +54,10 @@ namespace AssemblyTool.Kernel.Assembly
         }
 
         /// <summary>
-        /// WBI-0E-2
+        /// This method implements WBI-0E-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/> for indirect failure mechanisms.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <exception cref="NotImplementedException">Thrown always</exception>
         public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentIndirectFailureMechanisms(SimpleAssessmentResult result)
         {
             throw new NotImplementedException();
@@ -68,10 +68,10 @@ namespace AssemblyTool.Kernel.Assembly
         #region DetailedAssessment
 
         /// <summary>
-        /// WBI-0G-1
+        /// This method implements WBI-0G-1 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="DetailedAssessmentResult"/>.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromResult(DetailedAssessmentResult result)
         {
             switch (result)
@@ -88,10 +88,10 @@ namespace AssemblyTool.Kernel.Assembly
         }
 
         /// <summary>
-        /// WBI-0G-2
+        /// This method implements WBI-0G-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/> for indirect failure mechanisms.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <exception cref="NotImplementedException">Thrown always</exception>
         public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedAssessmentResult result)
         {
             throw new NotImplementedException();
@@ -198,10 +198,10 @@ namespace AssemblyTool.Kernel.Assembly
         }
 
         /// <summary>
-        /// WBI-0T-2
+        /// This method implements WBI-0T-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/> for indirect failure mechanisms.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <exception cref="NotImplementedException">Thrown always</exception>
         public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeAssessmentResult result)
         {
             throw new NotImplementedException();
