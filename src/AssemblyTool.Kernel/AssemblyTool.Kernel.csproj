@@ -35,12 +35,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly\IFailureMechanismSectionAssemblyCalculator.cs" />
     <Compile Include="Categories\CalculatorInput\CalculateAssessmentSectionCategoriesInput.cs" />
     <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismCategoriesInput.cs" />
     <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismSectionCategoriesInput.cs" />
     <Compile Include="Categories\CategoriesCalculator.cs" />
     <Compile Include="CalculationOutput.cs" />
     <Compile Include="Assembly\FailureMechanismSectionAssemblyCalculator.cs" />
+    <Compile Include="Categories\ICategoriesCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

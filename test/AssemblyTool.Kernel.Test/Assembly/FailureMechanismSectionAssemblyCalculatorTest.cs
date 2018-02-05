@@ -38,7 +38,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         public void SimpleAssessmentDirectFailureMechanismsReturnsCorrectCategory(
             SimpleCalculationResult calculationResult, object expectedResult)
         {
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.SimpleAssessmentDirectFailureMechanisms(calculationResult);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentDirectFailureMechanisms(calculationResult);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -50,7 +50,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         {
             try
             {
-                FailureMechanismSectionAssemblyCalculator.SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult.FV);
+                new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult.FV);
                 Assert.Fail("Not implemented exception expected.");
             }
             catch (NotImplementedException e)
@@ -65,7 +65,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.VIIv)]
         public void DetailedAssessmentDirectFailureMechanismsFromResultTranslatesResultCorrectly(DetailedCalculationResult result, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.DetailedAssessmentDirectFailureMechanismsFromResult(result);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanismsFromResult(result);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -77,7 +77,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         {
             try
             {
-                FailureMechanismSectionAssemblyCalculator.DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedCalculationResult.V);
+                new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedCalculationResult.V);
                 Assert.Fail("Not implemented exception expected.");
             }
             catch (NotImplementedException e)
@@ -104,7 +104,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
                 new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv,(Probability)0.5,(Probability)1),
             };
 
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.DetailedAssessmentDirectFailureMechanismsFromProbability((Probability) probability, categories);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanismsFromProbability((Probability) probability, categories);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -120,7 +120,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(TailorMadeCalculationResult.NGO, FailureMechanismSectionCategoryGroup.VIIv)]
         public void TailorMadeAssessmentDirectFailureMechanismsFromResultTranslatesResultCorrectly(TailorMadeCalculationResult result, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentDirectFailureMechanismsFromResult(result);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanismsFromResult(result);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -132,7 +132,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         {
             try
             {
-                FailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeCalculationResult.FV);
+                new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeCalculationResult.FV);
                 Assert.Fail("Not implemented exception expected.");
             }
             catch (NotImplementedException e)
@@ -147,7 +147,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityReturnsCorrectCategoryNoProbability(TailorMadeProbabilityCalculationResultGroup resultGroup, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
             var input = new TailorMadeProbabilityCalculationResult(resultGroup);
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentDirectFailureMechanismsFromProbability(input, null);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanismsFromProbability(input, null);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -168,7 +168,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
             };
 
             var input = new TailorMadeProbabilityCalculationResult((Probability)0.35);
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentDirectFailureMechanismsFromProbability(input, categories);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanismsFromProbability(input, categories);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -187,7 +187,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(TailorMadeCategoryCalculationResult.FV, FailureMechanismSectionCategoryGroup.Iv)]
         public void TailorMadeAssessmentDirectFailureMechanismsFromCategoryResultReturnsCorrectCategory(TailorMadeCategoryCalculationResult result, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(result);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(result);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
@@ -205,7 +205,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
             FailureMechanismSectionCategoryGroup tailorMadeAssessmentResult,
             FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
-            var calculationOutput = FailureMechanismSectionAssemblyCalculator.CombinedAssessmentFromFailureMechanismSectionResults(simpleAssessmentResult,detailedAssessmentResult,tailorMadeAssessmentResult);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().CombinedAssessmentFromFailureMechanismSectionResults(simpleAssessmentResult,detailedAssessmentResult,tailorMadeAssessmentResult);
 
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);

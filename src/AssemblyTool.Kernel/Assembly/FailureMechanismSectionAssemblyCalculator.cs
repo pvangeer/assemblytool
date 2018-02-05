@@ -30,8 +30,10 @@ using AssemblyTool.Kernel.Categories;
 
 namespace AssemblyTool.Kernel.Assembly
 {
-    public static class FailureMechanismSectionAssemblyCalculator
+    public class FailureMechanismSectionAssemblyCalculator : IFailureMechanismSectionAssemblyCalculator
     {
+        public FailureMechanismSectionAssemblyCalculator() { }
+
         #region Simple assessment
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanisms(SimpleCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanisms(SimpleCalculationResult result)
         {
             switch (result)
             {
@@ -60,7 +62,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult result)
         {
             throw new NotImplementedException();
         }
@@ -71,7 +73,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanismsRelevanceOnly(SimpleCalculationResultValidityOnly result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanismsRelevanceOnly(SimpleCalculationResultValidityOnly result)
         {
             switch (result)
             {
@@ -94,7 +96,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromResult(DetailedCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromResult(DetailedCalculationResult result)
         {
             switch (result)
             {
@@ -114,7 +116,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedCalculationResult result)
         {
             throw new NotImplementedException();
         }
@@ -127,7 +129,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> does not contain a category that encloses the specified <see cref="probability"/>.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbability(Probability probability, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbability(Probability probability, FailureMechanismSectionCategory[] categories)
         {
             if (categories == null || categories.Length == 0)
             {
@@ -149,7 +151,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="calculationResults">Calculation results for all category boundaries for this failure mechanism.</param>
         /// <returns></returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when an impossible combination of qualitative results was specified (the result for a boundary between two high classes is positive, whereas the result at the boundary between two lower classes was not.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromCategoryBoundaries(DetailedCategoryBoundariesCalculationResult calculationResults)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromCategoryBoundaries(DetailedCategoryBoundariesCalculationResult calculationResults)
         {
             if (calculationResults.ResultItoII == DetailedCalculationResult.V)
             {
@@ -214,7 +216,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> does not contain a category that encloses the specified <see cref="probability"/>.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbabilityWithLengthFactor(Probability probability, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbabilityWithLengthFactor(Probability probability, FailureMechanismSectionCategory[] categories)
         {
             if (categories == null || categories.Length == 0)
             {
@@ -239,7 +241,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The regustered qualitative result.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
         {
             switch (result)
             {
@@ -262,7 +264,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
         {
             throw new NotImplementedException();
         }
@@ -275,7 +277,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when the <see cref="result"/> equals null.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbability(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbability(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
         {
             if (result == null)
             {
@@ -301,7 +303,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result"></param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(TailorMadeCategoryCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(TailorMadeCategoryCalculationResult result)
         {
             switch (result)
             {
@@ -335,7 +337,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when the <see cref="result"/> equals null.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbabilityIncludingLength(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbabilityIncludingLength(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
         {
             if (result == null)
             {
@@ -364,7 +366,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="resultDetailedAssessment"></param>
         /// <param name="resultTailorMadeAssessment"></param>
         /// <returns></returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup>CombinedAssessmentFromFailureMechanismSectionResults(
+        public CalculationOutput<FailureMechanismSectionCategoryGroup>CombinedAssessmentFromFailureMechanismSectionResults(
                 FailureMechanismSectionCategoryGroup resultSimpleAssessment,
                 FailureMechanismSectionCategoryGroup resultDetailedAssessment,
                 FailureMechanismSectionCategoryGroup resultTailorMadeAssessment)
