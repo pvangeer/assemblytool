@@ -38,7 +38,7 @@ namespace AssemblyTool.Kernel.Test.Categories
         public void CalculateAssessmentSectionCategoriesTest(double signalingStandard,double lowerBoundaryStandard)
         {
             var input = new CalculateAssessmentSectionCategoriesInput((Probability) signalingStandard, (Probability) lowerBoundaryStandard);
-            var calculationResult = CategoriesCalculator.CalculateAssessmentSectionCategories(input);
+            var calculationResult = new CategoriesCalculator().CalculateAssessmentSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.WarningMessages);
@@ -79,7 +79,7 @@ namespace AssemblyTool.Kernel.Test.Categories
         {
             var probabilityDistributionFactor = 0.5;
             var input = new CalculateFailureMechanismCategoriesInput(new Probability(signalingStandard), new Probability(lowerBoundaryStandard), probabilityDistributionFactor);
-            var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(input);
+            var calculationResult = new CategoriesCalculator().CalculateFailureMechanismCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.WarningMessages);
@@ -125,7 +125,7 @@ namespace AssemblyTool.Kernel.Test.Categories
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
             var input = new CalculateFailureMechanismSectionCategoriesInput((Probability)signalingStandard, (Probability)lowerBoundaryStandard, probabilityDistributionFactor, nValue);
-            var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(input);
+            var calculationResult = new CategoriesCalculator().CalculateFailureMechanismSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.WarningMessages);
@@ -174,7 +174,7 @@ namespace AssemblyTool.Kernel.Test.Categories
             var probabilityDistributionFactor = 0.04;
             var nValue = 2.5;
             var input = new CalculateFailureMechanismSectionCategoriesInput(signalingStandard,lowerBoundaryStandard,probabilityDistributionFactor,nValue);
-            var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(input);
+            var calculationResult = new CategoriesCalculator().CalculateGeotechnicFailureMechanismSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.WarningMessages);
@@ -220,7 +220,7 @@ namespace AssemblyTool.Kernel.Test.Categories
             var probabilityDistributionFactor = 0.5;
             var nValue = 2.5;
             var input = new CalculateFailureMechanismSectionCategoriesInput(signalingStandard, lowerBoundaryStandard, probabilityDistributionFactor, nValue);
-            var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(input);
+            var calculationResult = new CategoriesCalculator().CalculateGeotechnicFailureMechanismSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
             Assert.IsNotNull(calculationResult.WarningMessages);

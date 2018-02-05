@@ -27,8 +27,10 @@ using AssemblyTool.Kernel.ErrorHandling;
 
 namespace AssemblyTool.Kernel.Categories
 {
-    public static class CategoriesCalculator
+    public class CategoriesCalculator : ICategoriesCalculator
     {
+        public CategoriesCalculator() { }
+
         /// <summary>
         /// Calculates category boundaries (probabilities) for usages in assembly of WBI2017 assessment results on assessment section level. 
         /// This method implements "WBI-2-1" from the Functional Design.
@@ -36,7 +38,7 @@ namespace AssemblyTool.Kernel.Categories
         /// <param name="input">The input for this method, consisting of an signaling standard and a lower boundary standard.</param>
         /// <returns>A collection of <see cref="AssessmentSectionCategory"/> that contains all assembly categories with their boundaries.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when inconsistent boundaries were derived.</exception>
-        public static CalculationOutput<AssessmentSectionCategory[]> CalculateAssessmentSectionCategories(CalculateAssessmentSectionCategoriesInput input)
+        public CalculationOutput<AssessmentSectionCategory[]> CalculateAssessmentSectionCategories(CalculateAssessmentSectionCategoriesInput input)
         {
             var aPlusToA = 1 / 30.0 * input.SignalingStandard;
             var cToD = 30 * input.LowerBoundaryStandard;
@@ -61,7 +63,7 @@ namespace AssemblyTool.Kernel.Categories
         /// <param name="input">The input for this method, consisting of an signaling standard, a lower boundary standard and probability distribution factor.</param>
         /// <returns>A collection of <see cref="FailureMechanismCategory"/> that contains all assembly categories with their boundaries.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when inconsistent boundaries were calculated.</exception>
-        public static CalculationOutput<FailureMechanismCategory[]> CalculateFailureMechanismCategories(CalculateFailureMechanismCategoriesInput input)
+        public CalculationOutput<FailureMechanismCategory[]> CalculateFailureMechanismCategories(CalculateFailureMechanismCategoriesInput input)
         {
             var iToII = 1 / 30.0 * input.ProbabilityDistributionFactor * input.SignalingStandard;
             var iItoIII = input.ProbabilityDistributionFactor * input.SignalingStandard;
@@ -89,7 +91,7 @@ namespace AssemblyTool.Kernel.Categories
         /// <param name="input">The input for this method, consisting of an signaling standard, a lower boundary standard and probability distribution factor and an N-value that takes the length-effect into account.</param>
         /// <returns>A collection of <see cref="FailureMechanismCategory"/> that contains all assembly categories with their boundaries.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when inconsistent boundaries were calculated.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategory[]> CalculateFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
+        public CalculationOutput<FailureMechanismSectionCategory[]> CalculateFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
         {
             Probability iToII = (Probability) (1 / 30.0 * input.ProbabilityDistributionFactor * input.SignalingStandard / input.NValue);
             Probability iItoIII = (Probability) (input.ProbabilityDistributionFactor * input.SignalingStandard / input.NValue);
@@ -115,7 +117,7 @@ namespace AssemblyTool.Kernel.Categories
         /// <param name="input">The input for this method, consisting of an signaling standard, a lower boundary standard and probability distribution factor and an N-value that takes the length-effect into account.</param>
         /// <returns>A collection of <see cref="FailureMechanismCategory"/> that contains all assembly categories with their boundaries.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when inconsistent boundaries were calculated.</exception>
-        public static CalculationOutput<FailureMechanismSectionCategory[]> CalculateGeotechnicFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
+        public CalculationOutput<FailureMechanismSectionCategory[]> CalculateGeotechnicFailureMechanismSectionCategories(CalculateFailureMechanismSectionCategoriesInput input)
         {
             var warnings = new List<WarningMessage>();
 
