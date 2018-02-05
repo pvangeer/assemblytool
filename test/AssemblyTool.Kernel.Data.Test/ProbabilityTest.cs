@@ -30,9 +30,22 @@ namespace AssemblyTool.Kernel.Data.Test
     [TestFixture]
     public class ProbabilityTest
     {
+        [Test]
+        public void NaN_ExpectedValue()
+        {
+            Assert.IsNaN(Probability.NaN.Value);
+        }
+
+        [Test]
+        public void NaNEqualsNaN()
+        {
+            Assert.IsNaN(Probability.NaN);
+            Assert.IsTrue(double.IsNaN(new Probability(double.NaN)));
+            Assert.IsTrue(double.IsNaN(Probability.NaN));
+        }
+
         [TestCase(-1, ErrorCode.ValueBelowZero)]
         [TestCase(2, ErrorCode.ValueAboveOne)]
-        [TestCase(double.NaN, ErrorCode.ValueIsNaN)]
         public void ValidateProbabilityTest(double probabilityValue, ErrorCode expectedErrorCode)
         {
             try

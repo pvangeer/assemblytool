@@ -47,8 +47,14 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
         /// Use this constructor to specify a probability result.
         /// </summary>
         /// <param name="probability">The specified probability.</param>
+        /// <exception cref="AssemblyToolKernelException">Thrown when <see cref="probability"/> equals Probability.NaN</exception>
         public TailorMadeProbabilityAndDetailedCalculationResult(Probability probability)
         {
+            if (double.IsNaN(probability))
+            {
+                throw new AssemblyToolKernelException(ErrorCode.ValueIsNaN);
+            }
+
             Probability = probability;
             CalculationResultGroup = TailorMadeProbabilityAndDetailedCalculationResultGroup.Probability;
         }

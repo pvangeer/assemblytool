@@ -39,6 +39,7 @@
     <Compile Include="AssemblyCategories\AssessmentSectionCategory.cs" />
     <Compile Include="AssemblyCategories\CategoryBase.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismCategory.cs" />
+    <Compile Include="AssemblyCategories\FailureMechanismSectionAssemblyCategoryResult.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismSectionCategory.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismSectionCategoryGroup.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismCategoryGroup.cs" />
@@ -56,12 +57,23 @@
     <Compile Include="CalculationResults\TailorMadeProbabilityCalculationResultGroup.cs" />
     <Compile Include="Probability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AssemblyTool.Kernel.ErrorHandling\AssemblyTool.Kernel.ErrorHandling.csproj">
       <Project>{B75E04B2-A702-46DF-A014-EA500F5FDA19}</Project>
       <Name>AssemblyTool.Kernel.ErrorHandling</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -35,7 +35,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly\CalculatorInput\DetailedCalculationInputFromProbability.cs" />
+    <Compile Include="Assembly\CalculatorInput\DetailedCalculationInputFromProbabilityWithLengthEffect.cs" />
+    <Compile Include="Assembly\CalculatorInput\TailorMadeCalculationInputFromProbability.cs" />
     <Compile Include="Assembly\IFailureMechanismSectionAssemblyCalculator.cs" />
+    <Compile Include="Assembly\CalculatorInput\TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor.cs" />
     <Compile Include="Categories\CalculatorInput\CalculateAssessmentSectionCategoriesInput.cs" />
     <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismCategoriesInput.cs" />
     <Compile Include="Categories\CalculatorInput\CalculateFailureMechanismSectionCategoriesInput.cs" />
@@ -59,5 +63,6 @@
       <Name>AssemblyTool.Kernel.ErrorHandling</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

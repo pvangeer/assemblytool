@@ -21,15 +21,21 @@
 
 using System;
 using System.Globalization;
+using AssemblyTool.Kernel.Data.Properties;
 using AssemblyTool.Kernel.ErrorHandling;
 
 namespace AssemblyTool.Kernel.Data
 {
-    public struct Probability : IEquatable<Probability>, IEquatable<double>, IFormattable, IComparable,
-        IComparable<Probability>, IComparable<double>
+    public struct Probability : IEquatable<Probability>, IEquatable<double>, IFormattable, IComparable, IComparable<Probability>, IComparable<double>
     {
-        private static double Precision = 1e-100;
+        private static double ToStringPrecision = 1e-100;
 
+        /// <summary>
+        /// Represents a value that is not a number (NaN). This field is constant.
+        /// </summary>
+        /// <seealso cref="double.NaN"/>
+        public static readonly Probability NaN = new Probability(double.NaN);
+        
         public Probability(double probabilityValue)
         {
             ValidateProbabilityValue(probabilityValue);
@@ -52,17 +58,12 @@ namespace AssemblyTool.Kernel.Data
         /// <exception cref="AssemblyToolKernelException">Thrown in case <paramref name="probability"/> exceeds 1</exception>
         private static void ValidateProbabilityValue(double probability)
         {
-            if (Double.IsNaN(probability))
-            {
-                throw new AssemblyToolKernelException(ErrorCode.ValueIsNaN);
-            }
-
-            if (probability < 0)
+            if (!double.IsNaN(probability) && probability < 0)
             {
                 throw new AssemblyToolKernelException(ErrorCode.ValueBelowZero);
             }
 
-            if (probability > 1)
+            if (!double.IsNaN(probability) && probability > 1)
             {
                 throw new AssemblyToolKernelException(ErrorCode.ValueAboveOne);
             }
@@ -173,7 +174,7 @@ namespace AssemblyTool.Kernel.Data
 
         public bool Equals(Probability other)
         {
-            return other != null && other.Value.Equals(Value);
+            return other.Value.Equals(Value);
         }
 
         public bool Equals(double other)
@@ -188,14 +189,19 @@ namespace AssemblyTool.Kernel.Data
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            if (Math.Abs(Value) < Precision)
+            if (Math.Abs(Value) < ToStringPrecision)
             {
                 return "0";
             }
 
-            if (Math.Abs(Value - 1) < Precision)
+            if (Math.Abs(Value - 1) < ToStringPrecision)
             {
                 return "1";
+            }
+
+            if (double.IsNaN(Value))
+            {
+                return Resources.Probability_ToString_Unknown;
             }
 
             if (format == null)

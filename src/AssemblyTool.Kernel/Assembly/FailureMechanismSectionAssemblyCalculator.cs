@@ -26,14 +26,13 @@ using AssemblyTool.Kernel.ErrorHandling;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using AssemblyTool.Kernel.Assembly.CalculatorInput;
 using AssemblyTool.Kernel.Categories;
 
 namespace AssemblyTool.Kernel.Assembly
 {
     public class FailureMechanismSectionAssemblyCalculator : IFailureMechanismSectionAssemblyCalculator
     {
-        public FailureMechanismSectionAssemblyCalculator() { }
-
         #region Simple assessment
 
         /// <summary>
@@ -42,16 +41,16 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanisms(SimpleCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> SimpleAssessmentDirectFailureMechanisms(SimpleCalculationResult result)
         {
             switch (result)
             {
                 case SimpleCalculationResult.NVT:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.None);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.None,(Probability) 0));
                 case SimpleCalculationResult.FV:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.Iv,(Probability)0));
                 case SimpleCalculationResult.VB:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv, Probability.NaN));
                 default:
                     throw new InvalidEnumArgumentException();
             }
@@ -73,14 +72,14 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanismsRelevanceOnly(SimpleCalculationResultValidityOnly result)
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> SimpleAssessmentDirectFailureMechanisms(SimpleCalculationResultValidityOnly result)
         {
             switch (result)
             {
                 case SimpleCalculationResultValidityOnly.NVT:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.None);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.None,(Probability) 0));
                 case SimpleCalculationResultValidityOnly.WVT:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv, Probability.NaN));
                 default:
                     throw new InvalidEnumArgumentException();
             }
@@ -96,7 +95,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromResult(DetailedCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanisms(DetailedCalculationResult result)
         {
             switch (result)
             {
@@ -116,7 +115,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanisms(DetailedCalculationResult result)
         {
             throw new NotImplementedException();
         }
@@ -129,20 +128,20 @@ namespace AssemblyTool.Kernel.Assembly
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> does not contain a category that encloses the specified <see cref="probability"/>.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbability(Probability probability, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> DetailedAssessmentDirectFailureMechanisms(DetailedCalculationInputFromProbability input)
         {
-            if (categories == null || categories.Length == 0)
+            if (input == null)
             {
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
 
-            var resultCategory = categories.FirstOrDefault(c => c.LowerBoundary <= probability && c.UpperBoundary >= probability);
+            var resultCategory = input.Categories.FirstOrDefault(c => c.LowerBoundary <= input.Probability && c.UpperBoundary >= input.Probability);
             if (resultCategory == null)
             {
                 throw new AssemblyToolKernelException(ErrorCode.NoMatchingCategory);
             }
 
-            return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultCategory.CategoryGroup);
+            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(resultCategory.CategoryGroup,input.Probability));
         }
 
         /// <summary>
@@ -151,7 +150,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="calculationResults">Calculation results for all category boundaries for this failure mechanism.</param>
         /// <returns></returns>
         /// <exception cref="AssemblyToolKernelException">Thrown when an impossible combination of qualitative results was specified (the result for a boundary between two high classes is positive, whereas the result at the boundary between two lower classes was not.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromCategoryBoundaries(DetailedCategoryBoundariesCalculationResult calculationResults)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanisms(DetailedCategoryBoundariesCalculationResult calculationResults)
         {
             if (calculationResults.ResultItoII == DetailedCalculationResult.V)
             {
@@ -213,23 +212,24 @@ namespace AssemblyTool.Kernel.Assembly
         /// </summary>
         /// <param name="probability">The calculated probability.</param>
         /// <param name="categories">The list of categories for this failure mechanism obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
+        /// <param name="lengthEffectFactor">The length effect factor for the failuremechanism section that is being considered.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> does not contain a category that encloses the specified <see cref="probability"/>.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbabilityWithLengthFactor(Probability probability, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> DetailedAssessmentDirectFailureMechanisms(DetailedCalculationInputFromProbabilityWithLengthEffect input)
         {
-            if (categories == null || categories.Length == 0)
+            if (input == null)
             {
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
 
-            var resultCategory = categories.FirstOrDefault(c => c.LowerBoundary <= probability && c.UpperBoundary >= probability);
+            var resultCategory = input.Categories.FirstOrDefault(c => c.LowerBoundary <= input.Probability && c.UpperBoundary >= input.Probability);
             if (resultCategory == null)
             {
                 throw new AssemblyToolKernelException(ErrorCode.NoMatchingCategory);
             }
 
-            return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultCategory.CategoryGroup);
+            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(resultCategory.CategoryGroup, input.Probability* input.NValue));
         }
         #endregion
 
@@ -241,7 +241,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The regustered qualitative result.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanisms(TailorMadeCalculationResult result)
         {
             switch (result)
             {
@@ -264,7 +264,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanisms(TailorMadeCalculationResult result)
         {
             throw new NotImplementedException();
         }
@@ -277,21 +277,21 @@ namespace AssemblyTool.Kernel.Assembly
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when the <see cref="result"/> equals null.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbability(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> TailorMadeAssessmentDirectFailureMechanisms(TailorMadeCalculationInputFromProbability input)
         {
-            if (result == null)
+            if (input == null)
             {
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
 
-            switch (result.CalculationResultGroup)
+            switch (input.Result.CalculationResultGroup)
             {
                 case TailorMadeProbabilityCalculationResultGroup.FV:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.Iv,(Probability) 0));
                 case TailorMadeProbabilityCalculationResultGroup.NGO:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv,Probability.NaN));
                 case TailorMadeProbabilityCalculationResultGroup.Probability:
-                    return DetailedAssessmentDirectFailureMechanismsFromProbability(result.Probability, categories);
+                    return DetailedAssessmentDirectFailureMechanisms(new DetailedCalculationInputFromProbability(input.Result.Probability, input.Categories));
                 default:
                     throw new InvalidEnumArgumentException();
             }
@@ -303,7 +303,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// <param name="result"></param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(TailorMadeCategoryCalculationResult result)
+        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanisms(TailorMadeCategoryCalculationResult result)
         {
             switch (result)
             {
@@ -334,24 +334,25 @@ namespace AssemblyTool.Kernel.Assembly
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated.</param>
         /// <param name="categories">The list of categories for this failure mechanism that is used in case of a probability result, obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
+        /// <param name="lengthEffectFactor">The length effect factor for the failuremechanism section that is being considered.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
         /// <exception cref="AssemblyToolKernelException">Thrown when the <see cref="result"/> equals null.</exception>
-        public CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbabilityIncludingLength(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> TailorMadeAssessmentDirectFailureMechanisms(TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor input)
         {
-            if (result == null)
+            if (input == null)
             {
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
 
-            switch (result.CalculationResultGroup)
+            switch (input.Result.CalculationResultGroup)
             {
                 case TailorMadeProbabilityCalculationResultGroup.FV:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.Iv,(Probability) 0));
                 case TailorMadeProbabilityCalculationResultGroup.NGO:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv,Probability.NaN));
                 case TailorMadeProbabilityCalculationResultGroup.Probability:
-                    return DetailedAssessmentDirectFailureMechanismsFromProbability(result.Probability, categories);
+                    return DetailedAssessmentDirectFailureMechanisms(new DetailedCalculationInputFromProbabilityWithLengthEffect(input.Result.Probability, input.Categories, input.NValue));
                 default:
                     throw new InvalidEnumArgumentException();
             }
@@ -385,6 +386,34 @@ namespace AssemblyTool.Kernel.Assembly
             }
 
             return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+        }
+
+        /// <summary>
+        /// WBI-0A-1
+        /// </summary>
+        /// <param name="resultSimpleAssessment"></param>
+        /// <param name="resultDetailedAssessment"></param>
+        /// <param name="resultTailorMadeAssessment"></param>
+        /// <returns></returns>
+        public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> CombinedAssessmentFromFailureMechanismSectionResults(
+            FailureMechanismSectionAssemblyCategoryResult resultSimpleAssessment,
+            FailureMechanismSectionAssemblyCategoryResult resultDetailedAssessment,
+            FailureMechanismSectionAssemblyCategoryResult resultTailorMadeAssessment)
+        {
+            if (resultTailorMadeAssessment.CategoryGroup != FailureMechanismSectionCategoryGroup.VIIv)
+            {
+                return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(resultTailorMadeAssessment);
+            }
+            if (resultDetailedAssessment.CategoryGroup != FailureMechanismSectionCategoryGroup.VIIv)
+            {
+                return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(resultDetailedAssessment);
+            }
+            if (resultSimpleAssessment.CategoryGroup != FailureMechanismSectionCategoryGroup.VIIv)
+            {
+                return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(resultSimpleAssessment);
+            }
+
+            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv,Probability.NaN));
         }
 
         #endregion
