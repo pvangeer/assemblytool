@@ -20,21 +20,32 @@
 // All rights reserved.
 
 using System;
+using System.Collections.Generic;
 
 namespace AssemblyTool.Kernel.ErrorHandling
 {
     public class AssemblyToolKernelException : Exception
     {
-        public AssemblyToolKernelException(ErrorCode errorCode, AssemblyToolKernelException innerexception) :  base(errorCode.GetMessage(),innerexception)
+        public AssemblyToolKernelException(ErrorCode errorCode, AssemblyToolKernelException innerexception) : base(errorCode.GetMessage(), innerexception)
         {
-            Code = errorCode;
+            Code = new[] {errorCode};
         }
 
         public AssemblyToolKernelException(ErrorCode errorCode) : base(errorCode.GetMessage())
         {
-            Code = errorCode;
+            Code = new[] {errorCode};
         }
 
-        public ErrorCode Code { get; }
+        public AssemblyToolKernelException(ErrorCode[] errorCodes, AssemblyToolKernelException innerexception) : base("Meerdere fouten zijn opgetreden", innerexception)
+        {
+            Code = errorCodes;
+        }
+
+        public AssemblyToolKernelException(ErrorCode[] errorCodes) : base("Meerdere fouten zijn opgetreden")
+        {
+            Code = errorCodes;
+        }
+
+        public ErrorCode[] Code { get; }
     }
 }

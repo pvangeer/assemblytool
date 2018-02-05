@@ -42,13 +42,18 @@
     <Compile Include="AssemblyCategories\FailureMechanismSectionCategory.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismSectionCategoryGroup.cs" />
     <Compile Include="AssemblyCategories\FailureMechanismCategoryGroup.cs" />
-    <Compile Include="AssessmentResults\DetailedAssesmentCategoryBoundariesResult.cs" />
-    <Compile Include="AssessmentResults\DetailedAssessmentResult.cs" />
-    <Compile Include="AssessmentResults\SimpleAssessmentResult.cs" />
-    <Compile Include="AssessmentResults\TailorMadeCategoryAssessmentResult.cs" />
-    <Compile Include="AssessmentResults\TailorMadeProbabilityAssessmentResult.cs" />
-    <Compile Include="AssessmentResults\TailorMadeAssessmentResult.cs" />
-    <Compile Include="AssessmentResults\TailorMadeProbabilityAssessmentResultGroup.cs" />
+    <Compile Include="CalculationResults\DetailedCalculationProbabilityResultGroup.cs" />
+    <Compile Include="CalculationResults\DetailedCalculationWithProbability.cs" />
+    <Compile Include="CalculationResults\DetailedCategoryBoundariesCalculationResult.cs" />
+    <Compile Include="CalculationResults\DetailedCalculationResult.cs" />
+    <Compile Include="CalculationResults\SimpleCalculationResult.cs" />
+    <Compile Include="CalculationResults\SimpleCalculationResultValidityOnly.cs" />
+    <Compile Include="CalculationResults\TailorMadeCategoryCalculationResult.cs" />
+    <Compile Include="CalculationResults\TailorMadeProbabilityAndDetailedCalculationResult.cs" />
+    <Compile Include="CalculationResults\TailorMadeProbabilityAndDetailedCalculationResultGroup.cs" />
+    <Compile Include="CalculationResults\TailorMadeProbabilityCalculationResult.cs" />
+    <Compile Include="CalculationResults\TailorMadeCalculationResult.cs" />
+    <Compile Include="CalculationResults\TailorMadeProbabilityCalculationResultGroup.cs" />
     <Compile Include="Probability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

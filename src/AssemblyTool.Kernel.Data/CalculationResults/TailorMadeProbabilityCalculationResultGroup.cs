@@ -19,23 +19,23 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    public enum DetailedAssessmentResult
+    public enum TailorMadeProbabilityCalculationResultGroup
     {
-        /// <summary>
-        /// V - Voldoet, approved
-        /// </summary>
-        V = 1,
-
-        /// <summary>
-        /// VN - Voldoet niet, Not approved
-        /// </summary>
-        VN = 2,
-
         /// <summary>
         /// NGO - Nog Geen Oordeel, No result yet
         /// </summary>
-        NGO = 3
+        NGO = 1,
+
+        /// <summary>
+        /// FV - Faalkans Verwaarloosbaar, probability neglectible
+        /// </summary>
+        FV = 2,
+
+        /// <summary>
+        /// Instead of a qualitative result, a quentitative result was provided 
+        /// </summary>
+        Probability = 3
     }
 }

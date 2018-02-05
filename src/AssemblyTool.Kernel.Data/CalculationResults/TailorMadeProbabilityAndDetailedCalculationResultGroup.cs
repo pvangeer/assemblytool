@@ -19,23 +19,36 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    public enum TailorMadeProbabilityAssessmentResultGroup
+    /// <summary>
+    /// Qualitative tailor made calculation results for failure mechanisms that have a possbility to register both a qualitative result as well as a probability. This enum is always used in combination with <see cref="TailorMadeProbabilityAndDetailedCalculationResult"/>.
+    /// </summary>
+    public enum TailorMadeProbabilityAndDetailedCalculationResultGroup
     {
+        /// <summary>
+        /// V - Voldoet, approved
+        /// </summary>
+        V = 1,
+
+        /// <summary>
+        /// VN - Voldoet niet, Not approved
+        /// </summary>
+        VN = 2,
+
         /// <summary>
         /// NGO - Nog Geen Oordeel, No result yet
         /// </summary>
-        NGO = 1,
+        NGO = 3,
 
         /// <summary>
         /// FV - Faalkans Verwaarloosbaar, probability neglectible
         /// </summary>
-        FV = 2,
+        FV = 4,
 
         /// <summary>
         /// Instead of a qualitative result, a quentitative result was provided 
         /// </summary>
-        Probability = 3
+        Probability = 5
     }
 }

@@ -42,11 +42,13 @@ namespace AssemblyTool.Kernel.Test.Categories.CalculatorInput
             }
             catch (AssemblyToolKernelException e)
             {
-                Assert.AreEqual(ErrorCode.InvalidNValue, e.Code);
+                Assert.AreEqual(1,e.Code.Length);
+                Assert.AreEqual(ErrorCode.InvalidNValue, e.Code[0]);
                 Assert.IsNotNull(e.InnerException);
                 Assert.IsInstanceOf<AssemblyToolKernelException>(e.InnerException);
                 var innerException = (AssemblyToolKernelException)e.InnerException;
-                Assert.AreEqual(expectedInnerExceptionCode, innerException.Code);
+                Assert.AreEqual(1, innerException.Code.Length);
+                Assert.AreEqual(expectedInnerExceptionCode, innerException.Code[0]);
             }
         }
 

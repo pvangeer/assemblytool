@@ -28,35 +28,6 @@ namespace AssemblyTool.Kernel.Test
     public class CalculationOutputTest
     {
         [Test]
-        public void ConstructorPassesErrorCorrectlyWithoutWarnings()
-        {
-            var error = new AssemblyToolKernelException(ErrorCode.InvalidNValue);
-            var output = new CalculationOutput<TestResult>(error);
-
-            Assert.IsNotNull(output);
-            Assert.IsNull(output.Result);
-            Assert.IsNotNull(output.WarningMessages);
-            Assert.IsEmpty(output.WarningMessages);
-            Assert.IsNotNull(output.ErrorMessage);
-            Assert.AreEqual(error,output.ErrorMessage);
-        }
-
-        [Test]
-        public void ConstructorPassesErrorAndWarningsCorrectly()
-        {
-            var error = new AssemblyToolKernelException(ErrorCode.InvalidNValue);
-            var warnings = new [] {WarningMessage.CorrectedSectionSpecificNValue};
-            var output = new CalculationOutput<TestResult>(error,warnings);
-
-            Assert.IsNotNull(output);
-            Assert.IsNull(output.Result);
-            Assert.IsNotNull(output.WarningMessages);
-            Assert.AreEqual(warnings,output.WarningMessages);
-            Assert.IsNotNull(output.ErrorMessage);
-            Assert.AreEqual(error, output.ErrorMessage);
-        }
-
-        [Test]
         public void ConstructorPassesResultCorrectly()
         {
             var result = new TestResult(){SomeInt = 5};
@@ -66,7 +37,6 @@ namespace AssemblyTool.Kernel.Test
             Assert.IsNotNull(output.Result);
             Assert.IsNotNull(output.WarningMessages);
             Assert.IsEmpty(output.WarningMessages);
-            Assert.IsNull(output.ErrorMessage);
             Assert.IsInstanceOf<TestResult>(output.Result);
             Assert.AreEqual(result,output.Result);
         }
@@ -82,7 +52,6 @@ namespace AssemblyTool.Kernel.Test
             Assert.IsNotNull(output.Result);
             Assert.IsNotNull(output.WarningMessages);
             Assert.AreEqual(warnings,output.WarningMessages);
-            Assert.IsNull(output.ErrorMessage);
             Assert.IsInstanceOf<TestResult>(output.Result);
             Assert.AreEqual(result, output.Result);
         }

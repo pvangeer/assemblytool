@@ -19,9 +19,12 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    public enum TailorMadeAssessmentResult
+    /// <summary>
+    /// Qualitative detaild calculation results
+    /// </summary>
+    public enum DetailedCalculationResult
     {
         /// <summary>
         /// V - Voldoet, approved
@@ -36,11 +39,6 @@ namespace AssemblyTool.Kernel.Data.AssessmentResults
         /// <summary>
         /// NGO - Nog Geen Oordeel, No result yet
         /// </summary>
-        NGO = 3,
-
-        /// <summary>
-        /// FV - Faalkans Verwaarloosbaar, probability neglectible
-        /// </summary>
-        FV = 4
+        NGO = 3
     }
 }

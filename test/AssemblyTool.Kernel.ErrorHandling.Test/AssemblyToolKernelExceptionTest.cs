@@ -38,7 +38,8 @@ namespace AssemblyTool.Kernel.ErrorHandling.Test
         {
             var exception = new AssemblyToolKernelException(errorCode);
 
-            Assert.AreEqual(errorCode,exception.Code);
+            Assert.AreEqual(1,exception.Code.Length);
+            Assert.AreEqual(errorCode,exception.Code[0]);
             Assert.AreEqual(errorCode.GetMessage(),exception.Message);
             Assert.IsNull(exception.InnerException);
         }
@@ -50,7 +51,8 @@ namespace AssemblyTool.Kernel.ErrorHandling.Test
             var innerException = new AssemblyToolKernelException(ErrorCode.ValueBelowOne);
             var exception = new AssemblyToolKernelException(errorCode,innerException);
 
-            Assert.AreEqual(errorCode, exception.Code);
+            Assert.AreEqual(1,exception.Code.Length);
+            Assert.AreEqual(errorCode, exception.Code[0]);
             Assert.AreEqual(errorCode.GetMessage(), exception.Message);
             Assert.AreEqual(innerException,exception.InnerException);
         }

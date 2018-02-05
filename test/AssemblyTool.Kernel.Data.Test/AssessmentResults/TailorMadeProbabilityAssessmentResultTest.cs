@@ -19,7 +19,7 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using AssemblyTool.Kernel.Data.AssessmentResults;
+using AssemblyTool.Kernel.Data.CalculationResults;
 using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
@@ -29,13 +29,13 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
     public class TailorMadeProbabilityAssessmentResultTest
     {
         [Test]
-        [TestCase(TailorMadeProbabilityAssessmentResultGroup.FV)]
-        [TestCase(TailorMadeProbabilityAssessmentResultGroup.NGO)]
-        public void EnumConstructorPassesInputCorrectly(TailorMadeProbabilityAssessmentResultGroup resultGroup)
+        [TestCase(TailorMadeProbabilityCalculationResultGroup.FV)]
+        [TestCase(TailorMadeProbabilityCalculationResultGroup.NGO)]
+        public void EnumConstructorPassesInputCorrectly(TailorMadeProbabilityCalculationResultGroup resultGroup)
         {
-            var probabilityAssessmentResult = new TailorMadeProbabilityAssessmentResult(resultGroup);
+            var probabilityAssessmentResult = new TailorMadeProbabilityCalculationResult(resultGroup);
 
-            Assert.AreEqual(resultGroup,probabilityAssessmentResult.AssessmentResultGroup);
+            Assert.AreEqual(resultGroup,probabilityAssessmentResult.CalculationResultGroup);
             Assert.AreEqual(default(Probability),probabilityAssessmentResult.Probability);
         }
 
@@ -44,12 +44,13 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         {
             try
             {
-                var probabilityAssessmentResult = new TailorMadeProbabilityAssessmentResult(TailorMadeProbabilityAssessmentResultGroup.Probability);
+                var probabilityAssessmentResult = new TailorMadeProbabilityCalculationResult(TailorMadeProbabilityCalculationResultGroup.Probability);
                 Assert.Fail("Exception was expoected.");
             }
             catch (AssemblyToolKernelException e)
             {
-                Assert.AreEqual(ErrorCode.NoProbabilityAllowedInConstructor,e.Code);
+                Assert.AreEqual(1,e.Code.Length);
+                Assert.AreEqual(ErrorCode.NoProbabilityAllowedInConstructor,e.Code[0]);
             }
         }
 
@@ -57,9 +58,9 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         public void ProbabilityConstructorPassesInputCorrectly()
         {
             var probability = (Probability) 0.01;
-            var probabilityAssessmentResult = new TailorMadeProbabilityAssessmentResult(probability);
+            var probabilityAssessmentResult = new TailorMadeProbabilityCalculationResult(probability);
 
-            Assert.AreEqual(TailorMadeProbabilityAssessmentResultGroup.Probability, probabilityAssessmentResult.AssessmentResultGroup);
+            Assert.AreEqual(TailorMadeProbabilityCalculationResultGroup.Probability, probabilityAssessmentResult.CalculationResultGroup);
             Assert.AreEqual(probability, probabilityAssessmentResult.Probability);
         }
     }

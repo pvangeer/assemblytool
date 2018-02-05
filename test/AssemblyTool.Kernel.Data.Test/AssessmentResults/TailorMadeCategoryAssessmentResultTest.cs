@@ -20,7 +20,7 @@
 // All rights reserved.
 
 using System;
-using AssemblyTool.Kernel.Data.AssessmentResults;
+using AssemblyTool.Kernel.Data.CalculationResults;
 using NUnit.Framework;
 
 namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
@@ -32,16 +32,16 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(9, Enum.GetValues(typeof(TailorMadeCategoryAssessmentResult)).Length);
-            Assert.AreEqual(1, (int)TailorMadeCategoryAssessmentResult.Iv);
-            Assert.AreEqual(2, (int)TailorMadeCategoryAssessmentResult.IIv);
-            Assert.AreEqual(3, (int)TailorMadeCategoryAssessmentResult.IIIv);
-            Assert.AreEqual(4, (int)TailorMadeCategoryAssessmentResult.IVv);
-            Assert.AreEqual(5, (int)TailorMadeCategoryAssessmentResult.Vv);
-            Assert.AreEqual(6, (int)TailorMadeCategoryAssessmentResult.VIv);
-            Assert.AreEqual(7, (int)TailorMadeCategoryAssessmentResult.VIIv);
-            Assert.AreEqual(8, (int)TailorMadeCategoryAssessmentResult.NGO);
-            Assert.AreEqual(9, (int)TailorMadeCategoryAssessmentResult.FV);
+            Assert.AreEqual(9, Enum.GetValues(typeof(TailorMadeCategoryCalculationResult)).Length);
+            Assert.AreEqual(1, (int)TailorMadeCategoryCalculationResult.Iv);
+            Assert.AreEqual(2, (int)TailorMadeCategoryCalculationResult.IIv);
+            Assert.AreEqual(3, (int)TailorMadeCategoryCalculationResult.IIIv);
+            Assert.AreEqual(4, (int)TailorMadeCategoryCalculationResult.IVv);
+            Assert.AreEqual(5, (int)TailorMadeCategoryCalculationResult.Vv);
+            Assert.AreEqual(6, (int)TailorMadeCategoryCalculationResult.VIv);
+            Assert.AreEqual(7, (int)TailorMadeCategoryCalculationResult.VIIv);
+            Assert.AreEqual(8, (int)TailorMadeCategoryCalculationResult.NGO);
+            Assert.AreEqual(9, (int)TailorMadeCategoryCalculationResult.FV);
         }
     }
 }

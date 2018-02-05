@@ -19,23 +19,31 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    public enum SimpleAssessmentResult
+    /// <summary>
+    /// Result groups for passing results of detailed calculation where both a qualitative result as well as a probability is accepted.
+    /// </summary>
+    public enum DetailedCalculationProbabilityResultGroup
     {
         /// <summary>
-        /// NVT - Niet van toepassing, not applicable
+        /// V - Voldoet, approved
         /// </summary>
-        NVT = 1,
+        V = 1,
 
         /// <summary>
-        /// FV - Faalkans Verwaarloosbaar, probability neglectible
+        /// VN - Voldoet niet, Not approved
         /// </summary>
-        FV = 2,
+        VN = 2,
 
         /// <summary>
-        /// VB - Verder Beoordelen, Perform detailed assessment
+        /// NGO - Nog Geen Oordeel, No result yet
         /// </summary>
-        VB = 3
+        NGO = 3,
+
+        /// <summary>
+        /// Instead of a qualitative result, a quentitative result was provided 
+        /// </summary>
+        Probability = 4
     }
 }

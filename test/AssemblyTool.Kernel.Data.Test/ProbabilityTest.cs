@@ -42,7 +42,8 @@ namespace AssemblyTool.Kernel.Data.Test
             }
             catch (AssemblyToolKernelException e)
             {
-                Assert.AreEqual(expectedErrorCode, e.Code);
+                Assert.AreEqual(1,e.Code.Length);
+                Assert.AreEqual(expectedErrorCode, e.Code[0]);
             }
         }
 

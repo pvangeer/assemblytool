@@ -41,7 +41,8 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
             }
             catch (AssemblyToolKernelException e)
             {
-                Assert.AreEqual(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary, e.Code);
+                Assert.AreEqual(1,e.Code.Length);
+                Assert.AreEqual(ErrorCode.CategoryLowerBoundaryExceedsUpperBoundary, e.Code[0]);
             }
         }
 

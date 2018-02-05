@@ -32,7 +32,7 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(7, Enum.GetValues(typeof(FailureMechanismSectionCategoryGroup)).Length);
+            Assert.AreEqual(8, Enum.GetValues(typeof(FailureMechanismSectionCategoryGroup)).Length);
             Assert.AreEqual(0, (int)FailureMechanismSectionCategoryGroup.Iv);
             Assert.AreEqual(1, (int)FailureMechanismSectionCategoryGroup.IIv);
             Assert.AreEqual(2, (int)FailureMechanismSectionCategoryGroup.IIIv);
@@ -40,6 +40,7 @@ namespace AssemblyTool.Kernel.Data.Test.AssemblyCategories
             Assert.AreEqual(4, (int)FailureMechanismSectionCategoryGroup.Vv);
             Assert.AreEqual(5, (int)FailureMechanismSectionCategoryGroup.VIv);
             Assert.AreEqual(6, (int)FailureMechanismSectionCategoryGroup.VIIv);
+            Assert.AreEqual(7, (int)FailureMechanismSectionCategoryGroup.None);
         }
     }
 }

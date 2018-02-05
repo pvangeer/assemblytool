@@ -20,7 +20,7 @@
 // All rights reserved.
 
 using System;
-using AssemblyTool.Kernel.Data.AssessmentResults;
+using AssemblyTool.Kernel.Data.CalculationResults;
 using NUnit.Framework;
 
 namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
@@ -32,10 +32,10 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(3, Enum.GetValues(typeof(SimpleAssessmentResult)).Length);
-            Assert.AreEqual(1, (int)SimpleAssessmentResult.NVT);
-            Assert.AreEqual(2, (int)SimpleAssessmentResult.FV);
-            Assert.AreEqual(3, (int)SimpleAssessmentResult.VB);
+            Assert.AreEqual(3, Enum.GetValues(typeof(SimpleCalculationResult)).Length);
+            Assert.AreEqual(1, (int)SimpleCalculationResult.NVT);
+            Assert.AreEqual(2, (int)SimpleCalculationResult.FV);
+            Assert.AreEqual(3, (int)SimpleCalculationResult.VB);
         }
     }
 }

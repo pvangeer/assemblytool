@@ -19,9 +19,12 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    public enum TailorMadeCategoryAssessmentResult
+    /// <summary>
+    /// Qualitative tailor made calculation results for failure mechanisms in group 3.
+    /// </summary>
+    public enum TailorMadeCategoryCalculationResult
     {
         /// <summary>
         /// Assembly category Iv. This category lies between a probability of 0 and 1/30 * f * signaling standard / N

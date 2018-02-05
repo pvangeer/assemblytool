@@ -25,22 +25,11 @@ namespace AssemblyTool.Kernel
 {
     public class CalculationOutput<TResult>
     {
-        public CalculationOutput(AssemblyToolKernelException exception, WarningMessage[] warningMessages = null)
-        {
-            WarningMessages = warningMessages ?? new WarningMessage[] { };
-            ErrorMessage = exception;
-        }
-
         public CalculationOutput(TResult result, WarningMessage[] warningMessages = null)
         {
             Result = result;
             WarningMessages = warningMessages ?? new WarningMessage[]{};
         }
-
-        /// <summary>
-        /// Error message that occured during calculation.
-        /// </summary>
-        public AssemblyToolKernelException ErrorMessage { get; }
 
         /// <summary>
         /// Warning messages that occured during calculation.

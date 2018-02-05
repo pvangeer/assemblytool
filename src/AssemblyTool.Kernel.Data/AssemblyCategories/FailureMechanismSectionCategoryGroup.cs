@@ -56,6 +56,11 @@ namespace AssemblyTool.Kernel.Data.AssemblyCategories
         /// <summary>
         /// Assembly category VIIv. No result yet (NGO - Nog geen oordeel)
         /// </summary>
-        VIIv
+        VIIv,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        None
     }
 }

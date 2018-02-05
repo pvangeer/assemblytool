@@ -19,24 +19,21 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-namespace AssemblyTool.Kernel.Data.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    public class DetailedAssesmentCategoryBoundariesResult
+    /// <summary>
+    /// Qualitative detaild calculation results in case there is only a relevance check.
+    /// </summary>
+    public enum SimpleCalculationResultValidityOnly
     {
-        public DetailedAssesmentCategoryBoundariesResult(DetailedAssessmentResult iToII, DetailedAssessmentResult iIToIII, DetailedAssessmentResult iIIToIV, DetailedAssessmentResult iVToV, DetailedAssessmentResult vToVi)
-        {
-            ResultItoII = iToII;
-            ResultIItoIII = iIToIII;
-            ResultIIItoIV = iIIToIV;
-            ResultIVtoV = iVToV;
-            ResultVtoVI = vToVi;
-        }
+        /// <summary>
+        /// NVT - Niet van toepassing, not applicable
+        /// </summary>
+        NVT = 1,
 
-        public DetailedAssessmentResult ResultItoII { get; }
-        public DetailedAssessmentResult ResultIItoIII { get; }
-        public DetailedAssessmentResult ResultIIItoIV { get; }
-        public DetailedAssessmentResult ResultIVtoV { get; }
-        public DetailedAssessmentResult ResultVtoVI { get; }
-
+        /// <summary>
+        /// WVT - Wel Van Toepassing, No simple assessment, but a detailed assessment is necessary
+        /// </summary>
+        WVT = 2,
     }
 }

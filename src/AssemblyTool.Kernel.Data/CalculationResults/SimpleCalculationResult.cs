@@ -19,24 +19,26 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
-using System;
-using AssemblyTool.Kernel.Data.CalculationResults;
-using NUnit.Framework;
-
-namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
+namespace AssemblyTool.Kernel.Data.CalculationResults
 {
-    [TestFixture]
-    public class TailorMadeAssessmentResultTest
+    /// <summary>
+    /// Qualitative simple calculation results
+    /// </summary>
+    public enum SimpleCalculationResult
     {
-        [Test]
-        public void Values_ExpectedValues()
-        {
-            // Assert
-            Assert.AreEqual(4, Enum.GetValues(typeof(TailorMadeCalculationResult)).Length);
-            Assert.AreEqual(1, (int)TailorMadeCalculationResult.V);
-            Assert.AreEqual(2, (int)TailorMadeCalculationResult.VN);
-            Assert.AreEqual(3, (int)TailorMadeCalculationResult.NGO);
-            Assert.AreEqual(4, (int)TailorMadeCalculationResult.FV);
-        }
+        /// <summary>
+        /// NVT - Niet van toepassing, not applicable
+        /// </summary>
+        NVT = 1,
+
+        /// <summary>
+        /// FV - Faalkans Verwaarloosbaar, probability neglectible
+        /// </summary>
+        FV = 2,
+
+        /// <summary>
+        /// VB - Verder Beoordelen, Perform detailed assessment
+        /// </summary>
+        VB = 3
     }
 }

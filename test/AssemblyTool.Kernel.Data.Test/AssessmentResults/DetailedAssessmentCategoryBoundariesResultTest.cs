@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AssemblyTool.Kernel.Data.AssessmentResults;
+using AssemblyTool.Kernel.Data.CalculationResults;
 using NUnit.Framework;
 
 namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
@@ -34,13 +34,13 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         [Test]
         public void ConstructorPassesPropertiesCorrectly()
         {
-            var iToII = DetailedAssessmentResult.NGO;
-            var iIToIII = DetailedAssessmentResult.V;
-            var iIIToIV = DetailedAssessmentResult.VN;
-            var iVToV = DetailedAssessmentResult.NGO;
-            var vToVi = DetailedAssessmentResult.NGO;
+            var iToII = DetailedCalculationResult.NGO;
+            var iIToIII = DetailedCalculationResult.V;
+            var iIIToIV = DetailedCalculationResult.VN;
+            var iVToV = DetailedCalculationResult.NGO;
+            var vToVi = DetailedCalculationResult.NGO;
 
-            var detailedAssessmentCategoryBoundariesResult = new DetailedAssesmentCategoryBoundariesResult(iToII, iIToIII,iIIToIV, iVToV, vToVi);
+            var detailedAssessmentCategoryBoundariesResult = new DetailedCategoryBoundariesCalculationResult(iToII, iIToIII,iIIToIV, iVToV, vToVi);
 
             Assert.AreEqual(iToII,detailedAssessmentCategoryBoundariesResult.ResultItoII);
             Assert.AreEqual(iIToIII, detailedAssessmentCategoryBoundariesResult.ResultIItoIII);

@@ -1,4 +1,4 @@
-﻿    // Copyright (C) Stichting Deltares 2018. All rights reserved.
+﻿// Copyright (C) Stichting Deltares 2018. All rights reserved.
 //
 // This file is part of AssemblyTool.
 //
@@ -19,13 +19,14 @@
 // Stichting Deltares and remain full property of Stichting Deltares at all times.
 // All rights reserved.
 
+using AssemblyTool.Kernel.Data;
+using AssemblyTool.Kernel.Data.AssemblyCategories;
+using AssemblyTool.Kernel.Data.CalculationResults;
+using AssemblyTool.Kernel.ErrorHandling;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using AssemblyTool.Kernel.Data;
-using AssemblyTool.Kernel.Data.AssemblyCategories;
-using AssemblyTool.Kernel.Data.AssessmentResults;
-using AssemblyTool.Kernel.ErrorHandling;
+using AssemblyTool.Kernel.Categories;
 
 namespace AssemblyTool.Kernel.Assembly
 {
@@ -34,19 +35,20 @@ namespace AssemblyTool.Kernel.Assembly
         #region Simple assessment
 
         /// <summary>
-        /// This method implements WBI-0E-1 and WBI-0E-3 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/>.
+        /// This method implements WBI-0E-1 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleCalculationResult"/>.
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanisms(SimpleAssessmentResult result)
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanisms(SimpleCalculationResult result)
         {
             switch (result)
             {
-                case SimpleAssessmentResult.NVT:
-                    return null;
-                case SimpleAssessmentResult.FV:
+                case SimpleCalculationResult.NVT:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.None);
+                case SimpleCalculationResult.FV:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
-                case SimpleAssessmentResult.VB:
+                case SimpleCalculationResult.VB:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
                 default:
                     throw new InvalidEnumArgumentException();
@@ -54,13 +56,32 @@ namespace AssemblyTool.Kernel.Assembly
         }
 
         /// <summary>
-        /// This method implements WBI-0E-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/> for indirect failure mechanisms.
+        /// This method implements WBI-0E-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleCalculationResult"/> for indirect failure mechanisms.
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentIndirectFailureMechanisms(SimpleAssessmentResult result)
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult result)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// This method implements WBI-0E-3 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleCalculationResult"/>.
+        /// </summary>
+        /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> SimpleAssessmentDirectFailureMechanismsRelevanceOnly(SimpleCalculationResultValidityOnly result)
+        {
+            switch (result)
+            {
+                case SimpleCalculationResultValidityOnly.NVT:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.None);
+                case SimpleCalculationResultValidityOnly.WVT:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
         }
 
         #endregion
@@ -68,19 +89,20 @@ namespace AssemblyTool.Kernel.Assembly
         #region DetailedAssessment
 
         /// <summary>
-        /// This method implements WBI-0G-1 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="DetailedAssessmentResult"/>.
+        /// This method implements WBI-0G-1 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="DetailedCalculationResult"/>.
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromResult(DetailedAssessmentResult result)
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the specified <see cref="result"/> has an invalid enum value.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromResult(DetailedCalculationResult result)
         {
             switch (result)
             {
-                case DetailedAssessmentResult.NGO:
+                case DetailedCalculationResult.NGO:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
-                case DetailedAssessmentResult.V:
+                case DetailedCalculationResult.V:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IIv);
-                case DetailedAssessmentResult.VN:
+                case DetailedCalculationResult.VN:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Vv);
                 default:
                     throw new InvalidEnumArgumentException();
@@ -88,82 +110,95 @@ namespace AssemblyTool.Kernel.Assembly
         }
 
         /// <summary>
-        /// This method implements WBI-0G-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/> for indirect failure mechanisms.
+        /// This method implements WBI-0G-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="DetailedCalculationResult"/> for indirect failure mechanisms.
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedAssessmentResult result)
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanismsFromResult(DetailedCalculationResult result)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// WBI-0G-3 / WBI-0G-5
+        /// This method implements WBI-0G-3 from the functional design. Is calculates a <seealso cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="DetailedCalculationResult"/>.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="probability">The calculated probability.</param>
+        /// <param name="categories">The list of categories for this failure mechanism obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> does not contain a category that encloses the specified <see cref="probability"/>.</exception>
         public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbability(Probability probability, FailureMechanismSectionCategory[] categories)
         {
+            if (categories == null || categories.Length == 0)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
+            }
+
             var resultCategory = categories.FirstOrDefault(c => c.LowerBoundary <= probability && c.UpperBoundary >= probability);
-            return resultCategory == null
-                ? new CalculationOutput<FailureMechanismSectionCategoryGroup>(
-                    new AssemblyToolKernelException(ErrorCode.NoMatchingCategory))
-                : new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultCategory.CategoryGroup);
+            if (resultCategory == null)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.NoMatchingCategory);
+            }
+
+            return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultCategory.CategoryGroup);
         }
 
         /// <summary>
         /// WBI-0G-4. This method differs from the FO, since we (Ringtoets) register the results differently.
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="calculationResults">Calculation results for all category boundaries for this failure mechanism.</param>
         /// <returns></returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromCategoryBoundaries(DetailedAssesmentCategoryBoundariesResult results)
+        /// <exception cref="AssemblyToolKernelException">Thrown when an impossible combination of qualitative results was specified (the result for a boundary between two high classes is positive, whereas the result at the boundary between two lower classes was not.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromCategoryBoundaries(DetailedCategoryBoundariesCalculationResult calculationResults)
         {
-            if (results.ResultItoII == DetailedAssessmentResult.V)
+            if (calculationResults.ResultItoII == DetailedCalculationResult.V)
             {
-                if (results.ResultIItoIII == DetailedAssessmentResult.VN ||
-                    results.ResultIIItoIV == DetailedAssessmentResult.VN ||
-                    results.ResultIVtoV == DetailedAssessmentResult.VN ||
-                    results.ResultVtoVI == DetailedAssessmentResult.VN)
+                if (calculationResults.ResultIItoIII == DetailedCalculationResult.VN ||
+                    calculationResults.ResultIIItoIV == DetailedCalculationResult.VN ||
+                    calculationResults.ResultIVtoV == DetailedCalculationResult.VN ||
+                    calculationResults.ResultVtoVI == DetailedCalculationResult.VN)
                 {
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination));
+                    throw new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination);
                 }
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
             }
 
-            if (results.ResultIItoIII == DetailedAssessmentResult.V)
+            if (calculationResults.ResultIItoIII == DetailedCalculationResult.V)
             {
-                if (results.ResultIIItoIV == DetailedAssessmentResult.VN ||
-                    results.ResultIVtoV == DetailedAssessmentResult.VN ||
-                    results.ResultVtoVI == DetailedAssessmentResult.VN)
+                if (calculationResults.ResultIIItoIV == DetailedCalculationResult.VN ||
+                    calculationResults.ResultIVtoV == DetailedCalculationResult.VN ||
+                    calculationResults.ResultVtoVI == DetailedCalculationResult.VN)
                 {
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination));
+                    throw new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination);
                 }
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IIv);
             }
 
-            if (results.ResultIIItoIV == DetailedAssessmentResult.V)
+            if (calculationResults.ResultIIItoIV == DetailedCalculationResult.V)
             {
-                if (results.ResultIVtoV == DetailedAssessmentResult.VN ||
-                    results.ResultVtoVI == DetailedAssessmentResult.VN)
+                if (calculationResults.ResultIVtoV == DetailedCalculationResult.VN ||
+                    calculationResults.ResultVtoVI == DetailedCalculationResult.VN)
                 {
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination));
+                    throw new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination);
                 }
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IIIv);
             }
 
-            if (results.ResultIVtoV == DetailedAssessmentResult.V)
+            if (calculationResults.ResultIVtoV == DetailedCalculationResult.V)
             {
-                return results.ResultVtoVI == DetailedAssessmentResult.VN
-                    ? new CalculationOutput<FailureMechanismSectionCategoryGroup>(new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination))
-                    : new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IVv);
+                if (calculationResults.ResultVtoVI == DetailedCalculationResult.VN)
+                {
+                    throw new AssemblyToolKernelException(ErrorCode.ImpossibleResultCombination);
+                }
+                return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IVv);
             }
 
-            if (results.ResultVtoVI == DetailedAssessmentResult.V)
+            if (calculationResults.ResultVtoVI == DetailedCalculationResult.V)
             {
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Vv);
             }
 
-            if (results.ResultVtoVI == DetailedAssessmentResult.VN)
+            if (calculationResults.ResultVtoVI == DetailedCalculationResult.VN)
             {
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIv);
             }
@@ -171,26 +206,50 @@ namespace AssemblyTool.Kernel.Assembly
             return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
         }
 
+        /// <summary>
+        /// This method implements WBI-0G-5 from the functional design. Is calculates a <seealso cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="DetailedCalculationResult"/>.
+        /// </summary>
+        /// <param name="probability">The calculated probability.</param>
+        /// <param name="categories">The list of categories for this failure mechanism obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> does not contain a category that encloses the specified <see cref="probability"/>.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentDirectFailureMechanismsFromProbabilityWithLengthFactor(Probability probability, FailureMechanismSectionCategory[] categories)
+        {
+            if (categories == null || categories.Length == 0)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
+            }
+
+            var resultCategory = categories.FirstOrDefault(c => c.LowerBoundary <= probability && c.UpperBoundary >= probability);
+            if (resultCategory == null)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.NoMatchingCategory);
+            }
+
+            return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultCategory.CategoryGroup);
+        }
         #endregion
 
         #region TailorMade assessment
 
         /// <summary>
-        /// WBI-0T-1
+        /// This method implements WBI-0T-1 from the functional design. It calculates a category group from the result of a tailor made assessment for the failure mechanisms in group 4.
         /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromResult(TailorMadeAssessmentResult result)
+        /// <param name="result">The regustered qualitative result.</param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
         {
             switch (result)
             {
-                case TailorMadeAssessmentResult.NGO:
+                case TailorMadeCalculationResult.NGO:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
-                case TailorMadeAssessmentResult.V:
+                case TailorMadeCalculationResult.V:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IIv);
-                case TailorMadeAssessmentResult.VN:
+                case TailorMadeCalculationResult.VN:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Vv);
-                case TailorMadeAssessmentResult.FV:
+                case TailorMadeCalculationResult.FV:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
                 default:
                     throw new InvalidEnumArgumentException();
@@ -198,66 +257,103 @@ namespace AssemblyTool.Kernel.Assembly
         }
 
         /// <summary>
-        /// This method implements WBI-0T-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleAssessmentResult"/> for indirect failure mechanisms.
+        /// This method implements WBI-0T-2 from the functional design. It calculates a <see cref="FailureMechanismSectionCategoryGroup"/> from the specified <see cref="SimpleCalculationResult"/> for indirect failure mechanisms.
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="NotImplementedException">Thrown always</exception>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeAssessmentResult result)
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentIndirectFailureMechanismsFromResult(TailorMadeCalculationResult result)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// WBI-0T-3 / WBI-0T-5
+        /// This method implements WBI-0T-3 from the functional design. It calculates a category group from the result of a tailor made assessment for the failure mechanisms in group 1 and 2.
         /// </summary>
-        /// <param name="result"></param>
-        /// <param name="categories"></param>
-        /// <returns></returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbability(TailorMadeProbabilityAssessmentResult result, FailureMechanismSectionCategory[] categories)
+        /// <param name="result">The specified tailor made calculation result.</param>
+        /// <param name="categories">The categories for this failure mechanisms obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/>.</param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when the <see cref="result"/> equals null.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbability(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
         {
-            if (result.AssessmentResultGroup == TailorMadeProbabilityAssessmentResultGroup.FV)
+            if (result == null)
             {
-                return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
+                throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
 
-            if (result.AssessmentResultGroup == TailorMadeProbabilityAssessmentResultGroup.NGO)
+            switch (result.CalculationResultGroup)
             {
-                return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                case TailorMadeProbabilityCalculationResultGroup.FV:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
+                case TailorMadeProbabilityCalculationResultGroup.NGO:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                case TailorMadeProbabilityCalculationResultGroup.Probability:
+                    return DetailedAssessmentDirectFailureMechanismsFromProbability(result.Probability, categories);
+                default:
+                    throw new InvalidEnumArgumentException();
             }
-
-            return DetailedAssessmentDirectFailureMechanismsFromProbability(result.Probability, categories);
         }
 
         /// <summary>
-        /// WBI-0T-4
+        /// This method implements WBI-0T-4 from the functional design. It calculates a category group from the result of a tailor made assessment for the failure mechanisms in group 3.
         /// </summary>
         /// <param name="result"></param>
-        /// <returns></returns>
-        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(TailorMadeCategoryAssessmentResult result)
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromCategoryResult(TailorMadeCategoryCalculationResult result)
         {
             switch (result)
             {
-                case TailorMadeCategoryAssessmentResult.Iv:
-                case TailorMadeCategoryAssessmentResult.FV:
+                case TailorMadeCategoryCalculationResult.Iv:
+                case TailorMadeCategoryCalculationResult.FV:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
-                case TailorMadeCategoryAssessmentResult.IIv:
+                case TailorMadeCategoryCalculationResult.IIv:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IIv);
-                case TailorMadeCategoryAssessmentResult.IIIv:
+                case TailorMadeCategoryCalculationResult.IIIv:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IIIv);
-                case TailorMadeCategoryAssessmentResult.IVv:
+                case TailorMadeCategoryCalculationResult.IVv:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.IVv);
-                case TailorMadeCategoryAssessmentResult.Vv:
+                case TailorMadeCategoryCalculationResult.Vv:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Vv);
-                case TailorMadeCategoryAssessmentResult.VIv:
+                case TailorMadeCategoryCalculationResult.VIv:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIv);
-                case TailorMadeCategoryAssessmentResult.VIIv:
-                case TailorMadeCategoryAssessmentResult.NGO:
+                case TailorMadeCategoryCalculationResult.VIIv:
+                case TailorMadeCategoryCalculationResult.NGO:
                     return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
                 default:
-                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                    throw new InvalidEnumArgumentException();
             }
         }
         #endregion
+
+        /// <summary>
+        /// This method implements WBI-0T-5 from the functional design. It calculates a category group from the result of a tailor made assessment for the failure mechanisms piping and slope stability.
+        /// </summary>
+        /// <param name="result">The calculation result that needs to be translated.</param>
+        /// <param name="categories">The list of categories for this failure mechanism that is used in case of a probability result, obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
+        /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
+        /// <exception cref="InvalidEnumArgumentException">Thrown when the CalculationResultGroup has an invalid enum value</exception>
+        /// <exception cref="AssemblyToolKernelException">Thrown when the <see cref="result"/> equals null.</exception>
+        public static CalculationOutput<FailureMechanismSectionCategoryGroup> TailorMadeAssessmentDirectFailureMechanismsFromProbabilityIncludingLength(TailorMadeProbabilityCalculationResult result, FailureMechanismSectionCategory[] categories)
+        {
+            if (result == null)
+            {
+                throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
+            }
+
+            switch (result.CalculationResultGroup)
+            {
+                case TailorMadeProbabilityCalculationResultGroup.FV:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.Iv);
+                case TailorMadeProbabilityCalculationResultGroup.NGO:
+                    return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
+                case TailorMadeProbabilityCalculationResultGroup.Probability:
+                    return DetailedAssessmentDirectFailureMechanismsFromProbability(result.Probability, categories);
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
+        }
 
         #region Combined over failure mechanism section
 

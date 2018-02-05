@@ -41,7 +41,6 @@ namespace AssemblyTool.Kernel.Test.Categories
             var calculationResult = CategoriesCalculator.CalculateAssessmentSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
-            Assert.IsNull(calculationResult.ErrorMessage);
             Assert.IsNotNull(calculationResult.WarningMessages);
             Assert.IsEmpty(calculationResult.WarningMessages);
 
@@ -83,7 +82,6 @@ namespace AssemblyTool.Kernel.Test.Categories
             var calculationResult = CategoriesCalculator.CalculateFailureMechanismCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
-            Assert.IsNull(calculationResult.ErrorMessage);
             Assert.IsNotNull(calculationResult.WarningMessages);
             Assert.IsEmpty(calculationResult.WarningMessages);
 
@@ -130,7 +128,6 @@ namespace AssemblyTool.Kernel.Test.Categories
             var calculationResult = CategoriesCalculator.CalculateFailureMechanismSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
-            Assert.IsNull(calculationResult.ErrorMessage);
             Assert.IsNotNull(calculationResult.WarningMessages);
             Assert.IsEmpty(calculationResult.WarningMessages);
 
@@ -180,7 +177,6 @@ namespace AssemblyTool.Kernel.Test.Categories
             var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
-            Assert.IsNull(calculationResult.ErrorMessage);
             Assert.IsNotNull(calculationResult.WarningMessages);
             Assert.IsEmpty(calculationResult.WarningMessages);
 
@@ -227,7 +223,6 @@ namespace AssemblyTool.Kernel.Test.Categories
             var calculationResult = CategoriesCalculator.CalculateGeotechnicFailureMechanismSectionCategories(input);
 
             Assert.IsNotNull(calculationResult.Result);
-            Assert.IsNull(calculationResult.ErrorMessage);
             Assert.IsNotNull(calculationResult.WarningMessages);
 
             Assert.AreEqual(1, calculationResult.WarningMessages.Length);
