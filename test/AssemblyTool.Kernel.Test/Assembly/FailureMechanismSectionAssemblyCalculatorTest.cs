@@ -20,11 +20,13 @@
 // All rights reserved.
 
 using System;
+using System.ComponentModel;
 using AssemblyTool.Kernel.Assembly;
 using AssemblyTool.Kernel.Assembly.CalculatorInput;
 using AssemblyTool.Kernel.Data;
 using AssemblyTool.Kernel.Data.AssemblyCategories;
 using AssemblyTool.Kernel.Data.CalculationResults;
+using AssemblyTool.Kernel.ErrorHandling;
 using NUnit.Framework;
 
 namespace AssemblyTool.Kernel.Test.Assembly
@@ -32,6 +34,8 @@ namespace AssemblyTool.Kernel.Test.Assembly
     [TestFixture]
     public class FailureMechanismSectionAssemblyCalculatorTest
     {
+        #region SimpleAssessment
+
         [Test]
         [TestCase(SimpleCalculationResult.NVT, FailureMechanismSectionCategoryGroup.None, 0.0)]
         [TestCase(SimpleCalculationResult.FV, FailureMechanismSectionCategoryGroup.Iv, 0.0)]
@@ -48,18 +52,42 @@ namespace AssemblyTool.Kernel.Test.Assembly
         }
 
         [Test]
+        public void SimpleAssessmentDirectFailureMechanismsThrowsOnInvalidEnum()
+        {
+            const SimpleCalculationResult invalidEnum = (SimpleCalculationResult)15;
+            Assert.Throws<InvalidEnumArgumentException>(() => new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentDirectFailureMechanisms(invalidEnum));
+        }
+
+        [Test]
         public void SimpleAssessmentIndirectFailureMechanismsThrowsNotImplementedException()
         {
-            try
-            {
-                new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult.FV);
-                Assert.Fail("Not implemented exception expected.");
-            }
-            catch (NotImplementedException e)
-            {
-                // ok
-            }
+            Assert.Throws<NotImplementedException>(() => new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentIndirectFailureMechanisms(SimpleCalculationResult.FV));
         }
+
+        [Test]
+        [TestCase(SimpleCalculationResultValidityOnly.NVT, FailureMechanismSectionCategoryGroup.None, 0.0)]
+        [TestCase(SimpleCalculationResultValidityOnly.WVT, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        public void SimpleAssessmentDirectFailureMechanismsValidityOnlyResultsCorrectCategory(SimpleCalculationResultValidityOnly calculationResult, FailureMechanismSectionCategoryGroup expectedResult,double expectedProbability)
+        {
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentDirectFailureMechanisms(calculationResult);
+
+            Assert.IsNotNull(calculationOutput);
+            Assert.IsEmpty(calculationOutput.WarningMessages);
+            Assert.IsNotNull(calculationOutput.Result);
+            Assert.AreEqual(expectedResult, calculationOutput.Result.CategoryGroup);
+            Assert.AreEqual(expectedProbability, calculationOutput.Result.EstimatedProbabilityOfFailure);
+        }
+
+        [Test]
+        public void SimpleAssessmentDirectFailureMechanismsValidityOnlyThrowsOnInvalidEnum()
+        {
+            const SimpleCalculationResultValidityOnly invalidEnum = (SimpleCalculationResultValidityOnly)15;
+            Assert.Throws<InvalidEnumArgumentException>(() => new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentDirectFailureMechanisms(invalidEnum));
+        }
+
+        #endregion
+
+        #region Detailed assessment
 
         [Test]
         [TestCase(DetailedCalculationResult.V, FailureMechanismSectionCategoryGroup.IIv)]
@@ -75,17 +103,16 @@ namespace AssemblyTool.Kernel.Test.Assembly
         }
 
         [Test]
+        public void DetailedAssessmentDirectFailureMechsnismsThrowsOnInvalidEnum()
+        {
+            const DetailedCalculationResult invalidEnum = (DetailedCalculationResult)15;
+            Assert.Throws<InvalidEnumArgumentException>(() => new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(invalidEnum));
+        }
+
+        [Test]
         public void DetailedAssessmentIndirectFailureMechanismsFromResultThrowsNotImplementedException()
         {
-            try
-            {
-                new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentIndirectFailureMechanisms(DetailedCalculationResult.V);
-                Assert.Fail("Not implemented exception expected.");
-            }
-            catch (NotImplementedException e)
-            {
-                // ok
-            }
+            Assert.Throws<NotImplementedException>(() => new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentIndirectFailureMechanisms(DetailedCalculationResult.V));
         }
 
         [Test]
@@ -116,7 +143,140 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.AreEqual(expectedProbability, calculationOutput.Result.EstimatedProbabilityOfFailure);
         }
 
-        // TODO: Test all paths in DetailedAssessmentDirectFailureMechanisms
+        [Test]
+        public void DetailedAssessmentDirectFailureMechanismsFromProbabilityThrowsOnNullInput()
+        {
+            try
+            {
+                new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms((DetailedCalculationInputFromProbability) null);
+                Assert.Fail("Expected exception");
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                Assert.AreEqual(1,e.Code.Length);
+                Assert.AreEqual(ErrorCode.InputIsNull,e.Code[0]);
+            }
+        }
+
+        [Test]
+        public void DetailedAssessmentDirectFailureMechanismsFromProbabilityThrowsOnNonMatchingCategories()
+        {
+            var categories = new[]
+            {
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IVv,(Probability)0.3,(Probability)0.4),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Vv,(Probability)0.4,(Probability)0.5),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv,(Probability)0.5,(Probability)1),
+            };
+            var input = new DetailedCalculationInputFromProbability((Probability)0.1549874856, categories);
+
+            try
+            {
+                new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(input);
+                Assert.Fail("Expected exception");
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                Assert.AreEqual(1, e.Code.Length);
+                Assert.AreEqual(ErrorCode.NoMatchingCategory, e.Code[0]);
+            }
+        }
+
+        [Test]
+        [TestCase(DetailedCalculationResult.V,DetailedCalculationResult.NGO,DetailedCalculationResult.NGO,DetailedCalculationResult.NGO,DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.Iv)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IIv)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IIIv)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IVv)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, FailureMechanismSectionCategoryGroup.Vv)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, FailureMechanismSectionCategoryGroup.VIv)]
+        [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IIv)]
+        [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IIIv)]
+        [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.V, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IVv)]
+        [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.V, FailureMechanismSectionCategoryGroup.Vv)]
+        [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.VIIv)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, FailureMechanismSectionCategoryGroup.VIv)]
+        public void DetailedAssessmentDirectFailureMechanismsGroupThreeReturnsCorrectCategory(DetailedCalculationResult iToII, DetailedCalculationResult iIToIII, DetailedCalculationResult iIIToIV, DetailedCalculationResult iVToV, DetailedCalculationResult vToVI, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
+        {
+            var input = new DetailedCategoryBoundariesCalculationResult(iToII,iIToIII,iIIToIV,iVToV,vToVI);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(input);
+
+            Assert.IsNotNull(calculationOutput);
+            Assert.IsEmpty(calculationOutput.WarningMessages);
+            Assert.IsNotNull(calculationOutput.Result);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
+        }
+
+        [Test]
+        [TestCase(DetailedCalculationResult.V, DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO)]
+        [TestCase(DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO)]
+        [TestCase(DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, DetailedCalculationResult.NGO)]
+        [TestCase(DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.VN)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, DetailedCalculationResult.NGO)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.VN)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.VN, DetailedCalculationResult.NGO)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.VN)]
+        [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.VN)]
+        public void DetailedAssessmentDirectFailureMechanismsGroupThreeThrowsOnImpossibleResultCombination(DetailedCalculationResult iToII, DetailedCalculationResult iIToIII, DetailedCalculationResult iIIToIV, DetailedCalculationResult iVToV, DetailedCalculationResult vToVI)
+        {
+            var input = new DetailedCategoryBoundariesCalculationResult(iToII, iIToIII, iIIToIV, iVToV, vToVI);
+            try
+            {
+                new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(input);
+                Assert.Fail("Expected exception.");
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                Assert.AreEqual(1,e.Code.Length);
+                Assert.AreEqual(ErrorCode.ImpossibleResultCombination,e.Code[0]);
+            }
+        }
+
+        [Test]
+        [TestCase(0,2, FailureMechanismSectionCategoryGroup.Iv, 0.0)]
+        [TestCase(0.1,3.5, FailureMechanismSectionCategoryGroup.Iv, 0.1)]
+        [TestCase(0.4,1.145, FailureMechanismSectionCategoryGroup.IVv, 0.4)]
+        [TestCase(0.9, 2.542,FailureMechanismSectionCategoryGroup.VIv, 0.9)]
+        [TestCase(1, 5.135, FailureMechanismSectionCategoryGroup.VIv, 1.0)]
+        public void DetailedAssessmentDirectFailureMechanismsFromProbabilityWithNValueReturnsCorrectResult(double probability,double nValue, FailureMechanismSectionCategoryGroup expectedCategoryGroup, double expectedProbabilityWithoutNMultiplication)
+        {
+            var categories = new[]
+            {
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv,(Probability)0,(Probability)0.1),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIv,(Probability)0.1,(Probability)0.2),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIIv,(Probability)0.2,(Probability)0.3),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IVv,(Probability)0.3,(Probability)0.4),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Vv,(Probability)0.4,(Probability)0.5),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv,(Probability)0.5,(Probability)1),
+            };
+
+            var input = new DetailedCalculationInputFromProbabilityWithLengthEffect((Probability)probability, categories,nValue);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(input);
+
+            Assert.IsNotNull(calculationOutput);
+            Assert.IsEmpty(calculationOutput.WarningMessages);
+            Assert.IsNotNull(calculationOutput.Result);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
+            Assert.AreEqual(Math.Min(1,expectedProbabilityWithoutNMultiplication*nValue), calculationOutput.Result.EstimatedProbabilityOfFailure);
+        }
+
+        [Test]
+        public void DetailedAssessmentDirectFailureMEchanismsFromProbabilityWithNValueThrowsOnEmptyInput()
+        {
+            try
+            {
+                new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms((DetailedCalculationInputFromProbabilityWithLengthEffect)null);
+                Assert.Fail("Expected exception.");
+            }
+            catch (AssemblyToolKernelException e)
+            {
+                Assert.AreEqual(1, e.Code.Length);
+                Assert.AreEqual(ErrorCode.InputIsNull, e.Code[0]);
+            }
+        }
+
+        #endregion
+
+        #region Tailor made assessment
 
         [Test]
         [TestCase(TailorMadeCalculationResult.FV, FailureMechanismSectionCategoryGroup.Iv)]
@@ -135,15 +295,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [Test]
         public void TailorMadeAssessmentIndirectFailureMechanismsFromResultThrowsNotImplementedException()
         {
-            try
-            {
-                new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentIndirectFailureMechanisms(TailorMadeCalculationResult.FV);
-                Assert.Fail("Not implemented exception expected.");
-            }
-            catch (NotImplementedException e)
-            {
-                // ok
-            }
+            Assert.Throws<NotImplementedException>(() => new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentIndirectFailureMechanisms(TailorMadeCalculationResult.FV));
         }
 
         [Test]
@@ -211,6 +363,10 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
         }
 
+        #endregion
+
+        #region Combined assessment
+
         [Test]
         [TestCase(FailureMechanismSectionCategoryGroup.IIv,FailureMechanismSectionCategoryGroup.IVv,FailureMechanismSectionCategoryGroup.Iv,FailureMechanismSectionCategoryGroup.Iv)]
         [TestCase(FailureMechanismSectionCategoryGroup.IIv, FailureMechanismSectionCategoryGroup.IVv, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.IVv)]
@@ -228,5 +384,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.IsEmpty(calculationOutput.WarningMessages);
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
         }
+
+        #endregion
     }
 }

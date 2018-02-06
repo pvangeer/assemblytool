@@ -174,7 +174,8 @@ namespace AssemblyTool.Kernel.Assembly
 
             var result = DetailedAssessmentDirectFailureMechanisms(new DetailedCalculationInputFromProbability(input.Probability, input.Categories));
 
-            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(result.Result.CategoryGroup, result.Result.EstimatedProbabilityOfFailure* input.NValue));
+            var estimatedProbabilityOfFailure = (Probability)Math.Min(1.0,(double)result.Result.EstimatedProbabilityOfFailure* input.NValue);
+            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(result.Result.CategoryGroup, estimatedProbabilityOfFailure));
         }
         #endregion
 
