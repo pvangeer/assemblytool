@@ -29,13 +29,12 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
     public class DetailedCalculationInputFromProbability
     {
         /// <summary>
-        /// This class is inteded to be used as input in <see cref="IFailureMechanismSectionAssemblyCalculator.DetailedAssessmentDirectFailureMechanisms(AssemblyTool.Kernel.Assembly.CalculatorInput.DetailedCalculationInputFromProbability)."/>
+        /// This class is inteded to be used as input in <see cref="IFailureMechanismSectionAssemblyCalculator.DetailedAssessmentDirectFailureMechanisms(AssemblyTool.Kernel.Assembly.CalculatorInput.DetailedCalculationInputFromProbability)"/>.
         /// </summary>
         /// <param name="probability">The calculated probability.</param>
         /// <param name="categories">The list of categories for this failure mechanism obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="categories"/> equals null or is an empty list.</exception>
-        /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="probability"/> equals NaN.</exception>
         public DetailedCalculationInputFromProbability(Probability probability, FailureMechanismSectionCategory[] categories)
         {
             ValidateCategories(categories);
@@ -45,10 +44,13 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
         }
 
         /// <summary>
-        /// 
+        /// The calculated probability that needs to be translated into a category.
         /// </summary>
         public Probability Probability { get; }
 
+        /// <summary>
+        /// A list of categories describing the categories and category boundaries for the sections of a failure mechanism
+        /// </summary>
         public FailureMechanismSectionCategory[] Categories { get; }
 
         private void ValidateCategories(FailureMechanismSectionCategory[] categories)

@@ -30,7 +30,7 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
     public class DetailedCalculationInputFromProbabilityWithLengthEffect : DetailedCalculationInputFromProbability
     {
         /// <summary>
-        /// 
+        /// This class is inteded to be used as input in <see cref="IFailureMechanismSectionAssemblyCalculator.DetailedAssessmentDirectFailureMechanisms(AssemblyTool.Kernel.Assembly.CalculatorInput.DetailedCalculationInputFromProbabilityWithLengthEffect)"/>.
         /// </summary>
         /// <param name="probability">The calculated probability.</param>
         /// <param name="categories">The list of categories for this failure mechanism obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>

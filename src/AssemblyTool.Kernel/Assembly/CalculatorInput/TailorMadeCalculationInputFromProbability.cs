@@ -30,7 +30,7 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
     public class TailorMadeCalculationInputFromProbability
     {
         /// <summary>
-        /// 
+        /// This class is inteded to be used as input in <see cref="IFailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentDirectFailureMechanisms(TailorMadeCalculationInputFromProbability)"/>.
         /// </summary>
         /// <param name="result">The specified tailor made calculation result.</param>
         /// <param name="categories">The categories for this failure mechanisms obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/>.</param>
@@ -46,10 +46,13 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
         }
 
         /// <summary>
-        /// 
+        /// The result that needs to be translated into a category.
         /// </summary>
         public TailorMadeProbabilityCalculationResult Result { get; }
 
+        /// <summary>
+        /// A list of categories describing the categories and category boundaries for the sections of a failure mechanism
+        /// </summary>
         public FailureMechanismSectionCategory[] Categories { get; }
 
         private void ValidateCategories(FailureMechanismSectionCategory[] categories)

@@ -29,6 +29,9 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
 {
     public class TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor : TailorMadeCalculationInputFromProbability
     {
+        /// <summary>
+        /// This class is inteded to be used as input in <see cref="IFailureMechanismSectionAssemblyCalculator.TailorMadeAssessmentDirectFailureMechanisms(TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor)"/>.
+        /// </summary>
         /// <param name="result">The calculation result that needs to be translated.</param>
         /// <param name="categories">The list of categories for this failure mechanism that is used in case of a probability result, obtained with <see cref="CategoriesCalculator.CalculateFailureMechanismSectionCategories"/></param>
         /// <param name="nValue">The length effect factor for the failuremechanism section that is being considered.</param>
@@ -48,7 +51,7 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
 
         private void ValidateNValue(double nValue)
         {
-            if (Double.IsNaN(nValue))
+            if (double.IsNaN(nValue))
             {
                 throw new AssemblyToolKernelException(ErrorCode.InvalidNValue, new AssemblyToolKernelException(ErrorCode.ValueIsNaN));
             }
