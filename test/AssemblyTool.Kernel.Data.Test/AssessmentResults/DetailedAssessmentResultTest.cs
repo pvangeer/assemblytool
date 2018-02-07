@@ -32,10 +32,11 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(3, Enum.GetValues(typeof(DetailedCalculationResult)).Length);
+            Assert.AreEqual(4, Enum.GetValues(typeof(DetailedCalculationResult)).Length);
             Assert.AreEqual(1, (int)DetailedCalculationResult.V);
             Assert.AreEqual(2, (int)DetailedCalculationResult.VN);
             Assert.AreEqual(3, (int)DetailedCalculationResult.NGO);
+            Assert.AreEqual(4, (int)DetailedCalculationResult.None);
         }
     }
 }

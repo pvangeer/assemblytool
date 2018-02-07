@@ -32,10 +32,11 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(3, Enum.GetValues(typeof(TailorMadeProbabilityCalculationResultGroup)).Length);
+            Assert.AreEqual(4, Enum.GetValues(typeof(TailorMadeProbabilityCalculationResultGroup)).Length);
             Assert.AreEqual(1, (int)TailorMadeProbabilityCalculationResultGroup.NGO);
             Assert.AreEqual(2, (int)TailorMadeProbabilityCalculationResultGroup.FV);
             Assert.AreEqual(3, (int)TailorMadeProbabilityCalculationResultGroup.Probability);
+            Assert.AreEqual(4, (int)TailorMadeProbabilityCalculationResultGroup.None);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace AssemblyTool.Kernel.Assembly
             switch (result)
             {
                 case SimpleCalculationResult.NVT:
-                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.None,(Probability) 0));
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.NotApplicable,(Probability) 0));
                 case SimpleCalculationResult.FV:
                     return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.Iv,(Probability)0));
                 case SimpleCalculationResult.VB:
@@ -61,7 +61,7 @@ namespace AssemblyTool.Kernel.Assembly
             switch (result)
             {
                 case SimpleCalculationResultValidityOnly.NVT:
-                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.None,(Probability) 0));
+                    return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.NotApplicable,(Probability) 0));
                 case SimpleCalculationResultValidityOnly.WVT:
                     return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv, Probability.NaN));
                 default:
@@ -284,19 +284,19 @@ namespace AssemblyTool.Kernel.Assembly
                 FailureMechanismSectionCategoryGroup resultTailorMadeAssessment)
         {
             var tailorMadeAssessmentCategorySeven = resultTailorMadeAssessment == FailureMechanismSectionCategoryGroup.VIIv;
-            if (!tailorMadeAssessmentCategorySeven && resultTailorMadeAssessment != FailureMechanismSectionCategoryGroup.None)
+            if (!tailorMadeAssessmentCategorySeven && resultTailorMadeAssessment != FailureMechanismSectionCategoryGroup.NotApplicable)
             {
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultTailorMadeAssessment);
             }
 
             var detailedAssessmentCategorySeven = resultDetailedAssessment == FailureMechanismSectionCategoryGroup.VIIv;
-            if (!detailedAssessmentCategorySeven && resultDetailedAssessment != FailureMechanismSectionCategoryGroup.None)
+            if (!detailedAssessmentCategorySeven && resultDetailedAssessment != FailureMechanismSectionCategoryGroup.NotApplicable)
             {
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultDetailedAssessment);
             }
 
             var simpleAssessmentCategorySeven = resultSimpleAssessment == FailureMechanismSectionCategoryGroup.VIIv;
-            if (!simpleAssessmentCategorySeven && resultSimpleAssessment != FailureMechanismSectionCategoryGroup.None)
+            if (!simpleAssessmentCategorySeven && resultSimpleAssessment != FailureMechanismSectionCategoryGroup.NotApplicable)
             {
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(resultSimpleAssessment);
             }
@@ -306,7 +306,7 @@ namespace AssemblyTool.Kernel.Assembly
                 return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.VIIv);
             }
 
-            return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.None);
+            return new CalculationOutput<FailureMechanismSectionCategoryGroup>(FailureMechanismSectionCategoryGroup.NotApplicable);
         }
 
         public CalculationOutput<FailureMechanismSectionAssemblyCategoryResult> CombinedAssessmentFromFailureMechanismSectionResults(
@@ -314,19 +314,19 @@ namespace AssemblyTool.Kernel.Assembly
             FailureMechanismSectionAssemblyCategoryResult resultDetailedAssessment,
             FailureMechanismSectionAssemblyCategoryResult resultTailorMadeAssessment)
         {
-            var tailorMadeAssessmentNoResult = resultTailorMadeAssessment == null || resultTailorMadeAssessment.CategoryGroup == FailureMechanismSectionCategoryGroup.None;
+            var tailorMadeAssessmentNoResult = resultTailorMadeAssessment == null || resultTailorMadeAssessment.CategoryGroup == FailureMechanismSectionCategoryGroup.NotApplicable;
             if (!tailorMadeAssessmentNoResult && resultTailorMadeAssessment.CategoryGroup != FailureMechanismSectionCategoryGroup.VIIv)
             {
                 return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(resultTailorMadeAssessment);
             }
 
-            var detailedAssessmentNoResult = resultDetailedAssessment == null || resultDetailedAssessment.CategoryGroup == FailureMechanismSectionCategoryGroup.None;
+            var detailedAssessmentNoResult = resultDetailedAssessment == null || resultDetailedAssessment.CategoryGroup == FailureMechanismSectionCategoryGroup.NotApplicable;
             if (!detailedAssessmentNoResult && resultDetailedAssessment.CategoryGroup != FailureMechanismSectionCategoryGroup.VIIv)
             {
                 return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(resultDetailedAssessment);
             }
 
-            var simpleAssessmentNoResult = resultSimpleAssessment == null || resultSimpleAssessment.CategoryGroup == FailureMechanismSectionCategoryGroup.None;
+            var simpleAssessmentNoResult = resultSimpleAssessment == null || resultSimpleAssessment.CategoryGroup == FailureMechanismSectionCategoryGroup.NotApplicable;
             if (!simpleAssessmentNoResult && resultSimpleAssessment.CategoryGroup != FailureMechanismSectionCategoryGroup.VIIv)
             {
                 return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(resultSimpleAssessment);
@@ -334,7 +334,7 @@ namespace AssemblyTool.Kernel.Assembly
 
             if (tailorMadeAssessmentNoResult && detailedAssessmentNoResult && simpleAssessmentNoResult)
             {
-                return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.None, Probability.NaN));
+                return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.NotApplicable, Probability.NaN));
             }
 
             return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(FailureMechanismSectionCategoryGroup.VIIv,Probability.NaN));

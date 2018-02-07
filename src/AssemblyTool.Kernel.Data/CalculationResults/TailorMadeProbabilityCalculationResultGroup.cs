@@ -24,6 +24,11 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
     public enum TailorMadeProbabilityCalculationResultGroup
     {
         /// <summary>
+        /// The user did not register any result yet.
+        /// </summary>
+        None = 4,
+
+        /// <summary>
         /// NGO - Nog Geen Oordeel, No result yet
         /// </summary>
         NGO = 1,

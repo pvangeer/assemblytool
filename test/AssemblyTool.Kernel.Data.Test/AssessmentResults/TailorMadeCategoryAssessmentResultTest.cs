@@ -32,7 +32,7 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(9, Enum.GetValues(typeof(TailorMadeCategoryCalculationResult)).Length);
+            Assert.AreEqual(10, Enum.GetValues(typeof(TailorMadeCategoryCalculationResult)).Length);
             Assert.AreEqual(1, (int)TailorMadeCategoryCalculationResult.Iv);
             Assert.AreEqual(2, (int)TailorMadeCategoryCalculationResult.IIv);
             Assert.AreEqual(3, (int)TailorMadeCategoryCalculationResult.IIIv);
@@ -42,6 +42,7 @@ namespace AssemblyTool.Kernel.Data.Test.AssessmentResults
             Assert.AreEqual(7, (int)TailorMadeCategoryCalculationResult.VIIv);
             Assert.AreEqual(8, (int)TailorMadeCategoryCalculationResult.NGO);
             Assert.AreEqual(9, (int)TailorMadeCategoryCalculationResult.FV);
+            Assert.AreEqual(10, (int)TailorMadeCategoryCalculationResult.None);
         }
     }
 }

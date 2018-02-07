@@ -37,7 +37,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// This method implements WBI-0E-1 from the functional design. It calculates a <see cref="FailureMechanismSectionAssemblyCategoryResult"/> from the specified <see cref="SimpleCalculationResult"/>.
         /// 
         /// In short, this method returns the following:
-        /// * NVT => None / 0
+        /// * NVT => NotApplicable / 0
         /// * FV => Iv / 0
         /// * VB => VIIv / NaN
         /// </summary>
@@ -57,7 +57,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// This method implements WBI-0E-3 from the functional design. It calculates a <see cref="FailureMechanismSectionAssemblyCategoryResult"/> from the specified <see cref="SimpleCalculationResult"/>.
         /// 
         /// In short, this method returns the following:
-        /// * NVT => None / 0
+        /// * NVT => NotApplicable / 0
         /// * WVT => VIIv / NaN
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
@@ -188,7 +188,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// 2. If there is a detailed result => return this
         /// 3. If there is a simple result => return this
         /// 4. If one of the results is of category VIIv => return this result
-        /// 5. In case of no results at all => return category None
+        /// 5. In case of no results at all => return category NotApplicable
         /// </summary>
         /// <param name="resultSimpleAssessment">The result of the simple assessment</param>
         /// <param name="resultDetailedAssessment">The result of the detailed assessment</param>
@@ -207,7 +207,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// 2. If there is a detailed result => return this
         /// 3. If there is a simple result => return this
         /// 4. If one of the results is of category VIIv => return this result
-        /// 5. In case of no results at all => return category None
+        /// 5. In case of no results at all => return category NotApplicable
         /// </summary>
         /// <param name="resultSimpleAssessment">The result of the simple assessment</param>
         /// <param name="resultDetailedAssessment">The result of the detailed assessment</param>

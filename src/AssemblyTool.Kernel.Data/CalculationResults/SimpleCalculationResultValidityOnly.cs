@@ -27,6 +27,11 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
     public enum SimpleCalculationResultValidityOnly
     {
         /// <summary>
+        /// The user did not register any result yet.
+        /// </summary>
+        None = 3,
+
+        /// <summary>
         /// NVT - Niet van toepassing, not applicable
         /// </summary>
         NVT = 1,

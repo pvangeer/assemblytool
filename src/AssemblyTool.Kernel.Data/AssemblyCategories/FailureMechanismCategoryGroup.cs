@@ -56,6 +56,16 @@ namespace AssemblyTool.Kernel.Data.AssemblyCategories
         /// <summary>
         /// Assembly category VIt. No result yet (NGO - Nog geen oordeel)
         /// </summary>
-        VIIt
+        VIIt,
+
+        /// <summary>
+        /// This failure mechanisms is not applicable (not relevant) for this assessment section
+        /// </summary>
+        NotApplicable,
+
+        /// <summary>
+        /// There is no result for this failure mechanism yet.
+        /// </summary>
+        None
     }
 }

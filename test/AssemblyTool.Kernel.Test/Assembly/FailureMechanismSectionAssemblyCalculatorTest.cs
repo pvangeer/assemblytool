@@ -37,7 +37,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         #region SimpleAssessment
 
         [Test]
-        [TestCase(SimpleCalculationResult.NVT, FailureMechanismSectionCategoryGroup.None, 0.0)]
+        [TestCase(SimpleCalculationResult.NVT, FailureMechanismSectionCategoryGroup.NotApplicable, 0.0)]
         [TestCase(SimpleCalculationResult.FV, FailureMechanismSectionCategoryGroup.Iv, 0.0)]
         [TestCase(SimpleCalculationResult.VB, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
         public void SimpleAssessmentDirectFailureMechanismsReturnsCorrectCategory(SimpleCalculationResult calculationResult, FailureMechanismSectionCategoryGroup expectedResult, double expectedProbability)
@@ -65,7 +65,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         }
 
         [Test]
-        [TestCase(SimpleCalculationResultValidityOnly.NVT, FailureMechanismSectionCategoryGroup.None, 0.0)]
+        [TestCase(SimpleCalculationResultValidityOnly.NVT, FailureMechanismSectionCategoryGroup.NotApplicable, 0.0)]
         [TestCase(SimpleCalculationResultValidityOnly.WVT, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
         public void SimpleAssessmentDirectFailureMechanismsValidityOnlyResultsCorrectCategory(SimpleCalculationResultValidityOnly calculationResult, FailureMechanismSectionCategoryGroup expectedResult,double expectedProbability)
         {

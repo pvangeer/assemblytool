@@ -69,6 +69,11 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
         /// <summary>
         /// FV - Faalkans Verwaarloosbaar, probability neglectible
         /// </summary>
-        FV = 9
+        FV = 9,
+
+        /// <summary>
+        /// The user did not register any result yet.
+        /// </summary>
+        None = 10,
     }
 }

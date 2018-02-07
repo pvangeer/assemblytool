@@ -27,6 +27,11 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
     public enum DetailedCalculationResult
     {
         /// <summary>
+        /// The user did not register any result yet.
+        /// </summary>
+        None = 4,
+
+        /// <summary>
         /// V - Voldoet, approved
         /// </summary>
         V = 1,

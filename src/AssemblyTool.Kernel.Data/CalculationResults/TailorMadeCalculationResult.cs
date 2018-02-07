@@ -27,6 +27,11 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
     public enum TailorMadeCalculationResult
     {
         /// <summary>
+        /// The user did not register any result yet.
+        /// </summary>
+        None = 5,
+
+        /// <summary>
         /// V - Voldoet, approved
         /// </summary>
         V = 1,

@@ -59,7 +59,12 @@ namespace AssemblyTool.Kernel.Data.AssemblyCategories
         VIIv,
 
         /// <summary>
-        /// 
+        /// The failure mechanism is not applicable for this section
+        /// </summary>
+        NotApplicable,
+
+        /// <summary>
+        /// There is no registered result yet.
         /// </summary>
         None
     }
