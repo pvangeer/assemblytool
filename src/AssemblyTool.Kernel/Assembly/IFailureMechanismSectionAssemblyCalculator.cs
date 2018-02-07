@@ -40,6 +40,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// * NVT => NotApplicable / 0
         /// * FV => Iv / 0
         /// * VB => VIIv / NaN
+        /// * None => None / NaN
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionAssemblyCategoryResult"/>.</returns>
@@ -59,6 +60,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// In short, this method returns the following:
         /// * NVT => NotApplicable / 0
         /// * WVT => VIIv / NaN
+        /// * None => None / NaN
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionAssemblyCategoryResult"/>.</returns>
@@ -72,6 +74,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// * NGO => VIIv
         /// * V => IIv
         /// * VN => Vv
+        /// * None => None
         /// </summary>
         /// <param name="result">The calculation result that needs to be translated to an assessment category group.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
@@ -86,8 +89,10 @@ namespace AssemblyTool.Kernel.Assembly
         CalculationOutput<FailureMechanismSectionCategoryGroup> DetailedAssessmentIndirectFailureMechanisms(DetailedCalculationResult result);
 
         /// <summary>
-        /// This method implements WBI-0G-3 from the functional design. Is calculates a <seealso cref="FailureMechanismSectionAssemblyCategoryResult"/> from the specified <see cref="DetailedCalculationResult"/>. To do so, 
+        /// This method implements WBI-0G-3 from the functional design. Is calculates a <seealso cref="FailureMechanismSectionAssemblyCategoryResult"/> from the specified <see cref="DetailedCalculationInputFromProbability"/>. To do so, 
         /// the methods finds the first category that has a lower boundary smaller than or eqaul to the specified probability and an upperboundary greater than or equal to the specified probability.
+        /// 
+        /// In case the probability equals NaN, this method returns the category "None".
         /// </summary>
         /// <param name="input">The combined input for this method.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionAssemblyCategoryResult"/>.</returns>
@@ -106,7 +111,7 @@ namespace AssemblyTool.Kernel.Assembly
 
         /// <summary>
         /// This method implements WBI-0G-5 from the functional design. Is calculates a <seealso cref="FailureMechanismSectionAssemblyCategoryResult"/> from the specified <see cref="DetailedCalculationResult"/>. This method does the same calculation / determination as WBI-0G-3, 
-        /// but multiplies the corresponding probability with the <see cref="DetailedCalculationInputFromProbabilityWithLengthEffect.NValue"/>
+        /// but multiplies the corresponding probability with the <see cref="DetailedCalculationInputFromProbabilityWithLengthEffect.NValue"/>. In case of a probability of NaN, the method returns "None".
         /// </summary>
         /// <param name="input">The combined input for this method.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionAssemblyCategoryResult"/>.</returns>
@@ -121,6 +126,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// * V => IIv
         /// * VN => Vv
         /// * FV => Iv
+        /// * None => None
         /// </summary>
         /// <param name="result">The registered qualitative result.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
@@ -142,6 +148,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// * FV => Iv / 0
         /// * NGO => VIIv / NaN
         /// * Probability => call WBI-0G-3 and find a category for this probability.
+        /// * None => None / NaN
         /// </summary>
         /// <param name="input">The combined input for this method.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
@@ -160,6 +167,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// * Vv => Vv
         /// * VIv => VIv
         /// * VIIv or NGO => VIIv
+        /// * None => None
         /// </summary>
         /// <param name="result">The calculation result.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
@@ -173,6 +181,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// * FV => Iv / 0
         /// * NGO => VIIv / NaN
         /// * Probability => call WBI-0G-5 and find a category for this probability (which multiplies the found probability with the spoecified <see cref="TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor.NValue"/>).
+        /// * None => None / NaN
         /// </summary>
         /// <param name="input">The combined input for this method.</param>
         /// <returns><see cref="CalculationOutput{TResult}"/> containing the determined <see cref="FailureMechanismSectionCategoryGroup"/>.</returns>
@@ -188,7 +197,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// 2. If there is a detailed result => return this
         /// 3. If there is a simple result => return this
         /// 4. If one of the results is of category VIIv => return this result
-        /// 5. In case of no results at all => return category NotApplicable
+        /// 5. In case of no results at all => return category None
         /// </summary>
         /// <param name="resultSimpleAssessment">The result of the simple assessment</param>
         /// <param name="resultDetailedAssessment">The result of the detailed assessment</param>
@@ -207,7 +216,7 @@ namespace AssemblyTool.Kernel.Assembly
         /// 2. If there is a detailed result => return this
         /// 3. If there is a simple result => return this
         /// 4. If one of the results is of category VIIv => return this result
-        /// 5. In case of no results at all => return category NotApplicable
+        /// 5. In case of no results at all => return category None
         /// </summary>
         /// <param name="resultSimpleAssessment">The result of the simple assessment</param>
         /// <param name="resultDetailedAssessment">The result of the detailed assessment</param>
