@@ -46,11 +46,6 @@ namespace AssemblyTool.Kernel.Data.CalculationResults
         /// <exception cref="AssemblyToolKernelException">Thrown when <see cref="probability"/> equals Probability.NaN</exception>
         public TailorMadeProbabilityCalculationResult(Probability probability)
         {
-            if (double.IsNaN(probability))
-            {
-                throw new AssemblyToolKernelException(ErrorCode.ValueIsNaN);
-            }
-
             Probability = probability;
             CalculationResultGroup = TailorMadeProbabilityCalculationResultGroup.Probability;
         }

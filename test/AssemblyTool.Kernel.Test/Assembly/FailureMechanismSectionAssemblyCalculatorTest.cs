@@ -276,7 +276,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         }
 
         [Test]
-        public void DetailedAssessmentDirectFailureMEchanismsFromProbabilityWithNValueThrowsOnEmptyInput()
+        public void DetailedAssessmentDirectFailureMechanismsFromProbabilityWithNValueThrowsOnEmptyInput()
         {
             try
             {
@@ -299,6 +299,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(TailorMadeCalculationResult.V, FailureMechanismSectionCategoryGroup.IIv)]
         [TestCase(TailorMadeCalculationResult.VN, FailureMechanismSectionCategoryGroup.Vv)]
         [TestCase(TailorMadeCalculationResult.NGO, FailureMechanismSectionCategoryGroup.VIIv)]
+        [TestCase(TailorMadeCalculationResult.None, FailureMechanismSectionCategoryGroup.None)]
         public void TailorMadeAssessmentDirectFailureMechanismsFromResultTranslatesResultCorrectly(TailorMadeCalculationResult result, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(result);
@@ -306,6 +307,13 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
+        }
+
+        [Test]
+        public void TailorMadeAssessmentDirectFailureMechanismsFromResultThrowsOnInvalidEnum()
+        {
+            const TailorMadeCalculationResult invalidEnum = (TailorMadeCalculationResult)15;
+            Assert.Throws<InvalidEnumArgumentException>(() => new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(invalidEnum));
         }
 
         [Test]
@@ -317,6 +325,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [Test]
         [TestCase(TailorMadeProbabilityCalculationResultGroup.FV, FailureMechanismSectionCategoryGroup.Iv, 0.0)]
         [TestCase(TailorMadeProbabilityCalculationResultGroup.NGO, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        [TestCase(TailorMadeProbabilityCalculationResultGroup.None, FailureMechanismSectionCategoryGroup.None, double.NaN)]
         public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityReturnsCorrectCategoryNoProbability(TailorMadeProbabilityCalculationResultGroup resultGroup, FailureMechanismSectionCategoryGroup expectedCategoryGroup, double expectedProbability)
         {
             var input = new TailorMadeCalculationInputFromProbability(
@@ -334,9 +343,25 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
             Assert.AreEqual(expectedProbability, calculationOutput.Result.EstimatedProbabilityOfFailure);
         }
+        
+        [Test]
+        public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityThrowsOnInvalidEnum()
+        {
+            const TailorMadeProbabilityCalculationResultGroup invalidEnum = (TailorMadeProbabilityCalculationResultGroup)15;
+            var input = new TailorMadeCalculationInputFromProbability(
+                new TailorMadeProbabilityCalculationResult(invalidEnum),
+                new[]
+                {
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv, (Probability) 0,(Probability) 1)
+                });
+
+            Assert.Throws<InvalidEnumArgumentException>(() => new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(input));
+        }
 
         [Test]
-        public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityReturnsCorrectCategoryFromProbability()
+        [TestCase(0.35, FailureMechanismSectionCategoryGroup.IVv)]
+        [TestCase(double.NaN, FailureMechanismSectionCategoryGroup.None)]
+        public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityReturnsCorrectCategoryFromProbability(double probabilityValue, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
             var categories = new[]
             {
@@ -348,7 +373,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
                 new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv,(Probability)0.5,(Probability)1),
             };
 
-            var probability = (Probability)0.35;
+            var probability = (Probability)probabilityValue;
             var result = new TailorMadeProbabilityCalculationResult(probability);
             var input = new TailorMadeCalculationInputFromProbability(result, categories);
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(input);
@@ -356,7 +381,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.IsNotNull(calculationOutput);
             Assert.IsEmpty(calculationOutput.WarningMessages);
             Assert.IsNotNull(calculationOutput.Result);
-            Assert.AreEqual(FailureMechanismSectionCategoryGroup.IVv, calculationOutput.Result.CategoryGroup);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
             Assert.AreEqual(probability, calculationOutput.Result.EstimatedProbabilityOfFailure);
         }
 
@@ -370,6 +395,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(TailorMadeCategoryCalculationResult.VIv, FailureMechanismSectionCategoryGroup.VIv)]
         [TestCase(TailorMadeCategoryCalculationResult.VIIv, FailureMechanismSectionCategoryGroup.VIIv)]
         [TestCase(TailorMadeCategoryCalculationResult.FV, FailureMechanismSectionCategoryGroup.Iv)]
+        [TestCase(TailorMadeCategoryCalculationResult.None, FailureMechanismSectionCategoryGroup.None)]
         public void TailorMadeAssessmentDirectFailureMechanismsFromCategoryResultReturnsCorrectCategory(TailorMadeCategoryCalculationResult result, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(result);
@@ -379,6 +405,79 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
         }
 
+        [Test]
+        [TestCase(TailorMadeProbabilityCalculationResultGroup.FV, FailureMechanismSectionCategoryGroup.Iv, 0.0)]
+        [TestCase(TailorMadeProbabilityCalculationResultGroup.NGO, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        [TestCase(TailorMadeProbabilityCalculationResultGroup.None, FailureMechanismSectionCategoryGroup.None, double.NaN)]
+        public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityWithNValueReturnsCorrectCategoryNoProbability(TailorMadeProbabilityCalculationResultGroup resultGroup, FailureMechanismSectionCategoryGroup expectedCategoryGroup, double expectedProbability)
+        {
+            var input = new TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor(
+                new TailorMadeProbabilityCalculationResult(resultGroup),
+                new[]
+                {
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv, (Probability) 0,(Probability) 1)
+                },1.234);
+
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(input);
+
+            Assert.IsNotNull(calculationOutput);
+            Assert.IsEmpty(calculationOutput.WarningMessages);
+            Assert.IsNotNull(calculationOutput.Result);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
+            Assert.AreEqual(expectedProbability, calculationOutput.Result.EstimatedProbabilityOfFailure);
+        }
+
+        [Test]
+        public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityWithNValueThrowsOnInvalidEnum()
+        {
+            const TailorMadeProbabilityCalculationResultGroup invalidEnum = (TailorMadeProbabilityCalculationResultGroup)15;
+            var input = new TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor(
+                new TailorMadeProbabilityCalculationResult(invalidEnum),
+                new[]
+                {
+                    new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv, (Probability) 0,(Probability) 1)
+                },1.234);
+
+            Assert.Throws<InvalidEnumArgumentException>(() => new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(input));
+        }
+
+        [Test]
+        [TestCase(0.35, FailureMechanismSectionCategoryGroup.IVv)]
+        [TestCase(0.95, FailureMechanismSectionCategoryGroup.VIv)]
+        [TestCase(double.NaN, FailureMechanismSectionCategoryGroup.None)]
+        public void TailorMadeAssessmentDirectFailureMechanismsFromProbabilityWithNValueReturnsCorrectCategoryFromProbability(double probabilityValue, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
+        {
+            var categories = new[]
+            {
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Iv,(Probability)0,(Probability)0.1),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIv,(Probability)0.1,(Probability)0.2),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IIIv,(Probability)0.2,(Probability)0.3),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.IVv,(Probability)0.3,(Probability)0.4),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.Vv,(Probability)0.4,(Probability)0.5),
+                new FailureMechanismSectionCategory(FailureMechanismSectionCategoryGroup.VIv,(Probability)0.5,(Probability)1),
+            };
+
+            var probability = (Probability)probabilityValue;
+            var result = new TailorMadeProbabilityCalculationResult(probability);
+            const double nValue = 1.234;
+            var input = new TailorMadeCalculationInputFromProbabilityWithLengthEffectFactor(result, categories,nValue);
+            var calculationOutput = new FailureMechanismSectionAssemblyCalculator().TailorMadeAssessmentDirectFailureMechanisms(input);
+
+            Assert.IsNotNull(calculationOutput);
+            var expectedProbability = probabilityValue * nValue;
+            if (expectedProbability > 1)
+            {
+                Assert.AreEqual(1,calculationOutput.WarningMessages.Length);
+                Assert.AreEqual(WarningMessage.CorrectedProbability,calculationOutput.WarningMessages[0]);
+            }
+            else
+            {
+                Assert.IsEmpty(calculationOutput.WarningMessages);
+            }
+            Assert.IsNotNull(calculationOutput.Result);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
+            Assert.AreEqual(Math.Min(expectedProbability,1.0), calculationOutput.Result.EstimatedProbabilityOfFailure);
+        }
         #endregion
 
         #region Combined assessment
