@@ -504,6 +504,40 @@ namespace AssemblyTool.Kernel.Test.Assembly
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result);
         }
 
+        [Test]
+        [TestCase(FailureMechanismSectionCategoryGroup.IIv, 0.1, FailureMechanismSectionCategoryGroup.IVv, 0.2, FailureMechanismSectionCategoryGroup.Iv, 0.3, FailureMechanismSectionCategoryGroup.Iv, 0.3)]
+        [TestCase(FailureMechanismSectionCategoryGroup.IIv, 0.1, FailureMechanismSectionCategoryGroup.IVv, 0.2, FailureMechanismSectionCategoryGroup.VIIv, 0.3, FailureMechanismSectionCategoryGroup.IVv, 0.2)]
+        [TestCase(FailureMechanismSectionCategoryGroup.IIv, 0.1, FailureMechanismSectionCategoryGroup.VIIv, 0.2, FailureMechanismSectionCategoryGroup.VIIv, 0.3, FailureMechanismSectionCategoryGroup.IIv, 0.1)]
+        [TestCase(FailureMechanismSectionCategoryGroup.VIIv, 0.1, FailureMechanismSectionCategoryGroup.VIIv, 0.2, FailureMechanismSectionCategoryGroup.VIIv, 0.3, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        [TestCase(FailureMechanismSectionCategoryGroup.IIIv, 0.1, FailureMechanismSectionCategoryGroup.None, 0.2, FailureMechanismSectionCategoryGroup.None, 0.3, FailureMechanismSectionCategoryGroup.IIIv, 0.1)]
+        [TestCase(FailureMechanismSectionCategoryGroup.None, 0.1, FailureMechanismSectionCategoryGroup.None, 0.2, FailureMechanismSectionCategoryGroup.None, 0.3, FailureMechanismSectionCategoryGroup.None, double.NaN)]
+        [TestCase(FailureMechanismSectionCategoryGroup.None, 0.1, FailureMechanismSectionCategoryGroup.VIIv, 0.2, FailureMechanismSectionCategoryGroup.None, 0.3, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        [TestCase(FailureMechanismSectionCategoryGroup.NotApplicable, 0.0, FailureMechanismSectionCategoryGroup.None, 0.2, FailureMechanismSectionCategoryGroup.None, 0.3, FailureMechanismSectionCategoryGroup.NotApplicable, 0)]
+        public void CombinedAssessmentFromFailureMechanismSectionResultsWithProbabilitiesSelectsCorrectResult(
+            FailureMechanismSectionCategoryGroup simpleAssessmentResult,
+            double simpleAssessmentProbabilityValue,
+            FailureMechanismSectionCategoryGroup detailedAssessmentResult,
+            double detailedAssessmentProbabilityValue,
+            FailureMechanismSectionCategoryGroup tailorMadeAssessmentResult,
+            double tailorMadeAssessmentProbabilityValue,
+            FailureMechanismSectionCategoryGroup expectedCategoryGroup,
+            double expectedProbabilityValue)
+        {
+            var calculationOutput =
+                new FailureMechanismSectionAssemblyCalculator().CombinedAssessmentFromFailureMechanismSectionResults(
+                    new FailureMechanismSectionAssemblyCategoryResult(simpleAssessmentResult,
+                        (Probability) simpleAssessmentProbabilityValue),
+                    new FailureMechanismSectionAssemblyCategoryResult(detailedAssessmentResult,
+                        (Probability) detailedAssessmentProbabilityValue),
+                    new FailureMechanismSectionAssemblyCategoryResult(tailorMadeAssessmentResult,
+                        (Probability) tailorMadeAssessmentProbabilityValue));
+
+            Assert.IsNotNull(calculationOutput);
+            Assert.IsEmpty(calculationOutput.WarningMessages);
+            Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
+            Assert.AreEqual(expectedProbabilityValue,calculationOutput.Result.EstimatedProbabilityOfFailure);
+        }
+
         #endregion
     }
 }
