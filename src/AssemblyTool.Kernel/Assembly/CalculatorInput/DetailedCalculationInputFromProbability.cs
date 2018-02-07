@@ -38,7 +38,6 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
         /// <exception cref="AssemblyToolKernelException">Thrown in case <see cref="probability"/> equals NaN.</exception>
         public DetailedCalculationInputFromProbability(Probability probability, FailureMechanismSectionCategory[] categories)
         {
-            ValidateResult(probability);
             ValidateCategories(categories);
 
             Probability = probability;
@@ -57,14 +56,6 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
             if (categories == null || categories.Length == 0)
             {
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
-            }
-        }
-
-        private static void ValidateResult(Probability probability)
-        {
-            if (double.IsNaN(probability))
-            {
-                throw new AssemblyToolKernelException(ErrorCode.ValueIsNaN);
             }
         }
     }

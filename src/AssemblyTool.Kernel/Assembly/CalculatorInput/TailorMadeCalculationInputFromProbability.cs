@@ -66,11 +66,6 @@ namespace AssemblyTool.Kernel.Assembly.CalculatorInput
             {
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
-
-            if (double.IsNaN(result.Probability))
-            {
-                throw new AssemblyToolKernelException(ErrorCode.ValueIsNaN);
-            }
         }
     }
 }

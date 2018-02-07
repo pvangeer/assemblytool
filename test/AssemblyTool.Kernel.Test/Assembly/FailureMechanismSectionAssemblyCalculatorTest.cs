@@ -40,6 +40,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(SimpleCalculationResult.NVT, FailureMechanismSectionCategoryGroup.NotApplicable, 0.0)]
         [TestCase(SimpleCalculationResult.FV, FailureMechanismSectionCategoryGroup.Iv, 0.0)]
         [TestCase(SimpleCalculationResult.VB, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        [TestCase(SimpleCalculationResult.None, FailureMechanismSectionCategoryGroup.None, double.NaN)]
         public void SimpleAssessmentDirectFailureMechanismsReturnsCorrectCategory(SimpleCalculationResult calculationResult, FailureMechanismSectionCategoryGroup expectedResult, double expectedProbability)
         {
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentDirectFailureMechanisms(calculationResult);
@@ -67,6 +68,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [Test]
         [TestCase(SimpleCalculationResultValidityOnly.NVT, FailureMechanismSectionCategoryGroup.NotApplicable, 0.0)]
         [TestCase(SimpleCalculationResultValidityOnly.WVT, FailureMechanismSectionCategoryGroup.VIIv, double.NaN)]
+        [TestCase(SimpleCalculationResultValidityOnly.None, FailureMechanismSectionCategoryGroup.None, double.NaN)]
         public void SimpleAssessmentDirectFailureMechanismsValidityOnlyResultsCorrectCategory(SimpleCalculationResultValidityOnly calculationResult, FailureMechanismSectionCategoryGroup expectedResult,double expectedProbability)
         {
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().SimpleAssessmentDirectFailureMechanisms(calculationResult);
@@ -93,6 +95,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(DetailedCalculationResult.V, FailureMechanismSectionCategoryGroup.IIv)]
         [TestCase(DetailedCalculationResult.VN, FailureMechanismSectionCategoryGroup.Vv)]
         [TestCase(DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.VIIv)]
+        [TestCase(DetailedCalculationResult.None, FailureMechanismSectionCategoryGroup.None)]
         public void DetailedAssessmentDirectFailureMechanismsFromResultTranslatesResultCorrectly(DetailedCalculationResult result, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(result);
@@ -121,6 +124,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(0.4, FailureMechanismSectionCategoryGroup.IVv, 0.4)]
         [TestCase(0.9, FailureMechanismSectionCategoryGroup.VIv, 0.9)]
         [TestCase(1, FailureMechanismSectionCategoryGroup.VIv, 1.0)]
+        [TestCase(double.NaN, FailureMechanismSectionCategoryGroup.None, double.NaN)]
         public void DetailedAssessmentDirectFailureMechanismsFromProbabilitySelectsCorrectCategory(double probability, FailureMechanismSectionCategoryGroup expectedCategoryGroup, double expectedProbability)
         {
             var categories = new[]
@@ -182,7 +186,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         }
 
         [Test]
-        [TestCase(DetailedCalculationResult.V,DetailedCalculationResult.NGO,DetailedCalculationResult.NGO,DetailedCalculationResult.NGO,DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.Iv)]
+        [TestCase(DetailedCalculationResult.V,DetailedCalculationResult.NGO,DetailedCalculationResult.None,DetailedCalculationResult.NGO,DetailedCalculationResult.None, FailureMechanismSectionCategoryGroup.Iv)]
         [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IIv)]
         [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IIIv)]
         [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.VN, DetailedCalculationResult.V, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.IVv)]
@@ -194,6 +198,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.V, FailureMechanismSectionCategoryGroup.Vv)]
         [TestCase(DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, DetailedCalculationResult.NGO, FailureMechanismSectionCategoryGroup.VIIv)]
         [TestCase(DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, DetailedCalculationResult.NGO, DetailedCalculationResult.VN, FailureMechanismSectionCategoryGroup.VIv)]
+        [TestCase(DetailedCalculationResult.None, DetailedCalculationResult.None, DetailedCalculationResult.None, DetailedCalculationResult.None, DetailedCalculationResult.None, FailureMechanismSectionCategoryGroup.None)]
         public void DetailedAssessmentDirectFailureMechanismsGroupThreeReturnsCorrectCategory(DetailedCalculationResult iToII, DetailedCalculationResult iIToIII, DetailedCalculationResult iIIToIV, DetailedCalculationResult iVToV, DetailedCalculationResult vToVI, FailureMechanismSectionCategoryGroup expectedCategoryGroup)
         {
             var input = new DetailedCategoryBoundariesCalculationResult(iToII,iIToIII,iIIToIV,iVToV,vToVI);
@@ -237,6 +242,7 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(0.4,1.145, FailureMechanismSectionCategoryGroup.IVv, 0.4)]
         [TestCase(0.9, 2.542,FailureMechanismSectionCategoryGroup.VIv, 0.9)]
         [TestCase(1, 5.135, FailureMechanismSectionCategoryGroup.VIv, 1.0)]
+        [TestCase(double.NaN, 5.135, FailureMechanismSectionCategoryGroup.None, double.NaN)]
         public void DetailedAssessmentDirectFailureMechanismsFromProbabilityWithNValueReturnsCorrectResult(double probability,double nValue, FailureMechanismSectionCategoryGroup expectedCategoryGroup, double expectedProbabilityWithoutNMultiplication)
         {
             var categories = new[]
