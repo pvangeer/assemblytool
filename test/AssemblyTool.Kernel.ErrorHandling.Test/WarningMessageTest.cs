@@ -33,8 +33,9 @@ namespace AssemblyTool.Kernel.ErrorHandling.Test
         public void Values_ExpectedValues()
         {
             // Assert
-            Assert.AreEqual(1, Enum.GetValues(typeof(WarningMessage)).Length);
+            Assert.AreEqual(2, Enum.GetValues(typeof(WarningMessage)).Length);
             Assert.AreEqual(0, (int)WarningMessage.CorrectedSectionSpecificNValue);
+            Assert.AreEqual(1, (int)WarningMessage.CorrectedProbability);
         }
     }
 }

@@ -253,10 +253,20 @@ namespace AssemblyTool.Kernel.Test.Assembly
             var calculationOutput = new FailureMechanismSectionAssemblyCalculator().DetailedAssessmentDirectFailureMechanisms(input);
 
             Assert.IsNotNull(calculationOutput);
-            Assert.IsEmpty(calculationOutput.WarningMessages);
+            var expectedProbability = expectedProbabilityWithoutNMultiplication * nValue;
+            if (expectedProbability > 1)
+            {
+                Assert.AreEqual(1,calculationOutput.WarningMessages.Length);
+                Assert.AreEqual(WarningMessage.CorrectedProbability,calculationOutput.WarningMessages[0]);
+            }
+            else
+            {
+                Assert.IsEmpty(calculationOutput.WarningMessages);
+            }
+            
             Assert.IsNotNull(calculationOutput.Result);
             Assert.AreEqual(expectedCategoryGroup, calculationOutput.Result.CategoryGroup);
-            Assert.AreEqual(Math.Min(1,expectedProbabilityWithoutNMultiplication*nValue), calculationOutput.Result.EstimatedProbabilityOfFailure);
+            Assert.AreEqual(Math.Min(1,expectedProbability), calculationOutput.Result.EstimatedProbabilityOfFailure);
         }
 
         [Test]

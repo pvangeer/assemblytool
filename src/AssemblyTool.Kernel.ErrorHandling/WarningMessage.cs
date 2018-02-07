@@ -26,6 +26,11 @@ namespace AssemblyTool.Kernel.ErrorHandling
         /// <summary>
         /// The section specific N-Value has been corrected in order to avoid invalid category boundaries
         /// </summary>
-        CorrectedSectionSpecificNValue
+        CorrectedSectionSpecificNValue,
+
+        /// <summary>
+        /// The probability was limited to 1.0 as it exceeded 1.0.
+        /// </summary>
+        CorrectedProbability
     }
 }

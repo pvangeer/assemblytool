@@ -24,6 +24,7 @@ using AssemblyTool.Kernel.Data.AssemblyCategories;
 using AssemblyTool.Kernel.Data.CalculationResults;
 using AssemblyTool.Kernel.ErrorHandling;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using AssemblyTool.Kernel.Assembly.CalculatorInput;
@@ -172,10 +173,16 @@ namespace AssemblyTool.Kernel.Assembly
                 throw new AssemblyToolKernelException(ErrorCode.InputIsNull);
             }
 
+            var warnings = new List<WarningMessage>();
             var result = DetailedAssessmentDirectFailureMechanisms(new DetailedCalculationInputFromProbability(input.Probability, input.Categories));
 
-            var estimatedProbabilityOfFailure = (Probability)Math.Min(1.0,(double)result.Result.EstimatedProbabilityOfFailure* input.NValue);
-            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(result.Result.CategoryGroup, estimatedProbabilityOfFailure));
+            var adjustedProbability = (double)result.Result.EstimatedProbabilityOfFailure* input.NValue;
+            if (adjustedProbability > 1.0)
+            {
+                warnings.Add(WarningMessage.CorrectedProbability);
+            }
+            var estimatedProbabilityOfFailure = (Probability)Math.Min(1.0,adjustedProbability);
+            return new CalculationOutput<FailureMechanismSectionAssemblyCategoryResult>(new FailureMechanismSectionAssemblyCategoryResult(result.Result.CategoryGroup, estimatedProbabilityOfFailure), warnings.ToArray());
         }
         #endregion
 
