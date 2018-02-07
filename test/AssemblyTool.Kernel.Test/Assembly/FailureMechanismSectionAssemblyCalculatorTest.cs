@@ -487,6 +487,10 @@ namespace AssemblyTool.Kernel.Test.Assembly
         [TestCase(FailureMechanismSectionCategoryGroup.IIv, FailureMechanismSectionCategoryGroup.IVv, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.IVv)]
         [TestCase(FailureMechanismSectionCategoryGroup.IIv, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.IIv)]
         [TestCase(FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.VIIv)]
+        [TestCase(FailureMechanismSectionCategoryGroup.IIIv, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.IIIv)]
+        [TestCase(FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.None)]
+        [TestCase(FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.VIIv, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.VIIv)]
+        [TestCase(FailureMechanismSectionCategoryGroup.NotApplicable, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.None, FailureMechanismSectionCategoryGroup.NotApplicable)]
         public void CombinedAssessmentFromFailureMechanismSectionResultsSelectsCorrectResult(
             FailureMechanismSectionCategoryGroup simpleAssessmentResult,
             FailureMechanismSectionCategoryGroup detailedAssessmentResult,
